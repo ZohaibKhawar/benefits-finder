@@ -1,0 +1,440 @@
+# Ontario benefits and programs.
+# Text and numbers live here; the eligibility logic for each id lives in finder/rules.py.
+# Benefit year: July 2026 to June 2027, based on the 2025 tax return, unless a note says otherwise.
+
+province: ON
+province_name: Ontario
+
+# Province-specific pieces of the step-by-step plan.
+plan:
+  health_card_id: ohip
+  student_aid_id: osap
+  rent_form_benefit: oeptc
+  rent_form_text: Fill in form ON-BEN for the Ontario Trillium Benefit and enter the rent you paid.
+
+benefits:
+
+  - id: oeptc
+    name: Ontario Energy and Property Tax Credit
+    also_called: part of the Ontario Trillium Benefit
+    level: ontario
+    category: money
+    summary: >-
+      Monthly money that helps with rent or property tax and energy costs. 20% of the rent you
+      paid counts toward it. A student residence only counts for $25.
+    how_to_get: >-
+      Fill in form ON-BEN (the Ontario Trillium Benefit form) with your tax return and enter the
+      rent you paid and your address. Roommates each claim the rent they paid.
+    url: https://www.canada.ca/en/revenue-agency/services/child-family-benefits/provincial-territorial-programs/province-ontario.html
+    needs_tax_return: true
+    last_checked: 2026-10-18
+    source: official
+    params:
+      rent_share: 0.20
+      residence_amount: 25
+      energy_max: 290
+      property_rate: 0.10
+      property_cap: 944
+      property_add: 73
+      reduction_rate: 0.02
+      single_threshold: 29047
+      family_threshold: 36309
+      max_under_65: 1307
+      max_65_plus: 1488
+
+  - id: noec
+    name: Northern Ontario Energy Credit
+    also_called: part of the Ontario Trillium Benefit
+    level: ontario
+    category: money
+    summary: >-
+      Extra money for people in Northern Ontario who pay rent or property tax, for the higher
+      cost of heating and energy up north.
+    how_to_get: >-
+      Fill in form ON-BEN with your tax return and say you live in Northern Ontario.
+    url: https://www.canada.ca/en/revenue-agency/services/child-family-benefits/provincial-territorial-programs/province-ontario.html
+    needs_tax_return: true
+    last_checked: 2026-10-18
+    source: secondary
+    params:
+      single_max: 189
+      family_max: 290
+      reduction_rate: 0.01
+      single_threshold: 50833
+      family_threshold: 65356
+
+  - id: ostc
+    name: Ontario Sales Tax Credit
+    also_called: part of the Ontario Trillium Benefit
+    level: ontario
+    category: money
+    summary: >-
+      Up to $378 a year for you, your partner and each child, paid monthly with the Ontario
+      Trillium Benefit.
+    how_to_get: >-
+      File your tax return. The CRA works it out for you; no separate form.
+    url: https://www.canada.ca/en/revenue-agency/services/child-family-benefits/provincial-territorial-programs/province-ontario.html
+    needs_tax_return: true
+    last_checked: 2026-10-18
+    source: official
+    params:
+      per_person: 378
+      reduction_rate: 0.04
+      single_threshold: 29047
+      family_threshold: 36309
+
+  - id: ocb
+    name: Ontario Child Benefit
+    level: ontario
+    category: money
+    summary: >-
+      Up to $146.66 a month for each child under 18, paid together with the Canada Child Benefit.
+    how_to_get: >-
+      Applying for the Canada Child Benefit signs you up for this too.
+    url: https://www.ontario.ca/page/ontario-child-benefit
+    needs_tax_return: true
+    last_checked: 2026-10-18
+    source: official
+    note: The 8% reduction rate is from older years and still needs checking.
+    params:
+      per_child: 1760
+      threshold: 26865
+      reduction_rate: 0.08
+
+  - id: liwtc
+    name: Ontario Low-Income Workers Tax Credit
+    also_called: LIFT credit
+    level: ontario
+    category: money
+    summary: >-
+      Cuts the Ontario tax you owe by up to $850 if you work and earn under about $38,500. It
+      only helps if you owe Ontario tax; it isn't paid out as cash.
+    how_to_get: >-
+      Tax software claims it for you on form ON428-A.
+    url: https://www.ontario.ca/page/low-income-workers-tax-credit
+    needs_tax_return: true
+    last_checked: 2026-10-18
+    source: official
+    params:
+      max: 850
+      rate: 0.0505
+      reduction_rate: 0.10
+      individual_threshold: 30000
+      family_threshold: 60000
+      no_ontario_tax_below: 16000   # rough point under which most people owe no Ontario tax anyway
+
+  - id: care_credit
+    name: Ontario Child Care Tax Credit (CARE)
+    level: ontario
+    category: money
+    summary: >-
+      If you pay for child care, Ontario gives back part of it as a refundable credit (families
+      with income up to about $150,000). Check if your daycare is in the lower-fee program too:
+      fees are capped at $22 a day.
+    how_to_get: >-
+      Keep your child care receipts and claim child care expenses on your tax return.
+    url: https://www.ontario.ca/page/ontario-child-care-tax-credit
+    needs_tax_return: true
+    last_checked: 2026-10-18
+    source: secondary
+    params:
+      income_limit: 150000
+
+  - id: osap
+    name: OSAP (Ontario Student Assistance Program)
+    level: ontario
+    category: study
+    summary: >-
+      Grants and loans for college, university and some training. Since August 1, 2026 most of
+      the Ontario part is a loan; career college students get only loans from Ontario. The
+      federal grant is still free money.
+    how_to_get: >-
+      Apply on the OSAP website. First-time applicants do a 15-minute module first. Try the OSAP
+      Aid Estimator to see a number before you apply.
+    url: https://www.ontario.ca/page/osap-ontario-student-assistance-program
+    extra_url: https://osap.gov.on.ca/AidEstimator2324Web/enterapp/enter.xhtml
+    needs_tax_return: true
+    last_checked: 2026-10-18
+    source: official
+
+  - id: learn_and_stay
+    name: Ontario Learn and Stay Grant
+    level: ontario
+    category: study
+    summary: >-
+      Full tuition, books and costs paid for eligible nursing, paramedic and medical lab programs
+      in Northern, Eastern and Southwestern Ontario, if you agree to work in that region after.
+    how_to_get: >-
+      Apply through OSAP. Check that your school and program are on the eligible list.
+    url: https://www.ontario.ca/page/ontario-learn-and-stay-grant
+    needs_tax_return: false
+    last_checked: 2026-10-18
+    source: official
+
+  - id: ohip
+    name: OHIP (Ontario health insurance)
+    level: ontario
+    category: health
+    summary: >-
+      Free doctor and hospital care. There is no waiting period any more.
+    how_to_get: >-
+      Go in person to a ServiceOntario centre with 3 original documents: one for your status in
+      Canada, one for your Ontario address, and one for your identity.
+    url: https://www.ontario.ca/page/apply-ohip-and-get-health-card
+    needs_tax_return: false
+    last_checked: 2026-10-18
+    source: official
+
+  - id: ohip_plus
+    name: OHIP+ (free prescriptions for 24 and under)
+    level: ontario
+    category: health
+    summary: >-
+      Free prescription drugs for anyone 24 or younger with OHIP and no private drug plan. No
+      sign-up: show your health card at the pharmacy.
+    how_to_get: >-
+      Show your health card with your prescription. If you have a school or work plan, that plan
+      pays first.
+    url: https://www.ontario.ca/page/learn-about-ohip-plus
+    needs_tax_return: false
+    last_checked: 2026-10-18
+    source: official
+
+  - id: healthy_smiles
+    name: Healthy Smiles Ontario
+    level: ontario
+    category: health
+    summary: >-
+      Free dental care for children 17 and under in lower-income families.
+    how_to_get: >-
+      Apply online or by mail. Kids on Ontario Works or ODSP are signed up automatically.
+    url: https://www.ontario.ca/page/get-dental-care
+    needs_tax_return: true
+    last_checked: 2026-10-18
+    source: official
+    params:
+      one_child: 29065
+      per_extra_child: 2200
+      max_children_counted: 8
+
+  - id: ontario_works
+    name: Ontario Works
+    level: ontario
+    category: support
+    summary: >-
+      Monthly money for food and rent (up to $733 a month for one person) and help finding work,
+      if you can't cover basic costs.
+    how_to_get: >-
+      Apply online or through your city's social services office.
+    url: https://www.ontario.ca/page/ontario-works
+    needs_tax_return: false
+    last_checked: 2026-10-18
+    source: official
+
+  - id: odsp
+    name: Ontario Disability Support Program (ODSP)
+    level: ontario
+    category: support
+    summary: >-
+      Monthly money for people with a disability and financial need: up to $1,436 a month for one
+      person from July 2026.
+    how_to_get: >-
+      Apply online or through your local ODSP office. You'll need medical forms.
+    url: https://www.ontario.ca/page/ontario-disability-support-program
+    needs_tax_return: false
+    last_checked: 2026-10-18
+    source: official
+
+  - id: oesp
+    name: Ontario Electricity Support Program
+    level: ontario
+    category: support
+    summary: >-
+      A monthly credit of about $35 to $75 (more with electric heat) on your hydro bill, for
+      lower-income households. Only if the hydro bill is in your name.
+    how_to_get: >-
+      Apply online at ontarioelectricitysupport.ca. It lasts 2 years, then you reapply.
+    url: https://ontarioelectricitysupport.ca
+    needs_tax_return: false
+    last_checked: 2026-10-18
+    source: secondary
+
+  - id: cohb
+    name: Canada-Ontario Housing Benefit
+    level: ontario
+    category: support
+    summary: >-
+      Monthly help paying rent. In most cities you can't apply directly: you're offered it from
+      the social housing wait list.
+    how_to_get: >-
+      Get on your city's social housing wait list and keep filing your taxes.
+    url: https://www.toronto.ca/community-people/housing-shelter/access-community-housing/rent-geared-to-income-subsidy/canada-ontario-housing-benefit/
+    needs_tax_return: true
+    last_checked: 2026-10-18
+    source: official
+
+  - id: obpap
+    name: Ontario Bridging Participant Assistance Program
+    level: ontario
+    category: study
+    summary: >-
+      Up to $5,000 for tuition, books and equipment in a bridge training program for people
+      trained in another country.
+    how_to_get: >-
+      Apply through the financial aid office of the school running your bridge program, by
+      March 31.
+    url: https://www.ontario.ca/page/ontario-bridging-participant-assistance-program
+    needs_tax_return: false
+    last_checked: 2026-10-18
+    source: official
+
+  - id: better_jobs
+    name: Better Jobs Ontario
+    level: ontario
+    category: study
+    summary: >-
+      Up to $28,000 (or $35,000 for programs over a year) for training if you were laid off or out
+      of work for a while, including up to $500 a week for living costs.
+    how_to_get: >-
+      Contact an Employment Ontario centre; they help you apply.
+    url: https://www.ontario.ca/page/better-jobs-ontario
+    needs_tax_return: false
+    last_checked: 2026-10-18
+    source: official
+
+
+
+  # ---------------------------------------------------------------- city programs
+  # All use the shared city_program rule. one_person_limit is the income screen for one person;
+  # it grows with the square root of household size, the way Statistics Canada's measures do.
+
+  - id: toronto_fair_pass
+    rule: city_program
+    name: Fair Pass (TTC discount)
+    level: city
+    category: support
+    summary: >-
+      Cheaper TTC rides for lower-income Toronto residents aged 20 to 64: $2.10 a ride instead of
+      $3.30, and monthly fare capping from September 2026.
+    how_to_get: >-
+      Apply online with your PRESTO card number. People on Ontario Works or ODSP are checked
+      automatically.
+    url: https://www.toronto.ca/community-people/employment-social-support/support-for-people-in-financial-need/assistance-through-ontario-works/fair-pass-transit-discount-program/
+    needs_tax_return: true
+    last_checked: 2026-10-18
+    source: official
+    params:
+      city: toronto
+      one_person_limit: 23000      # 75% of the after-tax low income measure (approx.)
+      min_age: 20
+      max_age: 64
+
+  - id: toronto_welcome_policy
+    rule: city_program
+    name: Welcome Policy (Toronto recreation credit)
+    level: city
+    category: support
+    summary: >-
+      A yearly credit for City of Toronto recreation programs: swimming, skating, fitness,
+      camps. About $683 for children and youth up to 24, and $315 for adults.
+    how_to_get: >-
+      Apply online or by phone with your Notice of Assessment. Reapply every year.
+    url: https://www.toronto.ca/community-people/employment-social-support/child-family-support/welcome-policy-recreation-fee-subsidy/
+    needs_tax_return: true
+    last_checked: 2026-10-18
+    source: secondary
+    params:
+      city: toronto
+      one_person_limit: 30000      # after-tax low income measure (approx.)
+      min_age: 18
+
+  - id: ottawa_equipass
+    rule: city_program
+    name: EquiPass (OC Transpo discount)
+    level: city
+    category: support
+    summary: >-
+      A $58.25 monthly pass, or $1.75 a ride, for Ottawa residents with low household income.
+    how_to_get: >-
+      Apply with OC Transpo's EquiPass form and your Notice of Assessment. Each person needs their
+      own PRESTO card.
+    url: https://www.octranspo.com/en/fares/reduced-fares/equipass
+    needs_tax_return: true
+    last_checked: 2026-10-18
+    source: official
+    params:
+      city: ottawa
+      one_person_limit: 25909      # official 2026 limit (2024 after-tax income), 2 people $31,533
+
+  - id: peel_affordable_transit
+    rule: city_program
+    name: Affordable Transit Program (MiWay and Brampton Transit)
+    level: city
+    category: support
+    summary: >-
+      Half-price PRESTO fares for lower-income Mississauga, Brampton and Caledon residents, and
+      half-price MiWay monthly passes.
+    how_to_get: >-
+      Apply online through Peel Region with your Notice of Assessment and a registered PRESTO card.
+    url: https://www.mississauga.ca/miway-transit/fares/affordable-transit-program/
+    needs_tax_return: true
+    last_checked: 2026-10-18
+    source: official
+    params:
+      city: peel
+      one_person_limit: 30000
+
+  - id: hamilton_fare_assist
+    rule: city_program
+    name: Fare Assist (HSR discount)
+    level: city
+    category: support
+    summary: >-
+      About 30% off HSR fares for Hamilton residents with low household income, including people
+      on Ontario Works or ODSP. Permanent since January 2026.
+    how_to_get: >-
+      Apply online, through Ontario Works, or at the HSR customer service office. Reapply every year.
+    url: https://www.hamilton.ca/home-neighbourhood/hsr/fares/hsr-fare-assist
+    needs_tax_return: true
+    last_checked: 2026-10-18
+    source: secondary
+    params:
+      city: hamilton
+      one_person_limit: 30000
+
+  - id: grt_affordable_transit
+    rule: city_program
+    name: Affordable Transit Program (Grand River Transit)
+    level: city
+    category: support
+    summary: >-
+      A $47 monthly pass (55% off) or $1.35 rides for Waterloo Region residents living on a low
+      income.
+    how_to_get: >-
+      Apply through the Region of Waterloo at grt.ca/ATP or by phone.
+    url: https://www.grt.ca/ATP
+    needs_tax_return: true
+    last_checked: 2026-10-18
+    source: secondary
+    params:
+      city: waterloo
+      one_person_limit: 30000
+
+  - id: london_transit_pass
+    rule: city_program
+    name: Income-Related Transit Pass (London Transit)
+    level: city
+    category: support
+    summary: >-
+      A discounted monthly London Transit pass (about $72) for London residents 18 and over with
+      low income.
+    how_to_get: >-
+      Apply through the City of London with proof of income.
+    url: https://london.ca/living-london/community-services/social-services-supports/income-related-transit-pass-program
+    needs_tax_return: true
+    last_checked: 2026-10-18
+    source: secondary
+    params:
+      city: london
+      one_person_limit: 23000      # after-tax low income cut-off for a city London's size (approx.)
+      min_age: 18

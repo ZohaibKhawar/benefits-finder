@@ -1,0 +1,96 @@
+# Newfoundland and Labrador. Benefit year July 2026 to June 2027 (2025 tax return) unless noted.
+
+province: NL
+province_name: Newfoundland and Labrador
+
+plan:
+  health_card_id: nl_mcp
+  student_aid_id: nl_student_aid
+
+benefits:
+
+  - id: nl_child_benefit
+    rule: provincial_child_benefit
+    name: Newfoundland and Labrador Child Benefit
+    level: provincial
+    category: money
+    summary: >-
+      About $157 to $193 a month per child for lower-income families, plus $150 a month for each child
+      under 5 (nutrition supplement). Paid with the Canada Child Benefit.
+    how_to_get: >-
+      Applying for the Canada Child Benefit signs you up. File your taxes every year.
+    url: https://www.canada.ca/en/revenue-agency/services/child-family-benefits/provincial-territorial-programs/province-newfoundland-labrador.html
+    needs_tax_return: true
+    last_checked: 2026-10-18
+    source: official
+    params:
+      formula: flat_per_child
+      per_child: [1888, 2002, 2150, 2310]
+      full_below: 20397
+      note: Families with income above $20,397 get part of it.
+
+  - id: nl_income_supplement
+    rule: provincial_credit
+    name: Newfoundland and Labrador Income Supplement
+    level: provincial
+    category: money
+    summary: >-
+      Up to $520 a year for one person, more for couples, plus $231 per child. Paid with the grocery
+      benefit every 3 months.
+    how_to_get: >-
+      File your tax return. The CRA works it out for you.
+    url: https://www.canada.ca/en/revenue-agency/services/child-family-benefits/provincial-territorial-programs/province-newfoundland-labrador.html
+    needs_tax_return: true
+    last_checked: 2026-10-18
+    source: official
+    params:
+      up_to: 520
+      note: The amount depends on your family income; the CRA works it out.
+
+  - id: nl_mcp
+    rule: health_card
+    name: Medical Care Plan (MCP)
+    level: provincial
+    category: health
+    summary: >-
+      Newfoundland and Labrador's health insurance: doctor and hospital care.
+    how_to_get: >-
+      Apply with your immigration papers and proof of your address.
+    url: https://www.gov.nl.ca/hcs/mcp/
+    needs_tax_return: false
+    last_checked: 2026-10-18
+    source: official
+    params:
+      wait: >-
+        Coverage starts when you arrive or when you're approved, whichever is later. Apply right away.
+      study_permit: maybe
+      study_note: >-
+        International students with a study permit of 12 months or more for full-time study can get MCP.
+
+  - id: nl_student_aid
+    rule: provincial_student_aid
+    name: Newfoundland and Labrador Student Financial Assistance
+    level: provincial
+    category: study
+    summary: >-
+      Newfoundland and Labrador's student aid: grants and loans for college and university.
+    how_to_get: >-
+      Apply online with Student Financial Assistance.
+    url: https://www.gov.nl.ca/education/studentaid/
+    needs_tax_return: true
+    last_checked: 2026-10-18
+    source: official
+
+  - id: nl_income_support
+    rule: income_assistance
+    name: Newfoundland and Labrador Income Support
+    level: provincial
+    category: support
+    summary: >-
+      Monthly money for basic needs if you can't cover them.
+    how_to_get: >-
+      Apply online or call 1-877-729-7888.
+    url: https://www.gov.nl.ca/cssd/income-support/
+    needs_tax_return: false
+    last_checked: 2026-10-18
+    source: official

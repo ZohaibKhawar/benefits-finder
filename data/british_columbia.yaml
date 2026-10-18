@@ -1,0 +1,108 @@
+# British Columbia. Benefit year July 2026 to June 2027 (2025 tax return) unless noted.
+
+province: BC
+province_name: British Columbia
+
+plan:
+  health_card_id: bc_msp
+  student_aid_id: bc_student_aid
+  rent_form_benefit: bc_renter_credit
+  rent_form_text: On your BC return, claim the BC renter's tax credit.
+
+benefits:
+
+  - id: bc_family_benefit
+    rule: provincial_child_benefit
+    name: BC Family Benefit
+    level: provincial
+    category: money
+    summary: >-
+      Tax-free monthly money for families with children under 18, paid with the Canada Child
+      Benefit. Up to $1,750 a year for the first child, plus $500 more for single parents.
+    how_to_get: >-
+      Applying for the Canada Child Benefit signs you up. Both parents must file taxes every year.
+    url: https://www.canada.ca/en/revenue-agency/services/child-family-benefits/provincial-territorial-programs/province-british-columbia.html
+    needs_tax_return: true
+    last_checked: 2026-10-18
+    source: official
+    params:
+      formula: bc_family_benefit
+      per_child: [1750, 1100, 900]
+      minimum: [775, 750, 725]
+      single_parent: 500
+      first_threshold: 30176
+      second_threshold: 96562
+      rate: 0.04
+
+  - id: bc_renter_credit
+    rule: renter_credit
+    name: BC renter's tax credit
+    level: provincial
+    category: money
+    summary: >-
+      Up to $400 a year for renters with family income up to about $64,800. It doesn't depend on
+      how much rent you pay.
+    how_to_get: >-
+      Claim it on your BC tax return. You need to have rented for at least 6 months of the year.
+    url: https://www2.gov.bc.ca/gov/content/taxes/income-taxes/personal/credits/renters-tax-credit
+    needs_tax_return: true
+    last_checked: 2026-10-18
+    source: official
+    params:
+      formula: renters_credit
+      max: 400
+      threshold: 64764
+      rate: 0.02
+      min_age: 19
+
+  - id: bc_msp
+    rule: health_card
+    name: Medical Services Plan (MSP)
+    level: provincial
+    category: health
+    summary: >-
+      BC's health insurance: doctor and hospital care. Newcomers wait about 3 months, so get
+      private insurance for the gap.
+    how_to_get: >-
+      Apply online as soon as you arrive in BC.
+    url: https://www2.gov.bc.ca/gov/content/health/health-drug-coverage/msp/bc-residents/eligibility-and-enrolment/how-to-enrol/coverage-wait-period
+    needs_tax_return: false
+    last_checked: 2026-10-18
+    source: official
+    params:
+      wait: >-
+        Coverage starts after a wait: the rest of the month you arrive plus two more months. Apply right
+        away and buy private insurance for the gap.
+      study_permit: maybe
+      study_note: >-
+        International students with a study permit of 6 months or more can join MSP. College and university
+        students pay a monthly health fee.
+
+  - id: bc_student_aid
+    rule: provincial_student_aid
+    name: StudentAid BC
+    level: provincial
+    category: study
+    summary: >-
+      BC's student aid: grants you don't pay back and interest-free loans for college, university
+      and some training. One application covers federal and BC aid.
+    how_to_get: >-
+      Apply online at StudentAid BC.
+    url: https://studentaidbc.ca
+    needs_tax_return: true
+    last_checked: 2026-10-18
+    source: official
+
+  - id: bc_income_assistance
+    rule: income_assistance
+    name: BC income assistance
+    level: provincial
+    category: support
+    summary: >-
+      Monthly money for food and rent, and help finding work, if you can't cover basic costs.
+    how_to_get: >-
+      Apply online with My Self Serve, or call 1-866-866-0800.
+    url: https://www2.gov.bc.ca/gov/content/family-social-supports/income-assistance
+    needs_tax_return: false
+    last_checked: 2026-10-18
+    source: official

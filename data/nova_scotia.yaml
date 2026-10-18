@@ -1,0 +1,104 @@
+# Nova Scotia. Benefit year July 2026 to June 2027 (2025 tax return) unless noted.
+
+province: NS
+province_name: Nova Scotia
+
+plan:
+  health_card_id: ns_msi
+  student_aid_id: ns_student_aid
+
+benefits:
+
+  - id: ns_child_benefit
+    rule: provincial_child_benefit
+    name: Nova Scotia Child Benefit
+    level: provincial
+    category: money
+    summary: >-
+      $127.08 a month for each child under 18 for families with income under $26,000, and part of
+      it up to $34,000. Paid with the Canada Child Benefit.
+    how_to_get: >-
+      Applying for the Canada Child Benefit signs you up. File your taxes every year.
+    url: https://www.canada.ca/en/revenue-agency/services/child-family-benefits/provincial-territorial-programs/province-nova-scotia.html
+    needs_tax_return: true
+    last_checked: 2026-10-18
+    source: official
+    params:
+      formula: flat_per_child
+      per_child: [1525]
+      full_below: 26000
+      note: Families with income between $26,000 and $34,000 get part of it.
+
+  - id: ns_affordable_living
+    rule: provincial_credit
+    name: Nova Scotia Affordable Living Tax Credit
+    level: provincial
+    category: money
+    summary: >-
+      Up to $255 a year for you (or you and your partner), plus $60 per child, paid with the grocery
+      benefit every 3 months.
+    how_to_get: >-
+      File your tax return. The CRA works it out for you.
+    url: https://www.canada.ca/en/revenue-agency/services/child-family-benefits/provincial-territorial-programs/province-nova-scotia.html
+    needs_tax_return: true
+    last_checked: 2026-10-18
+    source: official
+    params:
+      formula: adults_and_children
+      adult: 255
+      partner: 0
+      first_child_single_parent: 60
+      child: 60
+      threshold: 30000
+      rate: 0.05
+
+  - id: ns_msi
+    rule: health_card
+    name: Nova Scotia health card (MSI)
+    level: provincial
+    category: health
+    summary: >-
+      Nova Scotia's health insurance. Permanent residents arriving from outside Canada are covered
+      from their first day.
+    how_to_get: >-
+      Apply to MSI with your immigration papers and proof of your Nova Scotia address.
+    url: https://www.novascotia.ca/nova-scotia-health-insurance-program-eligibility
+    needs_tax_return: false
+    last_checked: 2026-10-18
+    source: official
+    params:
+      wait: >-
+        Permanent residents arriving from outside Canada are covered from their first day. Apply right away.
+      study_permit: maybe
+      study_note: >-
+        International students with a study permit of 12 months or more can apply in their 13th month in
+        Nova Scotia.
+
+  - id: ns_student_aid
+    rule: provincial_student_aid
+    name: Nova Scotia Student Assistance
+    level: provincial
+    category: study
+    summary: >-
+      Nova Scotia's student aid: loans and grants for college and university. One application covers
+      federal and provincial aid.
+    how_to_get: >-
+      Apply online at Nova Scotia Student Assistance.
+    url: https://novascotia.ca/studentassistance/
+    needs_tax_return: true
+    last_checked: 2026-10-18
+    source: official
+
+  - id: ns_income_assistance
+    rule: income_assistance
+    name: Nova Scotia Income Assistance
+    level: provincial
+    category: support
+    summary: >-
+      Monthly money for basic needs if you can't cover them, and help finding work.
+    how_to_get: >-
+      Apply online or call 1-877-424-1177.
+    url: https://novascotia.ca/coms/employment/income_assistance/
+    needs_tax_return: false
+    last_checked: 2026-10-18
+    source: official

@@ -1,0 +1,26 @@
+{# The money slip: the benefits we can put a number on, and the total under a highlighter. #}
+<section class="slip" aria-labelledby="slip-title">
+  <h2 id="slip-title" class="slip-title">{{ title }}</h2>
+  {% if report.counted %}
+    <table class="slip-lines">
+      <caption class="visually-hidden">{{ _("Estimated money a year") }}</caption>
+      <tbody>
+        {% for item in report.counted %}
+          <tr>
+            <th scope="row">{{ bt(item.benefit, "name") }}</th>
+            <td>{{ money(item.estimate) }}</td>
+          </tr>
+        {% endfor %}
+      </tbody>
+      <tfoot>
+        <tr>
+          <th scope="row">{{ _("About a year, in total") }}</th>
+          <td><mark class="highlight">{{ money(report.total) }}</mark></td>
+        </tr>
+      </tfoot>
+    </table>
+  {% else %}
+    <p class="slip-empty">{{ _("We couldn't put a dollar amount on anything yet. The list below still shows what to apply for.") }}</p>
+  {% endif %}
+  <p class="slip-note">{{ _("Estimates for July 2026 to June 2027, based on what you told us. Real amounts depend on your tax return.") }}</p>
+</section>

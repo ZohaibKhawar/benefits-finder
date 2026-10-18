@@ -1,0 +1,118 @@
+{% extends "base.html" %}
+{% block title %}{{ _("Your results") }}{% endblock %}
+{% block body_class %}page-results{% endblock %}
+
+{% macro amount(item) %}
+  {% if item.estimate and item.status in ("likely", "maybe", "not_yet") %}
+    <span class="amount">{{ _("about {amount} a year", amount=money(item.estimate)) }}</span>
+  {% elif item.up_to %}
+    <span class="amount">{{ _("up to {amount}", amount=money(item.up_to)) }}</span>
+  {% endif %}
+{% endmacro %}
+
+{% macro benefit_row(item) %}
+  <li class="benefit status-{{ item.status }}">
+    <div class="benefit-head">
+      <h3>{{ bt(item.benefit, "name") }}
+        {% if bt(item.benefit, "also_called") %}<span class="also">{{ _("also called") }} {{ bt(item.benefit, "also_called") }}</span>{% endif %}
+      </h3>
+      <p class="tags"><span class="tag tag-{{ item.status }}">{{ _(status_labels[item.status]) }}</span>{{ amount(item) }}</p>
+    </div>
+    <p class="summary">{{ bt(item.benefit, "summary") }}</p>
+    {% for reason in item.reasons %}<p class="reason">{{ r(reason) }}</p>{% endfor %}
+    {% if item.status != "no" %}
+      <p class="how"><strong>{{ _("How to get it:") }}</strong> {{ r(item.next_step) if item.next_step else bt(item.benefit, "how_to_get") }}</p>
+    {% endif %}
+    <p class="source">
+      <a href="{{ item.url }}" target="_blank" rel="noopener noreferrer">{{ _("Official page") }}<span class="visually-hidden"> {{ _("(opens in a new tab)") }}</span></a>
+      {% if item.source == "secondary" %}<span class="hint">{{ _("Some numbers here come from news and tax sites. Check the official page.") }}</span>{% endif %}
+    </p>
+  </li>
+{% endmacro %}
+
+{% block main %}
+<div class="results">
+  <h1>{{ _("Your results") }}</h1>
+
+  {% with title=_("Money you might be missing") %}{% include "_slip.html" %}{% endwith %}
+
+  <section class="plan" aria-labelledby="plan-title">
+    <h2 id="plan-title">{{ _("Do these first") }}</h2>
+    <ol class="steps">
+      {% for step in report.plan %}
+        <li>{{ r(step.text) }}{% if step.url %} <a href="{{ step.url }}" target="_blank" rel="noopener noreferrer">{{ _("Official page") }}<span class="visually-hidden"> {{ _("(opens in a new tab)") }}</span></a>{% endif %}</li>
+      {% endfor %}
+    </ol>
+    <div class="actions">
+      <form method="post" action="{{ link('calendar') }}">
+        <input type="hidden" name="answers" value="{{ answers_json }}">
+        <button type="submit" class="button button-quiet">{{ _("Add these dates to my calendar") }}</button>
+      </form>
+      <button type="button" class="button button-quiet" data-print>{{ _("Print or save as PDF") }}</button>
+      <form method="post" action="{{ link('quiz') }}">
+        <input type="hidden" name="answers" value="{{ answers_json }}">
+        <button type="submit" class="button-back">{{ _("Change my answers") }}</button>
+      </form>
+    </div>
+  </section>
+
+  {% for title, items in report.groups %}
+    <section class="group" aria-labelledby="group-{{ loop.index }}">
+      <h2 id="group-{{ loop.index }}">{{ _(title) }}</h2>
+      <ul class="benefits">{% for item in items %}{{ benefit_row(item) }}{% endfor %}</ul>
+    </section>
+  {% endfor %}
+
+  {% if report.not_yet %}
+    <section class="group" aria-labelledby="group-later">
+      <h2 id="group-later">{{ _("Not yet, but soon") }}</h2>
+      <ul class="benefits">
+        {% for item in report.not_yet %}
+          <li class="benefit status-not_yet">
+            <div class="benefit-head">
+              <h3>{{ bt(item.benefit, "name") }}</h3>
+              <p class="tags"><span class="tag tag-not_yet">{{ r(item.available_from) if item.available_from else _("Not yet") }}</span>{{ amount(item) }}</p>
+            </div>
+            {% for reason in item.reasons %}<p class="reason">{{ r(reason) }}</p>{% endfor %}
+            <p class="source"><a href="{{ item.url }}" target="_blank" rel="noopener noreferrer">{{ _("Official page") }}<span class="visually-hidden"> {{ _("(opens in a new tab)") }}</span></a></p>
+          </li>
+        {% endfor %}
+      </ul>
+    </section>
+  {% endif %}
+
+  {% if report.ruled_out %}
+    <details class="ruled-out">
+      <summary>{{ _("Probably not for you ({count}), and why", count=report.ruled_out | length) }}</summary>
+      <ul class="plain">
+        {% for item in report.ruled_out %}
+          <li><strong>{{ bt(item.benefit, "name") }}:</strong> {{ r(item.reasons[0]) }}</li>
+        {% endfor %}
+      </ul>
+    </details>
+  {% endif %}
+
+  {% if ai_enabled %}
+    <section class="ask" id="ask" aria-labelledby="ask-title">
+      <h2 id="ask-title">{{ _("Ask about your results") }}</h2>
+      {% if ask_answer %}
+        <div class="answer" role="status">
+          <p class="answer-question">{{ ask_question }}</p>
+          {% for paragraph in ask_answer.split("\n\n") %}<p>{{ paragraph }}</p>{% endfor %}
+          <p class="hint">{{ _("Written by AI from your results. It can make mistakes; the official pages have the final word.") }}</p>
+        </div>
+      {% endif %}
+      {% if ask_error %}<p class="error" role="alert">{{ _(ask_error) }}</p>{% endif %}
+      <form method="post" action="{{ link('ask_question') }}#ask">
+        <input type="hidden" name="answers" value="{{ answers_json }}">
+        <label class="sub-label" for="question">{{ _("Your question") }}</label>
+        <textarea id="question" name="question" rows="3" maxlength="500" placeholder="{{ _("For example: why can't I get the Canada Workers Benefit?") }}">{{ ask_question or "" }}</textarea>
+        <p class="hint">{{ _("Your question and a summary of these results (no name or contact details) go to Anthropic's Claude AI for one answer. We don't keep them.") }}</p>
+        <button type="submit" class="button button-quiet">{{ _("Ask") }}</button>
+      </form>
+    </section>
+  {% endif %}
+
+  <p class="disclaimer">{{ _("This is a guide, not tax, legal or immigration advice. The government decides who qualifies. Check the official page before you apply.") }}</p>
+</div>
+{% endblock %}

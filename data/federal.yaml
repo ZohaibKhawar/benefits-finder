@@ -1,0 +1,302 @@
+# Federal benefits (apply in every province).
+# Text and numbers live here; the eligibility logic for each id lives in finder/rules.py.
+# Benefit year: July 2026 to June 2027, based on the 2025 tax return, unless a note says otherwise.
+# source: official = read on canada.ca; secondary = news or tax sites, check before trusting.
+
+# Links used by the step-by-step plan.
+links:
+  sin: https://www.canada.ca/en/employment-social-development/services/sin.html
+  rc151: https://www.canada.ca/en/revenue-agency/services/forms-publications/forms/rc151.html
+  rc66: https://www.canada.ca/en/revenue-agency/services/forms-publications/forms/rc66.html
+  file_taxes: https://www.canada.ca/en/services/taxes/income-tax/personal-income-tax/get-ready-taxes.html
+
+benefits:
+
+  - id: cgeb
+    name: Canada Groceries and Essentials Benefit
+    also_called: GST/HST credit
+    level: federal
+    category: money
+    summary: >-
+      Tax-free money paid every 3 months to people with low and modest incomes. It replaced the
+      GST/HST credit in July 2026 and is 25% bigger until 2031.
+    how_to_get: >-
+      File your tax return every year, even with no income. New to Canada? Apply now with the
+      RC151 web form (or RC66 if you have children) without waiting for your first tax return.
+    url: https://www.canada.ca/en/revenue-agency/services/child-family-benefits/canada-groceries-essentials-benefit.html
+    needs_tax_return: true
+    last_checked: 2026-10-18
+    source: official
+    params:
+      adult: 445                     # you, and your spouse or partner
+      child: 234                     # each child under 19
+      single_supplement: 234         # extra for single people
+      supplement_start: 11564        # single top-up builds at 2% of net income above this
+      supplement_rate: 0.02
+      reduction_start: 46432         # whole amount drops by 5% of family net income above this
+      reduction_rate: 0.05
+
+  - id: cwb
+    name: Canada Workers Benefit
+    level: federal
+    category: money
+    summary: >-
+      A refundable tax credit for people who work and earn a low income. Part of it can be paid
+      in advance during the year.
+    how_to_get: >-
+      Claim it on Schedule 6 when you file your tax return. Tax software fills it in for you.
+    url: https://www.canada.ca/en/revenue-agency/services/tax/individuals/topics/about-your-tax-return/tax-return/completing-a-tax-return/deductions-credits-expenses/line-45300-canada-workers-benefit-cwb.html
+    needs_tax_return: true
+    last_checked: 2026-10-18
+    source: official
+    note: Amounts are for the 2025 tax year. The 2026 return (filed in spring 2027) will be slightly higher.
+    params:
+      min_work_income: 3000
+      phase_in_rate: 0.27
+      reduction_rate: 0.15
+      single_max: 1633
+      single_reduction_start: 26855
+      family_max: 2813
+      family_reduction_start: 30639
+      disability_max: 843
+      disability_reduction_start: 37740
+      student_weeks_limit: 13
+
+  - id: ccb
+    name: Canada Child Benefit
+    level: federal
+    category: money
+    summary: >-
+      Tax-free monthly money for each child under 18. The biggest benefit most families get.
+    how_to_get: >-
+      Apply when your child is born or when you arrive in Canada (form RC66 for newcomers). Both
+      parents must file a tax return every year to keep it coming.
+    url: https://www.canada.ca/en/revenue-agency/services/child-family-benefits/canada-child-benefit.html
+    needs_tax_return: true
+    last_checked: 2026-10-18
+    source: official
+    params:
+      under_6: 8157
+      age_6_to_17: 6883
+      first_threshold: 38237
+      second_threshold: 82847
+      # index = number of children (1, 2, 3, 4+)
+      rate_1: [0.07, 0.135, 0.19, 0.23]
+      base_2: [3123, 6022, 8476, 10260]
+      rate_2: [0.032, 0.057, 0.08, 0.095]
+      temporary_resident_months: 18
+      child_disability: 3480
+
+  - id: cdcp
+    name: Canadian Dental Care Plan
+    level: federal
+    category: health
+    summary: >-
+      Government dental coverage for people with no dental insurance and family income under
+      $90,000. Free under $70,000; a 40% or 60% co-pay between $70,000 and $90,000.
+    how_to_get: >-
+      Apply online or by phone after you have filed your tax return. You must confirm every year
+      that you have no dental insurance.
+    url: https://www.canada.ca/en/services/benefits/dental/dental-care-plan.html
+    needs_tax_return: true
+    last_checked: 2026-10-18
+    source: official
+    params:
+      income_limit: 90000
+      free_under: 70000
+
+  - id: dtc
+    name: Disability Tax Credit
+    level: federal
+    category: money
+    summary: >-
+      A tax credit for people with a long-term disability. On its own it lowers your tax, but it
+      is also the key that unlocks the Canada Disability Benefit, extra student grants and the
+      Registered Disability Savings Plan (RDSP).
+    how_to_get: >-
+      Ask a doctor or nurse practitioner to fill in form T2201, then send it to the CRA.
+    url: https://www.canada.ca/en/revenue-agency/services/tax/individuals/segments/tax-credits-deductions-persons-disabilities/disability-tax-credit.html
+    needs_tax_return: false
+    last_checked: 2026-10-18
+    source: official
+
+  - id: cdb
+    name: Canada Disability Benefit
+    level: federal
+    category: money
+    summary: >-
+      Up to about $204 a month for people aged 18 to 64 who have the Disability Tax Credit.
+      It goes down as income goes up.
+    how_to_get: >-
+      Get the Disability Tax Credit first, file your taxes, then apply through Service Canada.
+    url: https://www.canada.ca/en/services/benefits/disability/canada-disability-benefit.html
+    needs_tax_return: true
+    last_checked: 2026-10-18
+    source: secondary
+    params:
+      max_per_year: 2450
+
+  - id: student_grant
+    name: Canada Student Grant
+    level: federal
+    category: study
+    summary: >-
+      Free money for college and university that you don't pay back: up to $4,200 a year for
+      full-time students and $2,520 for part-time students, plus extra for students with a
+      disability or with children.
+    how_to_get: >-
+      You don't apply separately: you get it by applying for your province's student aid (OSAP in
+      Ontario). Quebec runs its own program instead.
+    url: https://www.canada.ca/en/services/benefits/education/student-aid/grants-loans/full-time.html
+    needs_tax_return: false
+    last_checked: 2026-10-18
+    source: official
+    params:
+      full_time_max: 4200
+      part_time_max: 2520
+      disability: 2800
+      per_dependant_per_month: 280
+
+  - id: tuition_credit
+    name: Tuition tax credit
+    level: federal
+    category: study
+    summary: >-
+      15% of the tuition you paid comes off your federal tax. If you owe no tax yet, it's saved
+      for later years with no time limit, or up to $5,000 can go to a parent or grandparent.
+      International students can claim it too.
+    how_to_get: >-
+      Download your T2202 slip from your school's student portal and enter it when you file.
+      Students can also deduct moving costs if they moved 40 km or more for a job or summer job.
+    url: https://www.canada.ca/en/revenue-agency/services/tax/individuals/topics/about-your-tax-return/tax-return/completing-a-tax-return/deductions-credits-expenses/line-32300-your-tuition-education-textbook-amounts.html
+    needs_tax_return: true
+    last_checked: 2026-10-18
+    source: secondary
+
+  - id: training_credit
+    name: Canada Training Credit
+    level: federal
+    category: study
+    summary: >-
+      For workers aged 25 to 64: a balance that grows by $250 a year (up to $5,000) and pays back
+      up to half of your tuition as a refund.
+    how_to_get: >-
+      Your Notice of Assessment shows your balance. Claim it with your tuition when you file.
+    url: https://www.canada.ca/en/revenue-agency/services/tax/individuals/topics/about-your-tax-return/tax-return/completing-a-tax-return/deductions-credits-expenses/line-45350-canada-training-credit.html
+    needs_tax_return: true
+    last_checked: 2026-10-18
+    source: secondary
+    params:
+      min_work_income: 12058
+
+  - id: rap
+    name: Repayment Assistance Plan
+    level: federal
+    category: study
+    summary: >-
+      If you're paying back student loans and your income is low, your payment can drop to $0.
+      The federal part of student loans is interest-free.
+    how_to_get: >-
+      Apply on the National Student Loans Service Centre site. Reapply every 6 months.
+    url: https://www.canada.ca/en/services/benefits/education/student-aid/grants-loans/repay/assistance/rap.html
+    needs_tax_return: false
+    last_checked: 2026-10-18
+    source: official
+    params:
+      zero_payment_monthly_single: 3788
+
+  - id: clb
+    name: Canada Learning Bond
+    level: federal
+    category: study
+    summary: >-
+      Up to $2,000 for school after high school, for children born in 2004 or later from
+      low-income families. No deposit needed. Many people never claim it.
+    how_to_get: >-
+      Open an RESP at a bank (many have no fees) and ask for the Canada Learning Bond. Adults
+      aged 18 to 20 can apply for themselves before they turn 21. From April 2028 the government
+      will open an RESP automatically for eligible children born in 2024 or later.
+    url: https://www.canada.ca/en/services/benefits/education/education-savings/canada-learning-bond.html
+    needs_tax_return: true
+    last_checked: 2026-10-18
+    source: secondary
+    params:
+      max: 2000
+      first_year: 500
+      family_income_limit: 57375
+
+  - id: ifhp
+    name: Interim Federal Health Program
+    level: federal
+    category: health
+    summary: >-
+      Health coverage for refugee claimants and protected persons who don't have provincial
+      coverage yet. Doctor and hospital visits are free. Since May 2026 there is a $4 fee per
+      prescription and a 30% share for dental, vision and counselling.
+    how_to_get: >-
+      It starts automatically with your refugee claim. Show your IFHP document at the clinic.
+    url: https://www.canada.ca/en/immigration-refugees-citizenship/services/refugees/help-within-canada/health-care/interim-federal-health-program.html
+    needs_tax_return: false
+    last_checked: 2026-10-18
+    source: secondary
+
+  - id: settlement
+    name: Free newcomer settlement services
+    level: federal
+    category: help
+    summary: >-
+      Free help with jobs, language classes, housing and paperwork from settlement agencies.
+      Economic-class permanent residents can use them for 6 years after landing (5 years from
+      April 2027). Some provinces, including Ontario, also fund agencies that help temporary residents.
+    how_to_get: >-
+      Search "settlement services near me" on the IRCC site or call 211.
+    url: https://ircc.canada.ca/english/newcomers/services/index.asp
+    needs_tax_return: false
+    last_checked: 2026-10-18
+    source: secondary
+
+  - id: tax_clinic
+    name: Free tax clinics
+    level: federal
+    category: help
+    summary: >-
+      Volunteers file your tax return for free if your income is modest and your taxes are
+      simple (about $40,000 or less for one person, $55,000 for two).
+    how_to_get: >-
+      Find a clinic on the CRA site. Most run from February to April; some run all year.
+    url: https://www.canada.ca/en/revenue-agency/services/tax/individuals/community-volunteer-income-tax-program/need-a-hand-complete-your-tax-return.html
+    needs_tax_return: false
+    last_checked: 2026-10-18
+    source: secondary
+    params:
+      single_limit: 40000
+      couple_limit: 55000
+      per_extra_person: 5000
+
+  - id: help_211
+    name: "211"
+    level: federal
+    category: help
+    summary: >-
+      Call or text 2-1-1, or search online, for food banks, housing help, legal clinics and any
+      local service. Free, 24/7, in over 150 languages.
+    how_to_get: >-
+      Dial 2-1-1 or visit 211.ca.
+    url: https://211.ca
+    needs_tax_return: false
+    last_checked: 2026-10-18
+    source: official
+
+  - id: aid_office
+    name: Your school's financial aid office
+    level: federal
+    category: help
+    summary: >-
+      Every college and university has bursaries, emergency grants and food support that don't
+      show up on government sites. Ask them directly.
+    how_to_get: >-
+      Search your school's website for "financial aid" or "bursary".
+    url: https://www.canada.ca/en/services/benefits/education/student-aid.html
+    needs_tax_return: false
+    last_checked: 2026-10-18
+    source: official

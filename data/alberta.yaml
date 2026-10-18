@@ -1,0 +1,85 @@
+# Alberta. Benefit year July 2026 to June 2027 (2025 tax return) unless noted.
+
+province: AB
+province_name: Alberta
+
+plan:
+  health_card_id: ab_health
+  student_aid_id: ab_student_aid
+
+benefits:
+
+  - id: ab_child_family_benefit
+    rule: provincial_child_benefit
+    name: Alberta Child and Family Benefit
+    level: provincial
+    category: money
+    summary: >-
+      Tax-free money for families with children under 18, paid four times a year. A base amount
+      (up to $1,529 for the first child) plus more for working families.
+    how_to_get: >-
+      Applying for the Canada Child Benefit signs you up. File your taxes every year.
+    url: https://www.canada.ca/en/revenue-agency/services/child-family-benefits/provincial-territorial-programs/province-alberta.html
+    needs_tax_return: true
+    last_checked: 2026-10-18
+    source: official
+    note: The 15% phase-in and reduction rates of the working part are from earlier years and still need checking.
+    params:
+      formula: alberta_child_family
+      base: [1529, 764, 764, 764]
+      working: [782, 712, 426, 141]
+      base_threshold: 28116
+      working_threshold: 47115
+      working_start: 2760
+      working_phase_in: 0.15
+      working_rate: 0.15
+
+  - id: ab_health
+    rule: health_card
+    name: Alberta Health Care Insurance Plan (AHCIP)
+    level: provincial
+    category: health
+    summary: >-
+      Alberta's health insurance: doctor and hospital care. Register within 3 months of moving here.
+    how_to_get: >-
+      Apply at a registry agent office with your immigration papers and proof of your Alberta address.
+    url: https://www.alberta.ca/ahcip-moving-to-alberta
+    needs_tax_return: false
+    last_checked: 2026-10-18
+    source: official
+    params:
+      wait: >-
+        Register within 3 months of moving to Alberta. Bring your immigration papers and proof of your
+        Alberta address.
+      study_permit: maybe
+      study_note: >-
+        International students with a study permit of 12 months or more can usually get AHCIP.
+
+  - id: ab_student_aid
+    rule: provincial_student_aid
+    name: Alberta Student Aid
+    level: provincial
+    category: study
+    summary: >-
+      Alberta's student aid: loans, grants and scholarships for college, university and
+      apprenticeship. One application covers federal and Alberta aid.
+    how_to_get: >-
+      Apply online at Alberta Student Aid.
+    url: https://studentaid.alberta.ca
+    needs_tax_return: true
+    last_checked: 2026-10-18
+    source: official
+
+  - id: ab_income_support
+    rule: income_assistance
+    name: Alberta Income Support
+    level: provincial
+    category: support
+    summary: >-
+      Monthly money for basic needs if you can't cover them, and help finding work.
+    how_to_get: >-
+      Apply online, or call the Alberta Supports Contact Centre at 1-877-644-9992.
+    url: https://www.alberta.ca/income-support
+    needs_tax_return: false
+    last_checked: 2026-10-18
+    source: official

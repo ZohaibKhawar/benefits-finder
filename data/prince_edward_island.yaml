@@ -1,0 +1,103 @@
+# Prince Edward Island. Benefit year July 2026 to June 2027 (2025 tax return) unless noted.
+
+province: PE
+province_name: Prince Edward Island
+
+plan:
+  health_card_id: pe_health
+  student_aid_id: pe_student_aid
+
+benefits:
+
+  - id: pe_child_benefit
+    rule: provincial_child_benefit
+    name: Prince Edward Island Child Benefit
+    level: provincial
+    category: money
+    summary: >-
+      $34.16 a month per child for families with income under $45,000, and $24.16 between $45,000 and
+      $80,000. Paid with the Canada Child Benefit.
+    how_to_get: >-
+      Applying for the Canada Child Benefit signs you up. File your taxes every year.
+    url: https://www.canada.ca/en/revenue-agency/services/child-family-benefits/provincial-territorial-programs/province-prince-edward-island.html
+    needs_tax_return: true
+    last_checked: 2026-10-18
+    source: official
+    params:
+      formula: pei_child
+      low_income: 410
+      middle_income: 290
+      lower: 45000
+      upper: 80000
+
+  - id: pe_essentials
+    rule: provincial_credit
+    name: PEI Essentials Benefit
+    level: provincial
+    category: money
+    summary: >-
+      $310 a year for a single person or $365 for a couple or single parent, and at least $175 for
+      everyone. It replaced the PEI sales tax credit.
+    how_to_get: >-
+      File your tax return. It's paid with the grocery benefit every 3 months.
+    url: https://www.canada.ca/en/revenue-agency/services/child-family-benefits/provincial-territorial-programs/province-prince-edward-island.html
+    needs_tax_return: true
+    last_checked: 2026-10-18
+    source: official
+    params:
+      formula: pei_essentials
+      single: 310
+      family: 365
+      start: 95000
+      single_end: 108500
+      family_end: 114000
+      minimum: 175
+
+  - id: pe_health
+    rule: health_card
+    name: PEI health card
+    level: provincial
+    category: health
+    summary: >-
+      PEI's health coverage: doctor and hospital care. You must plan to live on PEI at least 6 months
+      and a day.
+    how_to_get: >-
+      Apply online with your immigration papers and proof of your PEI address.
+    url: https://www.princeedwardisland.ca/en/topic/health-cards
+    needs_tax_return: false
+    last_checked: 2026-10-18
+    source: official
+    params:
+      wait: >-
+        Apply as soon as you arrive. You must plan to live on PEI for at least 6 months and a day.
+      study_permit: maybe
+      study_note: >-
+        International students can get a PEI health card for the length of their study permit.
+
+  - id: pe_student_aid
+    rule: provincial_student_aid
+    name: PEI Student Financial Services
+    level: provincial
+    category: study
+    summary: >-
+      PEI's student aid: loans, grants and bursaries for college and university.
+    how_to_get: >-
+      Apply online with PEI Student Financial Services.
+    url: https://www.princeedwardisland.ca/en/topic/student-financial-services
+    needs_tax_return: true
+    last_checked: 2026-10-18
+    source: official
+
+  - id: pe_social_assistance
+    rule: income_assistance
+    name: PEI Social Assistance
+    level: provincial
+    category: support
+    summary: >-
+      Monthly money for basic needs if you can't cover them.
+    how_to_get: >-
+      Call 1-877-569-0546 or visit a Social Programs office.
+    url: https://www.princeedwardisland.ca/en/information/social-development-and-seniors/social-assistance-program
+    needs_tax_return: false
+    last_checked: 2026-10-18
+    source: official

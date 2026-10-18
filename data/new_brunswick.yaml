@@ -1,0 +1,104 @@
+# New Brunswick. Benefit year July 2026 to June 2027 (2025 tax return) unless noted.
+
+province: NB
+province_name: New Brunswick
+
+plan:
+  health_card_id: nb_medicare
+  student_aid_id: nb_student_aid
+
+benefits:
+
+  - id: nb_child_tax_benefit
+    rule: provincial_child_benefit
+    name: New Brunswick Child Tax Benefit
+    level: provincial
+    category: money
+    summary: >-
+      $250 a year per child for families with income up to $20,000 (less above that), plus a $100
+      school supplement each July. Paid with the Canada Child Benefit.
+    how_to_get: >-
+      Applying for the Canada Child Benefit signs you up. File your taxes every year.
+    url: https://www.canada.ca/en/revenue-agency/services/child-family-benefits/provincial-territorial-programs/province-new-brunswick.html
+    needs_tax_return: true
+    last_checked: 2026-10-18
+    source: official
+    params:
+      formula: flat_per_child
+      per_child: [250]
+      full_below: 20000
+
+  - id: nb_hst_credit
+    rule: provincial_credit
+    name: New Brunswick Harmonized Sales Tax Credit
+    level: provincial
+    category: money
+    summary: >-
+      Up to $300 for you, $300 for a partner and $100 per child ($300 for a single parent's first
+      child), paid with the grocery benefit.
+    how_to_get: >-
+      File your tax return. The CRA works it out for you.
+    url: https://www.canada.ca/en/revenue-agency/services/child-family-benefits/provincial-territorial-programs/province-new-brunswick.html
+    needs_tax_return: true
+    last_checked: 2026-10-18
+    source: official
+    params:
+      formula: adults_and_children
+      adult: 300
+      partner: 300
+      first_child_single_parent: 300
+      child: 100
+      threshold: 35000
+      rate: 0.02
+
+  - id: nb_medicare
+    rule: health_card
+    name: New Brunswick Medicare
+    level: provincial
+    category: health
+    summary: >-
+      New Brunswick's health insurance. Newcomers who have settled here permanently can be covered from
+      their first day.
+    how_to_get: >-
+      Apply after you arrive, with your immigration papers and proof of address. Processing can take
+      10 to 12 weeks.
+    url: https://www2.gnb.ca/content/gnb/en/departments/health/DrugPlans/content/medicare/Eligibility.html
+    needs_tax_return: false
+    last_checked: 2026-10-18
+    source: official
+    params:
+      wait: >-
+        Newcomers who have settled here permanently can be covered from their first day. Apply as soon as
+        you arrive; processing can take 10 to 12 weeks.
+      study_permit: maybe
+      study_note: >-
+        International students who meet New Brunswick's rules can get Medicare. Check with Medicare.
+
+  - id: nb_student_aid
+    rule: provincial_student_aid
+    name: New Brunswick Student Financial Services
+    level: provincial
+    category: study
+    summary: >-
+      New Brunswick's student aid: loans, grants and bursaries. One application covers federal and
+      provincial aid.
+    how_to_get: >-
+      Apply online with New Brunswick Student Financial Services.
+    url: https://www2.gnb.ca/content/gnb/en/services/services_renderer.201132.Student_Financial_Assistance.html
+    needs_tax_return: true
+    last_checked: 2026-10-18
+    source: official
+
+  - id: nb_social_assistance
+    rule: income_assistance
+    name: New Brunswick Social Assistance
+    level: provincial
+    category: support
+    summary: >-
+      Monthly money for basic needs if you can't cover them.
+    how_to_get: >-
+      Call 1-833-733-7835 or visit a Social Development office.
+    url: https://www2.gnb.ca/content/gnb/en/departments/social_development/social_assistance.html
+    needs_tax_return: false
+    last_checked: 2026-10-18
+    source: official

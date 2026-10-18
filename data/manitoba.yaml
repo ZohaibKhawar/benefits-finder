@@ -1,0 +1,101 @@
+# Manitoba. The CRA pays no Manitoba benefits; these come through the Manitoba tax return
+# and Manitoba's own programs.
+
+province: MB
+province_name: Manitoba
+
+plan:
+  health_card_id: mb_health
+  student_aid_id: mb_student_aid
+  rent_form_benefit: mb_renter_credit
+  rent_form_text: On your Manitoba return, claim the Renters Affordability Tax Credit.
+
+benefits:
+
+  - id: mb_renter_credit
+    rule: renter_credit
+    name: Manitoba Renters Affordability Tax Credit
+    level: provincial
+    category: money
+    summary: >-
+      A refundable credit for renters: $625 for the 2026 tax year (it was $575 for 2025), with a
+      top-up for seniors.
+    how_to_get: >-
+      Claim it on your Manitoba tax return (form MB479) and keep your rent receipts.
+    url: https://www.gov.mb.ca/finance/tao/rent-credit.html
+    needs_tax_return: true
+    last_checked: 2026-10-18
+    source: official
+    params:
+      formula: renters_credit
+      max: 625
+      min_age: 18
+
+  - id: mb_rent_assist
+    rule: rent_help
+    name: Rent Assist
+    level: provincial
+    category: support
+    summary: >-
+      Monthly help with rent for lower-income renters who aren't on income assistance. It covers part
+      of the gap between your rent and 30% of your income.
+    how_to_get: >-
+      Apply to Manitoba Rent Assist. Try the online estimator first.
+    url: https://www.gov.mb.ca/fs/eia/rent_assist.html
+    needs_tax_return: true
+    last_checked: 2026-10-18
+    source: secondary
+    params:
+      one_person_limit: 28096
+      statuses: [citizen, pr]
+
+  - id: mb_health
+    rule: health_card
+    name: Manitoba health card
+    level: provincial
+    category: health
+    summary: >-
+      Manitoba's health coverage: doctor and hospital care. Permanent residents can apply from the day
+      they arrive.
+    how_to_get: >-
+      Send the registration form with proof of your status and your Manitoba address.
+    url: https://www.gov.mb.ca/health/mhsip/eligibility.html
+    needs_tax_return: false
+    last_checked: 2026-10-18
+    source: official
+    params:
+      wait: >-
+        Permanent residents can apply from the day they arrive in Manitoba, with proof of status and
+        address.
+      study_permit: "no"
+      study_note: >-
+        Manitoba doesn't cover international students. Your school has a health plan for you.
+
+  - id: mb_student_aid
+    rule: provincial_student_aid
+    name: Manitoba Student Aid
+    level: provincial
+    category: study
+    summary: >-
+      Manitoba's student aid: loans, grants and bursaries for college and university. One application
+      covers federal and Manitoba aid.
+    how_to_get: >-
+      Apply online at Manitoba Student Aid.
+    url: https://www.edu.gov.mb.ca/msa/
+    needs_tax_return: true
+    last_checked: 2026-10-18
+    source: official
+
+  - id: mb_eia
+    rule: income_assistance
+    name: Employment and Income Assistance (EIA)
+    level: provincial
+    category: support
+    summary: >-
+      Monthly money for food and rent if you can't cover basic costs, plus Rent Assist.
+    how_to_get: >-
+      Apply online or at a Manitoba EIA office.
+    url: https://www.gov.mb.ca/fs/eia/
+    needs_tax_return: false
+    last_checked: 2026-10-18
+    source: official

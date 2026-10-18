@@ -1,0 +1,18 @@
+{% extends "base.html" %}
+{% block title %}{{ _("About") }}{% endblock %}
+{% block main %}
+<article class="prose">
+  <h1>{{ _("About the Benefits Finder") }}</h1>
+  <p class="lede">{{ _("Every year, people in Canada miss out on benefits they're owed, often because they never filed a tax return or didn't know a program existed.") }}</p>
+  <p>{{ _("Researchers estimated that working-age people who don't file taxes miss about $1.7 billion in benefits a year. People on study and work permits are much less likely to file than other workers.") }}</p>
+  <p>{{ _("Government finders list programs, but they don't ask the questions that change the answer for students and newcomers, and they don't show amounts. This site does both, and gives you a plan in the right order.") }}</p>
+
+  <h2>{{ _("How we work out amounts") }}</h2>
+  <p>{{ _("We use the official formulas published by the Canada Revenue Agency and the provinces, and test them against the government's own numbers. Where a program has no simple formula, we show the most it pays, or no amount.") }}</p>
+  <p>{{ _("Amounts change every January and July. Each benefit shows the date we last checked it.") }}</p>
+
+  <h2>{{ _("What this site is not") }}</h2>
+  <p>{{ _("It isn't the government, and it can't apply for you. It doesn't give tax, legal or immigration advice. For help filing, use a free tax clinic. For immigration questions, talk to a licensed consultant or lawyer, or a settlement agency.") }}</p>
+  <p><a href="{{ link('benefits') }}">{{ _("Every benefit and its source") }}</a></p>
+</article>
+{% endblock %}

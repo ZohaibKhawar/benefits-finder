@@ -1,0 +1,34 @@
+{% extends "base.html" %}
+{% block body_class %}page-home{% endblock %}
+{% block main %}
+<div class="hero">
+  <div class="hero-text">
+    <h1>{{ _("Find the benefits you're missing") }}</h1>
+    <p class="lede">{{ _("For students and newcomers anywhere in Canada's ten provinces. Answer 13 short questions and see the credits and benefits you might get, what each one is worth, and what to do first.") }}</p>
+    <p><a class="button" href="{{ link('quiz') }}">{{ _("Start") }}</a></p>
+    <p class="reassure">{{ _("About 3 minutes. No sign-up. We don't save your answers.") }}</p>
+  </div>
+  <figure class="hero-example">
+    {% with report=example, title=_("Example: a 20-year-old student renting in Toronto, earning $9,000") %}
+      {% include "_slip.html" %}
+    {% endwith %}
+  </figure>
+</div>
+
+<section class="band" aria-labelledby="new-title">
+  <h2 id="new-title">{{ _("What changed in 2026") }}</h2>
+  <ul class="ruled">
+    {% for line in whats_new %}<li>{{ r(line) }}</li>{% endfor %}
+  </ul>
+</section>
+
+<section class="band" aria-labelledby="how-title">
+  <h2 id="how-title">{{ _("How it works") }}</h2>
+  <ol class="steps">
+    <li>{{ _("Answer questions about your age, status in Canada, school, rent, family and income.") }}</li>
+    <li>{{ _("See what you might qualify for, with an estimate where we can work one out from the official formulas.") }}</li>
+    <li>{{ _("Follow your step-by-step plan. Every benefit links to its official government page.") }}</li>
+  </ol>
+  <p><a class="button button-quiet" href="{{ link('quiz') }}">{{ _("Start") }}</a></p>
+</section>
+{% endblock %}

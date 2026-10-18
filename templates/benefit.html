@@ -1,0 +1,23 @@
+{% extends "base.html" %}
+{% block title %}{{ bt(benefit, "name") }}{% endblock %}
+{% block description %}{{ bt(benefit, "summary") }}{% endblock %}
+{% block main %}
+<article class="prose">
+  <p class="crumbs"><a href="{{ link('benefits') }}">{{ _("Every benefit and its source") }}</a></p>
+  <h1>{{ bt(benefit, "name") }}</h1>
+  {% if bt(benefit, "also_called") %}<p class="also">{{ _("also called") }} {{ bt(benefit, "also_called") }}</p>{% endif %}
+  <p class="lede">{{ bt(benefit, "summary") }}</p>
+  <h2>{{ _("How to get it") }}</h2>
+  <p>{{ bt(benefit, "how_to_get") }}</p>
+  {% if bt(benefit, "note") %}<p class="hint">{{ bt(benefit, "note") }}</p>{% endif %}
+  <p><a href="{{ benefit.url }}" target="_blank" rel="noopener noreferrer">{{ _("Official page") }}<span class="visually-hidden"> {{ _("(opens in a new tab)") }}</span></a></p>
+  {% if benefit.extra_url %}<p><a href="{{ benefit.extra_url }}" target="_blank" rel="noopener noreferrer">{{ _("Estimator") }}<span class="visually-hidden"> {{ _("(opens in a new tab)") }}</span></a></p>{% endif %}
+  <p class="hint">{{ _("Last checked {date}.", date=benefit.last_checked.isoformat()) }}
+    {% if benefit.source == "secondary" %}{{ _("Some numbers here come from news and tax sites. Check the official page.") }}{% endif %}</p>
+
+  <div class="callout">
+    <p>{{ _("Want to know if you qualify, and what else you might be missing?") }}</p>
+    <p><a class="button" href="{{ link('quiz') }}">{{ _("Start") }}</a></p>
+  </div>
+</article>
+{% endblock %}

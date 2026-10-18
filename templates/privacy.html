@@ -1,0 +1,22 @@
+{% extends "base.html" %}
+{% block title %}{{ _("Privacy") }}{% endblock %}
+{% block main %}
+<article class="prose">
+  <h1>{{ _("Privacy") }}</h1>
+  <p class="lede">{{ _("We don't save your answers.") }}</p>
+  <ul class="ruled">
+    <li>{{ _("Your answers are sent to our server once, used to build your results page, and then thrown away. They aren't stored, logged or shared.") }}</li>
+    <li>{{ _("We never ask for your name, address, email or Social Insurance Number.") }}</li>
+    <li>{{ _("Your answers never go in the web address, so they don't end up in your browser history.") }}</li>
+    <li>{{ _("Results pages are marked so browsers don't keep a copy. On a shared computer, close the tab when you're done.") }}</li>
+    <li>{{ _("There are no ads, no tracking cookies and no analytics that follow you.") }}</li>
+    <li>{{ _("The calendar file is made on the spot and downloaded to your device. We don't keep it.") }}</li>
+    <li>{{ _("The text font loads from Google Fonts, which sees your IP address like any website you visit.") }}</li>
+  </ul>
+  {% if ai_enabled %}
+    <h2>{{ _("Ask about your results") }}</h2>
+    <p>{{ _("If you type a question on your results page, that question and a short summary of your results are sent to Anthropic, the company that makes the Claude AI, to write one answer. Your name and contact details are never included, because we never ask for them. We don't store the question or the answer.") }}</p>
+    <p>{{ _("To keep costs down, the site counts how many questions each visitor asks in an hour. That count is kept in memory only and forgotten after an hour.") }}</p>
+  {% endif %}
+</article>
+{% endblock %}

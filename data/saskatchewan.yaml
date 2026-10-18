@@ -1,0 +1,86 @@
+# Saskatchewan. Benefit year July 2026 to June 2027 (2025 tax return) unless noted.
+
+province: SK
+province_name: Saskatchewan
+
+plan:
+  health_card_id: sk_health
+  student_aid_id: sk_student_aid
+
+benefits:
+
+  - id: sk_low_income_credit
+    rule: provincial_credit
+    name: Saskatchewan Low-Income Tax Credit
+    level: provincial
+    category: money
+    summary: >-
+      Up to $460 for you, $460 for a partner and $181 per child (two at most), paid with the
+      grocery benefit every 3 months. Up to $1,282 a year per family.
+    how_to_get: >-
+      File your tax return. The CRA works it out for you.
+    url: https://www.canada.ca/en/revenue-agency/services/child-family-benefits/provincial-territorial-programs/province-saskatchewan.html
+    needs_tax_return: true
+    last_checked: 2026-10-18
+    source: official
+    note: The reduction rate (about 3%) is worked out from the official income range ($39,345 to $81,668).
+    params:
+      formula: adults_and_children
+      adult: 460
+      partner: 460
+      first_child_single_parent: 460
+      child: 181
+      max_children: 2
+      threshold: 39345
+      rate: 0.030291                # lands exactly on the official $81,668 cut-off
+
+  - id: sk_health
+    rule: health_card
+    name: Saskatchewan health card
+    level: provincial
+    category: health
+    summary: >-
+      Saskatchewan's health coverage: doctor and hospital care. Coverage for newcomers starts within
+      about 3 months.
+    how_to_get: >-
+      Apply online through Saskatchewan Account as soon as you arrive.
+    url: https://www.ehealthsask.ca/residents/health-cards/apply-for-a-health-card
+    needs_tax_return: false
+    last_checked: 2026-10-18
+    source: official
+    params:
+      wait: >-
+        Coverage starts within about 3 months of arriving. Apply as soon as you arrive and get private
+        insurance until it starts.
+      study_permit: maybe
+      study_note: >-
+        Saskatchewan covers international students. Apply for a health card when you arrive.
+
+  - id: sk_student_aid
+    rule: provincial_student_aid
+    name: Saskatchewan Student Loans
+    level: provincial
+    category: study
+    summary: >-
+      Saskatchewan's student aid: loans and grants for college and university. One application
+      covers federal and provincial aid.
+    how_to_get: >-
+      Apply online through Saskatchewan Student Aid.
+    url: https://www.saskatchewan.ca/residents/education-and-learning/saskatchewan-student-aid/student-loans-and-grants
+    needs_tax_return: true
+    last_checked: 2026-10-18
+    source: official
+
+  - id: sk_income_support
+    rule: income_assistance
+    name: Saskatchewan Income Support
+    level: provincial
+    category: support
+    summary: >-
+      Monthly money for food, rent and other basic needs if you can't cover them.
+    how_to_get: >-
+      Apply online or call 1-866-221-5200.
+    url: https://saskatchewan.ca/income-support
+    needs_tax_return: false
+    last_checked: 2026-10-18
+    source: official

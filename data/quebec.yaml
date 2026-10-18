@@ -1,0 +1,136 @@
+# Quebec. Quebec has its own tax return (TP-1) and its own family and student programs.
+# Benefit year July 2026 to June 2027 unless noted.
+
+province: QC
+province_name: Quebec
+
+plan:
+  health_card_id: qc_ramq
+  student_aid_id: qc_afe
+  tax_text: In Quebec, also file your Quebec tax return (TP-1) and fill in Schedule D for the solidarity tax credit.
+
+benefits:
+
+  - id: qc_solidarity
+    rule: provincial_credit
+    name: Solidarity tax credit
+    also_called: crédit d'impôt pour solidarité
+    level: provincial
+    category: money
+    summary: >-
+      Quebec's main credit for people with low and modest incomes, paid monthly or every 3 months.
+      Part of it depends on paying rent or owning your home.
+    how_to_get: >-
+      File your Quebec tax return and fill in Schedule D. Sign up for direct deposit with Revenu Québec.
+    url: https://www.revenuquebec.ca/en/citizens/tax-credits/solidarity-tax-credit/
+    needs_tax_return: true
+    last_checked: 2026-10-18
+    source: secondary
+    params:
+      formula: quebec_solidarity
+      qst_adult: 363
+      qst_alone: 172
+      housing_single: 746
+      housing_couple: 906
+      housing_child: 158
+      threshold: 43195
+      rate_two_parts: 0.06
+      rate_one_part: 0.03
+      min_age: 18
+      temporary_months: 18
+      no_refugee_claimants: true
+
+  - id: qc_family_allowance
+    rule: provincial_child_benefit
+    name: Family allowance (Retraite Québec)
+    also_called: allocation famille
+    level: provincial
+    category: money
+    summary: >-
+      Quebec's child benefit: up to $3,068 a year per child under 18, plus up to $1,077 for single
+      parents. Paid by Retraite Québec, not the CRA.
+    how_to_get: >-
+      Usually automatic when a birth is registered in Quebec. Newcomers apply to Retraite Québec.
+    url: https://www.retraitequebec.gouv.qc.ca/en/citizens/children/family-allowance
+    needs_tax_return: true
+    last_checked: 2026-10-18
+    source: official
+    params:
+      up_to_per_child: 3068
+      single_parent: 1077
+      note: The amount depends on family income; the minimum is $1,221 per child.
+
+  - id: qc_work_premium
+    rule: provincial_credit
+    name: Work premium
+    also_called: prime au travail
+    level: provincial
+    category: money
+    summary: >-
+      A refundable credit that tops up low income from work, higher for families with children.
+    how_to_get: >-
+      Claim it on your Quebec tax return (Schedule P).
+    url: https://www.revenuquebec.ca/en/citizens/tax-credits/work-premium-tax-credits/
+    needs_tax_return: true
+    last_checked: 2026-10-18
+    source: secondary
+    params:
+      needs_work: true
+      min_age: 18
+      note: It depends on your work income and family; Revenu Québec works it out from your return.
+
+  - id: qc_ramq
+    rule: health_card
+    name: Quebec health insurance (RAMQ)
+    level: provincial
+    category: health
+    summary: >-
+      Quebec's health insurance. Most newcomers wait up to 3 months; refugees, protected persons and
+      children don't.
+    how_to_get: >-
+      Register with RAMQ as soon as you arrive, with your immigration papers and proof of address.
+    url: https://www.ramq.gouv.qc.ca/en/citizens/health-insurance/know-eligibility-conditions
+    needs_tax_return: false
+    last_checked: 2026-10-18
+    source: official
+    params:
+      wait: >-
+        Most newcomers wait up to 3 months after registering. Refugees, protected persons and children
+        don't have to wait.
+      study_permit: maybe
+      study_note: >-
+        Only students from countries with a social security agreement with Quebec (such as France and
+        Belgium) are covered. Others need the school's insurance.
+
+  - id: qc_afe
+    rule: provincial_student_aid
+    name: Quebec Loans and Bursaries (AFE)
+    also_called: Aide financière aux études
+    level: provincial
+    category: study
+    summary: >-
+      Quebec's student aid. Much of it comes as bursaries you don't pay back. Quebec runs its own
+      program instead of the federal Canada Student Grant.
+    how_to_get: >-
+      Apply online with Aide financière aux études.
+    url: https://www.quebec.ca/en/education/student-financial-assistance
+    needs_tax_return: true
+    last_checked: 2026-10-18
+    source: official
+    params:
+      note: Quebec residents who are citizens, permanent residents or protected persons can apply.
+
+  - id: qc_social_assistance
+    rule: income_assistance
+    name: Social assistance
+    also_called: aide sociale
+    level: provincial
+    category: support
+    summary: >-
+      Monthly money for basic needs if you can't cover them, and help getting back to work.
+    how_to_get: >-
+      Apply online or at a Services Québec office.
+    url: https://www.quebec.ca/en/family-and-support-for-individuals/social-assistance-social-solidarity
+    needs_tax_return: false
+    last_checked: 2026-10-18
+    source: official

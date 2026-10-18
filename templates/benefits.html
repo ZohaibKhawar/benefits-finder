@@ -1,0 +1,30 @@
+{% extends "base.html" %}
+{% block title %}{{ _("Every benefit and its source") }}{% endblock %}
+{% block description %}{{ _("Every credit, benefit and program the Benefits Finder checks, with the official link and the date we last checked it.") }}{% endblock %}
+{% block main %}
+<div class="prose">
+  <h1>{{ _("Every benefit and its source") }}</h1>
+  <p>{{ _("These are all the programs we check. Each one links to its official page. We re-check amounts every January and July, when most of them change.") }}</p>
+
+  {% for code, benefits in provinces.items() %}
+    {% for category, title in groups %}
+      {% set rows = benefits.values() | selectattr("category", "equalto", category) | list %}
+      {% if rows %}
+        <h2>{{ _(title) }}</h2>
+        <table class="sources">
+          <thead><tr><th scope="col">{{ _("Program") }}</th><th scope="col">{{ _("Last checked") }}</th></tr></thead>
+          <tbody>
+            {% for b in rows %}
+              <tr>
+                <td><a href="{{ link('benefit', benefit_id=b.id) }}">{{ bt(b, "name") }}</a>
+                  {% if b.source == "secondary" %}<span class="hint">{{ _("some numbers from news and tax sites") }}</span>{% endif %}</td>
+                <td>{{ b.last_checked.isoformat() }}</td>
+              </tr>
+            {% endfor %}
+          </tbody>
+        </table>
+      {% endif %}
+    {% endfor %}
+  {% endfor %}
+</div>
+{% endblock %}
