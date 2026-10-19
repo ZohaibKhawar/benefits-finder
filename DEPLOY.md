@@ -1,11 +1,11 @@
-# Putting the Benefits Finder online
+# Putting Claimable online
 
 The site is a small Flask app with no database. Anything that runs Python 3.11+ can host it.
 
 ## Before you start: pick where it lives
 
 CalcLearners already uses PythonAnywhere. A free PythonAnywhere account allows **one** web app,
-so the Benefits Finder needs one of these:
+so Claimable needs one of these:
 
 | Option | Cost | Notes |
 |---|---|---|
@@ -41,8 +41,11 @@ This is your call (it may cost money), so nothing has been set up yet.
    - `CONTACT_EMAIL` = **required before going live.** An address people can write to about privacy or
      a mistake. It shows on the privacy page and as "Report a mistake" in the footer. Use a separate
      address, not your personal one.
-   - `ANTHROPIC_API_KEY` = only if you want the "Ask about your results" helper. Leave it out and the
-     helper doesn't appear at all. You type the key in yourself; never commit it.
+   - `ANTHROPIC_API_KEY` = **leave it out at launch.** Without it the "Ask about your results" helper
+     doesn't appear and no answers ever leave the server. With it, questions and a summary of results go
+     to Anthropic in the US; Quebec's privacy law (Law 25) expects a written privacy assessment before
+     personal information leaves Quebec, so do that first if you turn it on. You type the key in
+     yourself; never commit it.
    - `BENEFITS_AI_DAILY_LIMIT` = optional cap on helper questions per day (default 500). At Claude
      Haiku 5.5 prices that is well under $1 a day even if every slot is used.
 8. **Force HTTPS** on the Web tab, then **Reload**.

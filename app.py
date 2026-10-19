@@ -1,4 +1,4 @@
-"""Benefits Finder website.
+"""Claimable website (the code and repository are still called benefits-finder).
 
 Every page exists in English at / and in French at /fr/. Answers arrive by POST, are used to
 build the results page, and are never saved or logged.
@@ -20,7 +20,7 @@ from finder.form import QUESTIONS, FormError, answers_from_form, answers_from_js
 from finder.i18n import LANGUAGES, Msg, benefit_text, gettext, money, render
 from finder.samples import PEOPLE
 
-APP_NAME = "Benefits Finder"
+APP_NAME = "Claimable"   # not "Benefits Finder": that is the Government of Canada's own tool
 SITE_URL = os.environ.get("SITE_URL", "http://127.0.0.1:5240").rstrip("/")
 CONTACT_EMAIL = os.environ.get("CONTACT_EMAIL", "")   # privacy questions and mistakes; set it before going live
 

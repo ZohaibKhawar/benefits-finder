@@ -130,3 +130,9 @@ def test_answers_never_go_in_a_url(client):
 def test_language_switch_points_to_the_other_language(client):
     assert 'href="/fr/"' in client.get("/").get_data(as_text=True)
     assert 'href="/"' in client.get("/fr/").get_data(as_text=True)
+
+
+@pytest.mark.parametrize("path", ["/", "/fr/", "/about", "/fr/about", "/benefits", "/privacy"])
+def test_site_never_uses_the_government_tool_name(client, path):
+    page = client.get(path).get_data(as_text=True)
+    assert "Benefits Finder" not in page and "Claimable" in page

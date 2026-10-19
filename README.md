@@ -1,4 +1,7 @@
-# Benefits Finder
+# Claimable
+
+The site's public name is **Claimable**. It was called Benefits Finder until 2026-10-19, but that is the
+name of the Government of Canada's own tool, so it was renamed; the repository and folder keep the old name.
 
 A free website that asks students and newcomers in Canada 13 short questions and lists the credits and
 benefits they might qualify for, with a rough amount, what to do first, and the official link for each.

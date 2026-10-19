@@ -14,7 +14,7 @@ def _escape(text: str) -> str:
 def _event(day: date, summary: str, description: str, url: str, uid: str, stamp: str) -> list[str]:
     return [
         "BEGIN:VEVENT",
-        f"UID:{uid}@benefits-finder",
+        f"UID:{uid}@claimable",
         f"DTSTAMP:{stamp}",
         f"DTSTART;VALUE=DATE:{day:%Y%m%d}",
         f"SUMMARY:{_escape(summary)}",
@@ -27,14 +27,14 @@ def _event(day: date, summary: str, description: str, url: str, uid: str, stamp:
 def build_calendar(report: Report, lang: str, link_base: str) -> str:
     stamp = datetime.now(timezone.utc).strftime("%Y%m%dT%H%M%SZ")
     deadline = report.tax_deadline
-    lines = ["BEGIN:VCALENDAR", "VERSION:2.0", "PRODID:-//Benefits Finder//EN", "CALSCALE:GREGORIAN"]
+    lines = ["BEGIN:VCALENDAR", "VERSION:2.0", "PRODID:-//Claimable//EN", "CALSCALE:GREGORIAN"]
 
     lines += _event(deadline, gettext("Tax deadline: file your return", lang),
                     gettext("File even if you had no income. Most benefits only start after you file.", lang),
                     link_base, f"taxes-{deadline.year}", stamp)
     new_year = date(deadline.year, 7, 1)
     lines += _event(new_year, gettext("New benefit year: amounts change", lang),
-                    gettext("Benefit amounts change every July. Check the Benefits Finder again.", lang),
+                    gettext("Benefit amounts change every July. Check Claimable again.", lang),
                     link_base, f"july-{new_year.year}", stamp)
     for item in report.not_yet:
         opens = item.available_from.params.get("month") if item.available_from else None

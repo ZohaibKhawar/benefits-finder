@@ -1,4 +1,4 @@
-# Benefits Finder: roadmap
+# Claimable (formerly Benefits Finder): roadmap
 
 A free website for **students and newcomers in Canada's ten provinces**, in English and French. It asks
 13 short questions and lists the credits and benefits they might qualify for, with a rough dollar amount,
@@ -181,8 +181,9 @@ CERB/CRB, "GST/HST credit" under its old name (show it as "Canada Groceries and 
 
 ## Decisions to make together
 
-- **Name and domain.** Ideas: *Owed* ("find what you're owed"), *Claimable*, *MoneyOwed.ca*,
-  *StartHere Ontario*. Must not look like a government site.
+- **Name and domain.** Name chosen 2026-10-19: *Claimable* ("Benefits Finder" is the Government of
+  Canada's own tool name). Before buying a domain, search the name in the CIPO trademarks database.
+  Must not look like a government site.
 - **Ask exact income or ranges?** Exact gives real estimates; ranges feel safer. Suggest: number field
   with "I don't know" -> ranges.
 - **Where the logic runs.** Server (Flask, simpler to test) or browser (nothing ever leaves the phone).
