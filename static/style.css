@@ -238,6 +238,10 @@ fieldset.choices { border: 0; padding: 0; margin: 0; min-width: 0; }
 .choice:has(input:checked) { border-color: var(--ink); background: var(--paper-2); }
 .choice input { width: 1.35rem; height: 1.35rem; margin: 0.12rem 0 0; flex: none; accent-color: var(--ink); }
 .choice-text { display: block; }
+/* Long lists (provinces, parts of Ontario) go in columns, so Next stays within reach on a phone. */
+fieldset.choices:has(> .choice:nth-of-type(8)) { display: grid; grid-template-columns: repeat(auto-fill, minmax(9.5rem, 1fr)); column-gap: 0.5rem; }
+fieldset.choices:has(> .choice:nth-of-type(8)) > .hint { grid-column: 1 / -1; }
+fieldset.choices:has(> .choice:nth-of-type(8)) > .choice { gap: 0.6rem; padding-inline: 0.75rem; }
 
 .input-row { display: flex; align-items: center; gap: 0.5rem; }
 .unit { color: var(--ink-2); }
@@ -272,6 +276,7 @@ html:not(.js) .screen-nav { display: none; }
 .actions { display: flex; flex-wrap: wrap; gap: 0.75rem 1rem; align-items: center; }
 .actions form { margin: 0; }
 
+.legend { margin-bottom: 1.5rem; }
 .group { margin-bottom: 3rem; }
 .benefits { list-style: none; padding: 0; margin: 0; border-top: 2px solid var(--ink); }
 .benefit { border-bottom: 1px solid var(--rule); padding: 1.25rem 0 1rem; }

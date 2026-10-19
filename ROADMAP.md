@@ -6,7 +6,7 @@ what to do first, and the official link for each one.
 
 Started and built 2026-10-18. Research is in [research/](research/).
 
-**Status:** every phase is built and tested (147 tests). What's left needs you: choosing hosting and a
+**Status:** every phase is built and tested (156 tests). What's left needs you: choosing hosting and a
 name, putting it online (`DEPLOY.md`), sending the outreach, and the open number checks
 below and in research/05.
 

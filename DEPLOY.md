@@ -38,6 +38,9 @@ This is your call (it may cost money), so nothing has been set up yet.
    a `.env` you load there):
    - `SITE_URL` = the public address, e.g. `https://benefitsfinder.example` (used in the sitemap and
      search-engine tags).
+   - `CONTACT_EMAIL` = **required before going live.** An address people can write to about privacy or
+     a mistake. It shows on the privacy page and as "Report a mistake" in the footer. Use a separate
+     address, not your personal one.
    - `ANTHROPIC_API_KEY` = only if you want the "Ask about your results" helper. Leave it out and the
      helper doesn't appear at all. You type the key in yourself; never commit it.
    - `BENEFITS_AI_DAILY_LIMIT` = optional cap on helper questions per day (default 500). At Claude

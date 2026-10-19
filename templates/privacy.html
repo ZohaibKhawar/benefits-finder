@@ -4,19 +4,32 @@
 <article class="prose">
   <h1>{{ _("Privacy") }}</h1>
   <p class="lede">{{ _("We don't save your answers.") }}</p>
+  <h2>{{ _("What we collect and why") }}</h2>
   <ul class="ruled">
+    <li>{{ _("To show your results, the questions ask about your province, age, status in Canada, school, housing, family, income, health coverage and disability. Some of this is sensitive, so we use it only to build your results page.") }}</li>
     <li>{{ _("Your answers are sent to our server once, used to build your results page, and then thrown away. They aren't stored, logged or shared.") }}</li>
     <li>{{ _("We never ask for your name, address, email or Social Insurance Number.") }}</li>
     <li>{{ _("Your answers never go in the web address, so they don't end up in your browser history.") }}</li>
     <li>{{ _("Results pages are marked so browsers don't keep a copy. On a shared computer, close the tab when you're done.") }}</li>
-    <li>{{ _("There are no ads, no tracking cookies and no analytics that follow you.") }}</li>
     <li>{{ _("The calendar file is made on the spot and downloaded to your device. We don't keep it.") }}</li>
+  </ul>
+  <h2>{{ _("What others can see") }}</h2>
+  <ul class="ruled">
+    <li>{{ _("Like every website, our web host keeps a standard access log for a limited time: your IP address, the time, the page address and your browser type. It never includes your answers. It's used only to keep the site running and safe.") }}</li>
     <li>{{ _("The text font loads from Google Fonts, which sees your IP address like any website you visit.") }}</li>
+    <li>{{ _("There are no ads, no tracking cookies and no analytics that follow you.") }}</li>
   </ul>
   {% if ai_enabled %}
     <h2>{{ _("Ask about your results") }}</h2>
     <p>{{ _("If you type a question on your results page, that question and a short summary of your results are sent to Anthropic, the company that makes the Claude AI, to write one answer. Your name and contact details are never included, because we never ask for them. We don't store the question or the answer.") }}</p>
+    <p>{{ _("Anthropic is in the United States, so your question is handled there and is subject to US law. Anthropic may keep it for a limited time under its own privacy policy.") }}</p>
+    <p>{{ _("Don't type your name, Social Insurance Number or anything else that identifies you.") }}</p>
     <p>{{ _("To keep costs down, the site counts how many questions each visitor asks in an hour. That count is kept in memory only and forgotten after an hour.") }}</p>
   {% endif %}
+  <h2>{{ _("Your rights and questions") }}</h2>
+  <p>{{ _("Because we keep nothing, there's nothing about you for us to show, correct or delete.") }}</p>
+  {% if contact_email %}<p>{{ _("Questions or complaints about privacy, or a mistake on the site: write to {email}.", email=contact_email) }}</p>{% endif %}
+  <p><a href="https://www.priv.gc.ca/{{ lang }}/" target="_blank" rel="noopener noreferrer">{{ _("You can also complain to the Office of the Privacy Commissioner of Canada.") }}<span class="visually-hidden"> {{ _("(opens in a new tab)") }}</span></a></p>
+  <p class="hint">{{ _("Last updated October 19, 2026.") }}</p>
 </article>
 {% endblock %}

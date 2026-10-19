@@ -51,11 +51,22 @@
     }
   }
 
+  // Each question gets a history entry, so the browser's Back button goes to the previous
+  // question instead of leaving the page and losing every answer.
+  function go(index) {
+    history.pushState({ screen: index }, "");
+    show(index, true);
+  }
+
+  window.addEventListener("popstate", function (event) {
+    if (event.state && typeof event.state.screen === "number") show(event.state.screen, true);
+  });
+
   function screenIsValid(screen) {
     var ok = true;
     screen.querySelectorAll("[data-required]").forEach(function (input) {
       var field = input.closest("[data-field]");
-      var old = field.querySelector(".error[data-js]");
+      var old = field.querySelector(".error");
       if (old) old.remove();
       if (!field.hidden && !input.value.trim()) {
         ok = false;
@@ -77,9 +88,9 @@
 
   form.addEventListener("click", function (event) {
     if (event.target.closest("[data-next]")) {
-      if (screenIsValid(screens[current])) show(current + 1, true);
+      if (screenIsValid(screens[current])) go(current + 1);
     } else if (event.target.closest("[data-back]")) {
-      show(current - 1, true);
+      go(current - 1);
     }
   });
 
@@ -100,5 +111,6 @@
 
   updateFields();
   var start = screens.findIndex(function (screen) { return screen.hasAttribute("data-start"); });
-  show(start === -1 ? 0 : start, start !== -1);
+  history.replaceState({ screen: Math.max(start, 0) }, "");
+  show(Math.max(start, 0), start !== -1);
 })();

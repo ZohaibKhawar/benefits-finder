@@ -6,8 +6,9 @@ answer matches; quiz.js does the hiding, and without JavaScript everything shows
 
 import json
 from dataclasses import asdict, fields
+from datetime import date
 
-from .answers import Answers
+from .answers import Answers, _parse_month
 
 PROVINCE_CHOICES = [
     ("ON", "Ontario", None),
@@ -62,7 +63,7 @@ QUESTIONS = [
             ("recent", "In the last 2 years", None),
         ]},
         {"name": "arrived_month", "kind": "month", "label": "Which month did you arrive?",
-         "help": "Your first day living in Canada.", "show_if": {"arrived_when": ["recent"]}},
+         "help": "Your first day living in Canada, as year and month (like 2025-03).", "show_if": {"arrived_when": ["recent"]}},
     ]},
     {"id": "student", "title": "Are you a student?", "fields": [
         {"name": "student", "kind": "radio", "default": "no", "choices": [
@@ -168,6 +169,12 @@ def answers_from_form(form) -> Answers:
         arrived = (get("arrived_month") or "").strip() or None
         if arrived is None:
             raise FormError("arrived_month", "Pick the month you arrived, or choose the other answer.")
+        try:
+            when = _parse_month(arrived)
+        except ValueError:
+            raise FormError("arrived_month", "Enter the month like 2025-03.") from None
+        if when > (date.today().year, date.today().month):
+            raise FormError("arrived_month", "That month hasn't happened yet. Enter the month you arrived.")
 
     student = get("student") or "no"
     housing = get("housing") or "rent"
@@ -214,11 +221,15 @@ def answers_to_json(answers: Answers) -> str:
 
 
 def answers_from_json(text: str) -> Answers:
+    """Answers sent back by the browser: anything tampered with or out of date is a ValueError."""
     data = json.loads(text or "{}")
     if not isinstance(data, dict):
         raise ValueError("bad answers")
     known = {f.name for f in fields(Answers)}
-    return Answers(**{key: value for key, value in data.items() if key in known})
+    try:
+        return Answers(**{key: value for key, value in data.items() if key in known})
+    except (TypeError, AttributeError) as error:   # wrong types, or no age at all
+        raise ValueError("bad answers") from error
 
 
 def form_values(answers: Answers) -> dict:

@@ -56,6 +56,8 @@
     </div>
   </section>
 
+  <p class="hint legend">{{ _("Likely: you seem to meet the rules. Maybe: it depends on something we didn't ask. Not yet: you can apply later.") }}</p>
+
   {% for title, items in report.groups %}
     <section class="group" aria-labelledby="group-{{ loop.index }}">
       <h2 id="group-{{ loop.index }}">{{ _(title) }}</h2>
@@ -107,7 +109,8 @@
         <input type="hidden" name="answers" value="{{ answers_json }}">
         <label class="sub-label" for="question">{{ _("Your question") }}</label>
         <textarea id="question" name="question" rows="3" maxlength="500" placeholder="{{ _("For example: why can't I get the Canada Workers Benefit?") }}">{{ ask_question or "" }}</textarea>
-        <p class="hint">{{ _("Your question and a summary of these results (no name or contact details) go to Anthropic's Claude AI for one answer. We don't keep them.") }}</p>
+        <p class="hint">{{ _("Your question and a summary of these results (no name or contact details) go to Anthropic's Claude AI for one answer. We don't keep them.") }}
+          {{ _("Don't type your name, Social Insurance Number or anything else that identifies you.") }}</p>
         <button type="submit" class="button button-quiet">{{ _("Ask") }}</button>
       </form>
     </section>

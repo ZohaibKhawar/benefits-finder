@@ -43,6 +43,7 @@
       <a href="{{ link('benefits') }}">{{ _("Every benefit and its source") }}</a>
       <a href="{{ link('about') }}">{{ _("About") }}</a>
       <a href="{{ link('privacy') }}">{{ _("Privacy") }}</a>
+      {% if contact_email %}<a href="mailto:{{ contact_email }}">{{ _("Report a mistake") }}</a>{% endif %}
     </nav>
   </footer>
 </body>

@@ -318,7 +318,6 @@ text:
   "Your family income is above the limit for your number of children.": "Votre revenu familial dépasse la limite pour votre nombre d'enfants."
   "Your family income is above the limit.": "Votre revenu familial dépasse la limite."
   "Your family income is under {amount}.": "Votre revenu familial est inférieur à {amount}."
-  "Your first day living in Canada.": "Votre premier jour comme résident du Canada."
   "Your income is above the limit for the rent you pay.": "Votre revenu dépasse la limite pour le loyer que vous payez."
   "Your income is above the limit.": "Votre revenu dépasse la limite."
   "Your income is under about {amount} for a household of {people}.": "Votre revenu est inférieur à environ {amount} pour un ménage de {people} personne(s)."
@@ -352,6 +351,25 @@ text:
   "Written by AI from your results. It can make mistakes; the official pages have the final word.": "Rédigé par une IA à partir de vos résultats. Elle peut se tromper; les pages officielles ont le dernier mot."
   "Your question": "Votre question"
   "Your question and a summary of these results (no name or contact details) go to Anthropic's Claude AI for one answer. We don't keep them.": "Votre question et un résumé de ces résultats (sans nom ni coordonnées) sont envoyés à l'IA Claude d'Anthropic pour une réponse. Nous ne les gardons pas."
+
+  # Privacy, legal and usability additions (2026-10-19)
+  "Anthropic is in the United States, so your question is handled there and is subject to US law. Anthropic may keep it for a limited time under its own privacy policy.": "Anthropic est aux États-Unis : votre question y est traitée et est soumise aux lois américaines. Anthropic peut la garder pendant une période limitée selon sa propre politique de confidentialité."
+  "Because we keep nothing, there's nothing about you for us to show, correct or delete.": "Comme nous ne gardons rien, nous n'avons aucun renseignement sur vous à montrer, à corriger ou à supprimer."
+  "Don't type your name, Social Insurance Number or anything else that identifies you.": "N'écrivez pas votre nom, votre numéro d'assurance sociale ni rien d'autre qui permet de vous identifier."
+  "Enter the month like 2025-03.": "Entrez le mois comme ceci : 2025-03."
+  "Last updated October 19, 2026.": "Dernière mise à jour : 19 octobre 2026."
+  "Likely: you seem to meet the rules. Maybe: it depends on something we didn't ask. Not yet: you can apply later.": "Probable : vous semblez remplir les conditions. Possible : cela dépend d'un élément que nous n'avons pas demandé. Pas encore : vous pourrez faire une demande plus tard."
+  "Like every website, our web host keeps a standard access log for a limited time: your IP address, the time, the page address and your browser type. It never includes your answers. It's used only to keep the site running and safe.": "Comme pour tout site Web, notre hébergeur garde pendant une période limitée un journal d'accès standard : votre adresse IP, l'heure, l'adresse de la page et votre type de navigateur. Il ne contient jamais vos réponses. Il sert seulement à faire fonctionner le site et à le protéger."
+  "Questions or complaints about privacy, or a mistake on the site: write to {email}.": "Pour une question ou une plainte sur la confidentialité, ou une erreur sur le site, écrivez à {email}."
+  "Report a mistake": "Signaler une erreur"
+  "That month hasn't happened yet. Enter the month you arrived.": "Ce mois n'est pas encore arrivé. Entrez le mois de votre arrivée."
+  "To show your results, the questions ask about your province, age, status in Canada, school, housing, family, income, health coverage and disability. Some of this is sensitive, so we use it only to build your results page.": "Pour afficher vos résultats, les questions portent sur votre province, votre âge, votre statut au Canada, vos études, votre logement, votre famille, votre revenu, votre couverture santé et une éventuelle situation de handicap. Certains de ces renseignements sont sensibles : nous les utilisons seulement pour créer votre page de résultats."
+  "We check every amount against official sources, but rules change and we can make mistakes. You use the site at your own risk: go by the official page before you apply or decide anything.": "Nous vérifions chaque montant auprès des sources officielles, mais les règles changent et nous pouvons faire des erreurs. Vous utilisez le site à vos propres risques : fiez-vous à la page officielle avant de faire une demande ou de prendre une décision."
+  "What others can see": "Ce que d'autres peuvent voir"
+  "What we collect and why": "Ce que nous recueillons et pourquoi"
+  "You can also complain to the Office of the Privacy Commissioner of Canada.": "Vous pouvez aussi porter plainte auprès du Commissariat à la protection de la vie privée du Canada."
+  "Your first day living in Canada, as year and month (like 2025-03).": "Votre premier jour comme résident du Canada, en année et en mois (comme 2025-03)."
+  "Your rights and questions": "Vos droits et vos questions"
 
 benefits:
   cgeb:

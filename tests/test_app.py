@@ -72,6 +72,15 @@ def test_recent_arrival_needs_a_month(client):
     assert response.status_code == 400
 
 
+@pytest.mark.parametrize("month, message", [("March 2025", "Enter the month like 2025-03."),
+                                            ("0000-01", "Enter the month like 2025-03."),
+                                            ("2099-01", "That month hasn&#39;t happened yet.")])
+def test_arrival_month_must_be_real(client, month, message):
+    response = client.post("/results", data={**AISHA, "arrived_when": "recent", "arrived_month": month})
+    assert response.status_code == 400
+    assert message in response.get_data(as_text=True)
+
+
 def test_calendar_download(client):
     page = client.post("/results", data=AISHA).get_data(as_text=True)
     answers = html.unescape(re.search(r'name="answers" value="([^"]+)"', page).group(1))
@@ -82,8 +91,11 @@ def test_calendar_download(client):
     assert "\r\n" in body
 
 
-def test_calendar_rejects_junk(client):
-    assert client.post("/calendar.ics", data={"answers": "not json"}).status_code == 400
+@pytest.mark.parametrize("junk", ["not json", "{}", '{"age": "20"}', '{"age": 20, "work_income": NaN}',
+                                  '{"age": 20, "arrived": 5}', '{"age": 20, "kids_under_6": "two"}'])
+def test_tampered_answers_are_rejected_not_crashes(client, junk):
+    assert client.post("/calendar.ics", data={"answers": junk}).status_code == 400
+    assert client.post("/start", data={"answers": junk}).status_code == 200   # a blank questionnaire
 
 
 def test_change_my_answers_prefills_the_form(client):
@@ -99,6 +111,14 @@ def test_security_headers(client):
     assert "default-src 'self'" in headers["Content-Security-Policy"]
     assert headers["Referrer-Policy"] == "no-referrer"
     assert headers["X-Content-Type-Options"] == "nosniff"
+    assert headers["Strict-Transport-Security"].startswith("max-age=")
+
+
+def test_privacy_contact_shows_once_set(client, monkeypatch):
+    assert "mailto:" not in client.get("/privacy").get_data(as_text=True)
+    monkeypatch.setattr("app.CONTACT_EMAIL", "hello@example.org")
+    page = client.get("/fr/privacy").get_data(as_text=True)
+    assert "écrivez à hello@example.org" in page and 'href="mailto:hello@example.org"' in page
 
 
 def test_answers_never_go_in_a_url(client):

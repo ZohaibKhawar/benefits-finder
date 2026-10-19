@@ -22,6 +22,7 @@ from finder.samples import PEOPLE
 
 APP_NAME = "Benefits Finder"
 SITE_URL = os.environ.get("SITE_URL", "http://127.0.0.1:5240").rstrip("/")
+CONTACT_EMAIL = os.environ.get("CONTACT_EMAIL", "")   # privacy questions and mistakes; set it before going live
 
 app = Flask(__name__)
 app.config["SEND_FILE_MAX_AGE_DEFAULT"] = 3600   # CSS, JS and icon: cache for an hour
@@ -82,6 +83,7 @@ def template_helpers():
         "site_url": SITE_URL,
         "status_labels": STATUS_LABELS,
         "ai_enabled": helper.enabled(),
+        "contact_email": CONTACT_EMAIL,
     }
 
 
@@ -95,6 +97,7 @@ def security_headers(response):
     response.headers["X-Content-Type-Options"] = "nosniff"
     response.headers["Referrer-Policy"] = "no-referrer"
     response.headers["Permissions-Policy"] = "camera=(), microphone=(), geolocation=()"
+    response.headers["Strict-Transport-Security"] = "max-age=31536000"   # browsers ignore it over plain http
     if request.method == "POST":
         response.headers["Cache-Control"] = "no-store"   # results never sit in a shared computer's cache
     return response

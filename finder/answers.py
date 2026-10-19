@@ -1,5 +1,6 @@
 """What the person told us in the questionnaire, plus a few values worked out from it."""
 
+import math
 from dataclasses import dataclass
 from datetime import date
 
@@ -65,8 +66,8 @@ class Answers:
         if not 0 <= self.age <= 120:
             raise ValueError("age must be between 0 and 120")
         for name in ("monthly_rent", "work_income", "other_income", "kids_under_6", "kids_6_to_17"):
-            if getattr(self, name) < 0:
-                raise ValueError(f"{name} can't be negative")
+            if not 0 <= getattr(self, name) < math.inf:     # also rejects NaN
+                raise ValueError(f"{name} must be a number, 0 or more")
         if self.arrived is not None:
             _parse_month(self.arrived)
 
@@ -118,7 +119,7 @@ def _parse_month(text: str) -> tuple[int, int]:
         year, month = (int(part) for part in text.split("-"))
     except ValueError:
         raise ValueError("arrived must look like 2026-03") from None
-    if not 1 <= month <= 12:
+    if not (1 <= month <= 12 and 1900 <= year <= 2100):
         raise ValueError("arrived must look like 2026-03")
     return year, month
 

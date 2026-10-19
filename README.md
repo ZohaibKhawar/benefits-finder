@@ -25,7 +25,7 @@ python -m finder.demo
 python -m finder.i18n_keys fr
 ```
 
-The tests (147) check the formulas against official numbers. `check_links.py` opens every official
+The tests (156) check the formulas against official numbers. `check_links.py` opens every official
 link. `finder.demo` prints results for five sample people. `finder.i18n_keys fr` lists anything
 without a French translation.
 
