@@ -13,7 +13,7 @@ HOUSING = ("rent", "residence", "own", "family_no_rent", "other")
 STATUS_CAN_GET_OSAP = ("citizen", "pr", "protected")
 
 
-PROVINCES = ("ON", "BC", "AB", "SK", "MB", "QC", "NB", "NS", "PE", "NL")
+PROVINCES = ("ON", "BC", "AB", "SK", "MB", "QC", "NB", "NS", "PE", "NL", "YT", "NT", "NU")
 
 # Ontario areas the questionnaire offers; the north gets the Northern Ontario Energy Credit.
 ONTARIO_CITIES = ("toronto", "ottawa", "peel", "hamilton", "waterloo", "london", "north", "other")

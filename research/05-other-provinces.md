@@ -32,7 +32,7 @@ security agreement.
 6. Quebec work premium amounts.
 7. Saskatchewan health card start date for newcomers (official page says "on or before the first day
    of the third month").
-8. Territories (Yukon, NWT, Nunavut) are not covered yet.
+8. Territories: added 2026-10-20, see the section below.
 
 ## Sources
 
@@ -60,6 +60,46 @@ security agreement.
 - [CRA: Newfoundland and Labrador programs](https://www.canada.ca/en/revenue-agency/services/child-family-benefits/provincial-territorial-programs/province-newfoundland-labrador.html)
 - [NL MCP](https://www.gov.nl.ca/hcs/mcp/)
 - [NL student aid](https://www.gov.nl.ca/education/studentaid/)
+
+## Territories (added 2026-10-20)
+
+| Territory | Money | Health card for newcomers | Student aid | Other |
+|---|---|---|---|---|
+| Yukon | Child Benefit $80.50/month per child, full up to $35,000 (the CRA gives no reduction rate, so "part of it" above) | Register in person on arrival; 3-month wait; study permits not covered; work permits of 1+ year (open or Yukon-specific) | The Yukon SFA office handles Canada Student Loans and Grants; Yukon Grant $195/week (2026-27), 170 weeks, only for students who went to high school in the Yukon or grew up there | Social Assistance (post-secondary students usually can't get it) |
+| Northwest Territories | Child Benefit from the GNWT table ($815/$652 for one child under 6 / 6-17, totals for 2-4 children, then $367/$293 each), full under $30,000, straight line to $0 at $80,000 | From another province: first day of the third month; from abroad: the health office sets the date; permits of 1+ year with an NWT address | Own program (no Canada Student Loans or Grants): 12 continuous months of NWT residency; basic grant only if schooled in the NWT; remissible and repayable loans (up to $1,400/month) | Income Assistance (19+) |
+| Nunavut | Child Benefit $58/month per child, full up to $22,065 | Usually the first day of the third month; permits of 1+ year with a Nunavut address | FANS (no Canada Student Loans or Grants): 12 months of Nunavut residency, citizens and PRs; grant for Nunavut Inuit, remissible loan for others; tuition up to $10,000, books $2,500 | Income Assistance (18+). Canada Workers Benefit amounts differ (like Alberta and Quebec): no estimate shown |
+
+Federal, for everyone in the three territories: the northern residents deduction (line 25500), $11 a
+day plus $11 more if nobody else in the home claims it, after 6 months in a row in the North.
+
+Reading the NWT table for families with children of both ages: each column is looked up by its own
+count of children (one under 6 and one aged 6-17 = $815 + $652). The handout doesn't show a mixed
+family; check this if the GNWT publishes an example.
+
+No other territorial credit is paid by the CRA in 2026: the CRA pages list only the child benefits
+(the old carbon-tax rebates are gone).
+
+Sites: yukon.ca and gov.nu.ca refuse scripts (a browser check page), so `check_links.py` marks them
+"??"; open them in a browser. canada.ca and the NWT sites answer normally.
+
+### Sources
+
+- [CRA: Yukon child benefit](https://www.canada.ca/en/revenue-agency/services/child-family-benefits/provincial-territorial-programs/yukon.html)
+- [CRA: Northwest Territories child benefit](https://www.canada.ca/en/revenue-agency/services/child-family-benefits/provincial-territorial-programs/northwest-territories.html)
+- [GNWT Finance: NWT Child Benefit handout (formula and table)](https://www.fin.gov.nt.ca/en/files/nwt-child-benefit-handout)
+- [CRA: Nunavut child benefit](https://www.canada.ca/en/revenue-agency/services/child-family-benefits/provincial-territorial-programs/nunavut.html)
+- [CRA: northern residents deductions](https://www.canada.ca/en/revenue-agency/services/tax/individuals/topics/about-your-tax-return/tax-return/completing-a-tax-return/deductions-credits-expenses/line-25500-northern-residents-deductions.html)
+- [CRA: Canada Workers Benefit, how much (Quebec, Nunavut and Alberta differ)](https://www.canada.ca/en/revenue-agency/services/tax/individuals/topics/about-your-tax-return/tax-return/completing-a-tax-return/deductions-credits-expenses/line-45300-canada-workers-benefit-cwb/how-much-you-can-get.html)
+- [Yukon: apply for a health care card](https://yukon.ca/en/health-and-wellness/care-services/apply-health-care-card)
+- [Yukon: Yukon Grant](https://yukon.ca/en/yukon-grant)
+- [Yukon: financial support for students](https://yukon.ca/en/education-and-schools/financial-support-students)
+- [Yukon: social assistance](https://yukon.ca/en/legal-and-social-supports/supports-adults-and-seniors/apply-social-assistance)
+- [NWT: Health Care Plan, information for residents](https://www.hss.gov.nt.ca/en/services/nwt-health-care-plan/general-information-residents)
+- [NWT: Student Financial Assistance](https://www.ece.gov.nt.ca/en/services/student-financial-assistance) and its [student handbook](https://www.ece.gov.nt.ca/en/content/student-financial-assistance-student-handbook) (residency rules)
+- [NWT: Income Assistance](https://www.ece.gov.nt.ca/en/services/income-security-programs/income-assistance-program)
+- [Nunavut: about the Health Care Plan](https://www.gov.nu.ca/en/health/about-nunavut-health-care-plan) and [applying](https://www.gov.nu.ca/en/health/applying-health-care)
+- [Nunavut: FANS](https://www.gov.nu.ca/en/education-and-schools/financial-assistance-nunavut-students-fans)
+- [Nunavut: Income Assistance](https://www.gov.nu.ca/en/social-supports/income-assistance-program)
 
 ## City programs (Ontario)
 

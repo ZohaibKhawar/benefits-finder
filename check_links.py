@@ -18,7 +18,7 @@ STALE_AFTER_DAYS = 180
 BROWSER = {"User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64)"}
 
 # Sites that refuse every script; check these by hand in a browser.
-BLOCKS_SCRIPTS = ("ramq.gouv.qc.ca",)
+BLOCKS_SCRIPTS = ("ramq.gouv.qc.ca", "yukon.ca", "gov.nu.ca")
 
 
 def fetch(url: str, headers: dict) -> str:

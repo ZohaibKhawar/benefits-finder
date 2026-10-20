@@ -1,0 +1,91 @@
+# Nunavut. Benefit year July 2026 to June 2027 (2025 tax return) unless noted.
+# Nunavut runs its own student aid (FANS) instead of Canada Student Loans and Grants, and the
+# Canada Workers Benefit has its own amounts here. gov.nu.ca refuses scripts: check it by hand.
+
+province: NU
+province_name: Nunavut
+
+plan:
+  health_card_id: nu_health
+  student_aid_id: nu_fans
+
+benefits:
+
+  - id: nu_child_benefit
+    rule: provincial_child_benefit
+    name: Nunavut Child Benefit
+    level: territorial
+    category: money
+    summary: >-
+      $58 a month for each child under 18 for families with income up to $22,065, and part of it above
+      that. Paid with the Canada Child Benefit.
+    how_to_get: >-
+      Applying for the Canada Child Benefit signs you up. File your taxes every year.
+    url: https://www.canada.ca/en/revenue-agency/services/child-family-benefits/provincial-territorial-programs/nunavut.html
+    needs_tax_return: true
+    last_checked: 2026-10-20
+    source: official
+    params:
+      formula: flat_per_child
+      per_child: [696]
+      full_below: 22065
+      note: Families with income above $22,065 get part of it.
+
+  - id: nu_health
+    rule: health_card
+    name: Nunavut health care card
+    level: territorial
+    category: health
+    summary: >-
+      The Nunavut Health Care Plan: doctor and hospital care, and help with medical travel.
+    how_to_get: >-
+      Email the application to nhip@gov.nu.ca with two pieces of ID (including your immigration papers)
+      and a letter or contract showing you'll live in Nunavut for over 12 months.
+    url: https://www.gov.nu.ca/en/health/about-nunavut-health-care-plan
+    needs_tax_return: false
+    last_checked: 2026-10-20
+    source: official
+    params:
+      wait: >-
+        Apply as soon as you arrive. Coverage usually starts on the first day of the third month, so get
+        private insurance until then.
+      study_permit: maybe
+      study_note: >-
+        A study permit of a year or more that shows a Nunavut address qualifies. Shorter permits don't.
+
+  - id: nu_fans
+    rule: provincial_student_aid
+    name: Financial Assistance for Nunavut Students (FANS)
+    level: territorial
+    category: study
+    summary: >-
+      Nunavut's own student aid, full-time or part-time: travel, up to $10,000 a year for tuition and
+      $2,500 for books, and living costs. It's a grant for Nunavut Inuit and a loan that can be forgiven
+      for other students.
+    how_to_get: >-
+      Send the FANS application to fans@gov.nu.ca (1-877-860-0680) at least 8 weeks before your program
+      ends, and again every school year. You can apply before you're accepted.
+    url: https://www.gov.nu.ca/en/education-and-schools/financial-assistance-nunavut-students-fans
+    needs_tax_return: true
+    last_checked: 2026-10-20
+    source: official
+    params:
+      residency_months: 12
+      note: >-
+        You need to have lived in Nunavut for 12 months before you apply.
+
+  - id: nu_income_assistance
+    rule: income_assistance
+    name: Nunavut Income Assistance
+    level: territorial
+    category: support
+    summary: >-
+      Help with basic needs for people 18 and older who can't cover them, once other money (like EI)
+      has been used.
+    how_to_get: >-
+      Call your local Income Assistance office to book an appointment. You need to file a tax return
+      every year.
+    url: https://www.gov.nu.ca/en/social-supports/income-assistance-program
+    needs_tax_return: true
+    last_checked: 2026-10-20
+    source: official

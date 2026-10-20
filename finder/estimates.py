@@ -127,6 +127,17 @@ def flat_per_child(p: dict, *, kids: int, income: float):
     return round(_per_child(p["per_child"], kids))
 
 
+def nwt_child(p: dict, *, under_6: int, age_6_to_17: int, income: float) -> int:
+    """GNWT's table gives the total for 1 to 4 children of each age; each child after that adds a set
+    amount. Full under one income, then a straight line down to $0."""
+    def total(table, extra, count):
+        return table[min(count, 4) - 1] + extra * max(0, count - 4) if count else 0
+    full = (total(p["under_6"], p["under_6_extra"], under_6)
+            + total(p["age_6_to_17"], p["age_6_to_17_extra"], age_6_to_17))
+    share = 1 - _over(income, p["full_below"]) / (p["zero_at"] - p["full_below"])
+    return max(0, round(full * share))
+
+
 def pei_child(p: dict, *, kids: int, income: float):
     if income < p["lower"]:
         return round(kids * p["low_income"])
@@ -177,6 +188,7 @@ FORMULAS = {
     "alberta_child_family": alberta_child_family,
     "flat_per_child": flat_per_child,
     "pei_child": pei_child,
+    "nwt_child": nwt_child,
     "adults_and_children": adults_and_children,
     "pei_essentials": pei_essentials,
     "renters_credit": renters_credit,

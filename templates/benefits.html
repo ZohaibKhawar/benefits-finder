@@ -6,11 +6,12 @@
   <h1>{{ _("Every benefit and its source") }}</h1>
   <p>{{ _("These are all the programs we check. Each one links to its official page. We re-check amounts every January and July, when most of them change.") }}</p>
 
-  {% for code, benefits in provinces.items() %}
+  {% for place, benefits in sections %}
+    <h2>{{ _(place) }}</h2>
     {% for category, title in groups %}
       {% set rows = benefits.values() | selectattr("category", "equalto", category) | list %}
       {% if rows %}
-        <h2>{{ _(title) }}</h2>
+        <h3>{{ _(title) }}</h3>
         <table class="sources">
           <thead><tr><th scope="col">{{ _("Program") }}</th><th scope="col">{{ _("Last checked") }}</th></tr></thead>
           <tbody>

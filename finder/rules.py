@@ -99,9 +99,9 @@ def cwb(a: Answers, p: dict, today: date):
         reasons.append(Msg("With the Disability Tax Credit you may also get up to {amount} more.",
                            amount=Money(p["disability_max"])))
     up_to = None
-    if a.province in ("AB", "QC"):
-        # Alberta and Quebec set their own amounts, so show the usual maximum instead of an estimate.
-        reasons = [Msg("Amounts are different in Alberta and Quebec, so we can't estimate it here.")]
+    if a.province in ("AB", "QC", "NU"):
+        # Alberta, Quebec and Nunavut set their own amounts, so show the usual maximum instead of an estimate.
+        reasons = [Msg("Amounts are different in Alberta, Quebec and Nunavut, so we can't estimate it here.")]
         up_to, amount = p["family_max" if a.family else "single_max"], None
     months = a.months_in_canada(today)
     if months is not None and months < 12:
@@ -206,6 +206,19 @@ def ifhp(a: Answers, p: dict, today: date):
     return None
 
 
+@rule("northern_residents")
+def northern_residents(a: Answers, p: dict, today: date):
+    if a.province not in ("YT", "NT", "NU"):
+        return None
+    months = a.months_in_canada(today)
+    if months is not None and months < p["months_needed"]:
+        opens = add_months(a.arrived, p["months_needed"])
+        return Result("not_yet", [Msg("You need to have lived in the North for 6 months in a row.")],
+                      counts_in_total=False, available_from=Msg("{month}", month=Month(opens.year, opens.month, 1)))
+    return Result("likely", [Msg("Everyone living in the territories can claim it. It lowers the tax you owe.")],
+                  counts_in_total=False)
+
+
 # ---------------------------------------------------------------- federal: studies
 
 def student_aid_status_reason(a: Answers) -> Msg:
@@ -235,6 +248,9 @@ def student_grant(a: Answers, p: dict, today: date):
     if a.province == "QC":
         reasons.insert(0, Msg("Quebec runs its own student aid (AFE), so the federal grant isn't paid there."))
         return Result("no", reasons[:1], counts_in_total=False)
+    if a.province in ("NT", "NU"):
+        return Result("no", [Msg("The Northwest Territories and Nunavut run their own student aid, so the federal "
+                                 "grant isn't paid there.")], counts_in_total=False)
     return Result("maybe", reasons, up_to=most, counts_in_total=False)
 
 
@@ -565,7 +581,7 @@ def cohb(a: Answers, p: dict, today: date):
 
 @rule("help_211")
 def help_211(a: Answers, p: dict, today: date):
-    return Result("likely", [Msg("Anyone in the province can use it.")], counts_in_total=False)
+    return Result("likely", [Msg("Anyone in Canada can use it.")], counts_in_total=False)
 
 
 # ---------------------------------------------------------------- city programs
@@ -602,6 +618,8 @@ def formula_estimate(a: Answers, p: dict, income: float | None = None):
         return fn(p, kids=a.kids, income=income, single_parent=a.kids > 0 and not a.has_partner)
     if name == "alberta_child_family":
         return fn(p, kids=a.kids, income=income, work_income=a.work_income)
+    if name == "nwt_child":
+        return fn(p, under_6=a.kids_under_6, age_6_to_17=a.kids_6_to_17, income=income)
     if name in ("flat_per_child", "pei_child"):
         return fn(p, kids=a.kids, income=income)
     if name == "adults_and_children":
@@ -706,8 +724,13 @@ def provincial_student_aid(a: Answers, p: dict, today: date):
         return None
     if not a.can_get_osap:
         return Result("no", [student_aid_status_reason(a)], counts_in_total=False)
-    return Result("likely", [Msg(p.get("note", "It's based on need: grants you don't pay back, plus loans."))],
-                  counts_in_total=False)
+    note = Msg(p.get("note", "It's based on need: grants you don't pay back, plus loans."))
+    months, needed = a.months_in_canada(today), p.get("residency_months")
+    if needed and months is not None and months < needed:
+        opens = add_months(a.arrived, needed)
+        return Result("not_yet", [note], counts_in_total=False,
+                      available_from=Msg("{month}", month=Month(opens.year, opens.month, 1)))
+    return Result("likely", [note], counts_in_total=False)
 
 
 @rule("rent_help")

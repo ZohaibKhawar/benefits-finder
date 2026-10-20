@@ -17,6 +17,9 @@ PROVINCE_FILES = {
     "NS": "nova_scotia.yaml",
     "PE": "prince_edward_island.yaml",
     "NL": "newfoundland_labrador.yaml",
+    "YT": "yukon.yaml",
+    "NT": "northwest_territories.yaml",
+    "NU": "nunavut.yaml",
 }
 
 REQUIRED = ("id", "name", "level", "category", "summary", "how_to_get", "url",

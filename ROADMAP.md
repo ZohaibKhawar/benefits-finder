@@ -1,12 +1,12 @@
 # Claimable (formerly Benefits Finder): roadmap
 
-A free website for **students and newcomers in Canada's ten provinces**, in English and French. It asks
+A free website for **students and newcomers anywhere in Canada** (ten provinces and three territories), in English and French. It asks
 13 short questions and lists the credits and benefits they might qualify for, with a rough dollar amount,
 what to do first, and the official link for each one.
 
 Started and built 2026-10-18. Research is in [research/](research/).
 
-**Status:** every phase is built and tested (156 tests). What's left needs you: choosing hosting and a
+**Status:** every phase is built and tested (172 tests). What's left needs you: choosing hosting and a
 name, putting it online (`DEPLOY.md`), sending the outreach, and the open number checks
 below and in research/05.
 
@@ -128,7 +128,18 @@ Newfoundland and Labrador, plus Ontario. Each has its child benefit or credits (
 the CRA publishes them), health card rules for newcomers and international students, student aid and
 income assistance. Quebec has its own tax return, family allowance, solidarity credit and student aid.
 Sources and open questions: [research/05-other-provinces.md](research/05-other-provinces.md).
-Territories are not covered yet.
+
+## Phase 7: Territories (done 2026-10-20)
+
+Yukon, the Northwest Territories and Nunavut: each territory's child benefit (the NWT one with its exact
+formula), health card rules for newcomers and permit holders, student aid and income assistance. The NWT
+and Nunavut run their own student aid, so the federal Canada Student Grant shows as "no" there, and their
+programs ask for 12 months of residency first (shown as "not yet" with the date). The federal northern
+residents deduction shows for everyone in the territories. Nunavut sets its own Canada Workers Benefit
+amounts, so no estimate is shown (like Alberta and Quebec).
+
+Also fixed: the "Every benefit and its source" page listed every federal program ten times with no
+province names. It now shows the federal programs once, then each province and territory under its name.
 
 ---
 

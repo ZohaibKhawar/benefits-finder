@@ -14,9 +14,9 @@ from flask import Blueprint, Flask, Response, abort, redirect, render_template, 
 from finder import ask as helper
 from finder import find
 from finder.calendar import build_calendar
-from finder.data import PROVINCE_FILES, all_benefits, load
+from finder.data import all_benefits, load
 from finder.engine import GROUPS
-from finder.form import QUESTIONS, FormError, answers_from_form, answers_from_json, answers_to_json, form_values
+from finder.form import PROVINCE_CHOICES, QUESTIONS, FormError, answers_from_form, answers_from_json, answers_to_json, form_values
 from finder.i18n import LANGUAGES, Msg, benefit_text, gettext, money, render
 from finder.samples import PEOPLE
 
@@ -176,8 +176,11 @@ def calendar():
 
 @pages.route("/benefits")
 def benefits():
-    provinces = {code: load(code)[0] for code in PROVINCE_FILES}
-    return render_template("benefits.html", provinces=provinces, groups=GROUPS)
+    """Federal programs once, then each province's and territory's own."""
+    sections = [("Across Canada", {k: b for k, b in load("ON")[0].items() if b["level"] == "federal"})]
+    sections += [(name, {k: b for k, b in load(code)[0].items() if b["level"] != "federal"})
+                 for code, name, _ in PROVINCE_CHOICES]
+    return render_template("benefits.html", sections=sections, groups=GROUPS)
 
 
 @pages.route("/benefits/<benefit_id>")

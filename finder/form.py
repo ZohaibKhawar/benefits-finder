@@ -21,6 +21,9 @@ PROVINCE_CHOICES = [
     ("NS", "Nova Scotia", None),
     ("PE", "Prince Edward Island", None),
     ("NL", "Newfoundland and Labrador", None),
+    ("YT", "Yukon", None),
+    ("NT", "Northwest Territories", None),
+    ("NU", "Nunavut", None),
 ]
 
 CITY_CHOICES = [
@@ -46,8 +49,7 @@ STATUS_CHOICES = [
 
 QUESTIONS = [
     {"id": "where", "title": "Where do you live?", "fields": [
-        {"name": "province", "kind": "radio", "choices": PROVINCE_CHOICES, "default": "ON",
-         "help": "The territories are coming later."},
+        {"name": "province", "kind": "radio", "choices": PROVINCE_CHOICES, "default": "ON"},
         {"name": "city", "kind": "radio", "label": "Which part of Ontario?", "choices": CITY_CHOICES,
          "show_if": {"province": ["ON"]}},
     ]},

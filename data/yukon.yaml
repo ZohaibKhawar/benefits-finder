@@ -1,0 +1,91 @@
+# Yukon. Benefit year July 2026 to June 2027 (2025 tax return) unless noted.
+# yukon.ca refuses scripts, so check_links.py marks its pages "??": open them in a browser.
+
+province: YT
+province_name: Yukon
+
+plan:
+  health_card_id: yt_health
+  student_aid_id: yt_student_aid
+
+benefits:
+
+  - id: yt_child_benefit
+    rule: provincial_child_benefit
+    name: Yukon Child Benefit
+    level: territorial
+    category: money
+    summary: >-
+      $80.50 a month for each child under 18 for families with income up to $35,000, and part of it
+      above that. Paid with the Canada Child Benefit.
+    how_to_get: >-
+      Applying for the Canada Child Benefit signs you up. File your taxes every year.
+    url: https://www.canada.ca/en/revenue-agency/services/child-family-benefits/provincial-territorial-programs/yukon.html
+    needs_tax_return: true
+    last_checked: 2026-10-20
+    source: official
+    params:
+      formula: flat_per_child
+      per_child: [966]
+      full_below: 35000
+      note: Families with income above $35,000 get part of it.
+
+  - id: yt_health
+    rule: health_card
+    name: Yukon health care card
+    level: territorial
+    category: health
+    summary: >-
+      The Yukon Health Care Insurance Plan: doctor and hospital care. New residents wait 3 months
+      for coverage to start.
+    how_to_get: >-
+      Register in person (4th floor, 204 Lambert Street in Whitehorse, or a Territorial Agent in
+      other communities) with your ID, immigration papers and proof of your Yukon address.
+    url: https://yukon.ca/en/health-and-wellness/care-services/apply-health-care-card
+    needs_tax_return: false
+    last_checked: 2026-10-20
+    source: official
+    params:
+      wait: >-
+        Register as soon as you arrive: coverage starts after a 3-month wait, and applying late can
+        push the start date back. Buy private health insurance for those 3 months.
+      study_permit: "no"
+      study_note: >-
+        The Yukon doesn't cover people on a study permit. Get a student or private health plan.
+
+  - id: yt_student_aid
+    rule: provincial_student_aid
+    name: Yukon Student Financial Assistance
+    level: territorial
+    category: study
+    summary: >-
+      The Yukon office handles Canada Student Loans and Grants for Yukon residents. Full-time students
+      who went to high school in the Yukon (or grew up there) can also get the Yukon Grant: $195 a
+      week of study in 2026-27, for up to 170 weeks.
+    how_to_get: >-
+      Apply on the Yukon Student Financial Assistance portal. Apply for the Yukon Grant within 6 weeks
+      of starting classes, and again every school year.
+    url: https://yukon.ca/en/education-and-schools/financial-support-students
+    needs_tax_return: true
+    last_checked: 2026-10-20
+    source: official
+    params:
+      note: >-
+        Canada Student Loans and Grants are based on need. The Yukon Grant is only for students who went
+        to high school in the Yukon or grew up there, and lived there for the 2 years before classes.
+
+  - id: yt_social_assistance
+    rule: income_assistance
+    name: Yukon Social Assistance
+    level: territorial
+    category: support
+    summary: >-
+      Money for food, clothing, utilities and shelter if you can't cover them. Most people in a
+      post-secondary program can't get it.
+    how_to_get: >-
+      Phone the social assistance office in your community to book an intake appointment
+      (Whitehorse: 867-667-5674).
+    url: https://yukon.ca/en/legal-and-social-supports/supports-adults-and-seniors/apply-social-assistance
+    needs_tax_return: false
+    last_checked: 2026-10-20
+    source: official

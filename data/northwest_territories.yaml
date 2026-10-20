@@ -1,0 +1,96 @@
+# Northwest Territories. Benefit year July 2026 to June 2027 (2025 tax return) unless noted.
+# The NWT runs its own student aid instead of Canada Student Loans and Grants.
+
+province: NT
+province_name: Northwest Territories
+
+plan:
+  health_card_id: nt_health
+  student_aid_id: nt_student_aid
+
+benefits:
+
+  - id: nt_child_benefit
+    rule: provincial_child_benefit
+    name: Northwest Territories Child Benefit
+    level: territorial
+    category: money
+    summary: >-
+      Up to $815 a year for a child under 6 and $652 for a child 6 to 17 (a little less for each extra
+      child), for families with income up to $30,000. It shrinks to nothing at $80,000. Paid with the
+      Canada Child Benefit.
+    how_to_get: >-
+      Applying for the Canada Child Benefit signs you up. File your taxes every year.
+    url: https://www.canada.ca/en/revenue-agency/services/child-family-benefits/provincial-territorial-programs/northwest-territories.html
+    needs_tax_return: true
+    last_checked: 2026-10-20
+    source: official
+    params:
+      # GNWT Finance handout: totals for 1, 2, 3 and 4 children of each age, then an amount for
+      # each child after the 4th. Full under $30,000, falling in a straight line to $0 at $80,000.
+      formula: nwt_child
+      under_6: [815, 1467, 1997, 2445]
+      under_6_extra: 367
+      age_6_to_17: [652, 1174, 1597, 1956]
+      age_6_to_17_extra: 293
+      full_below: 30000
+      zero_at: 80000
+
+  - id: nt_health
+    rule: health_card
+    name: NWT health care card
+    level: territorial
+    category: health
+    summary: >-
+      The NWT Health Care Plan: doctor and hospital care. People moving from another province wait
+      until the first day of the third month.
+    how_to_get: >-
+      Send the application with your immigration papers (showing an NWT address) and two documents
+      that prove you live in the NWT. Questions: 1-800-661-0830.
+    url: https://www.hss.gov.nt.ca/en/services/nwt-health-care-plan
+    needs_tax_return: false
+    last_checked: 2026-10-20
+    source: official
+    params:
+      wait: >-
+        Apply as soon as you arrive, with your immigration papers and proof of your NWT address. The
+        health office tells you the date your coverage starts.
+      study_permit: maybe
+      study_note: >-
+        People on a study permit should call the Health Services Administration Office (1-800-661-0830)
+        to check. A permit of a year or more with an NWT address usually qualifies.
+
+  - id: nt_student_aid
+    rule: provincial_student_aid
+    name: NWT Student Financial Assistance (SFA)
+    level: territorial
+    category: study
+    summary: >-
+      The NWT's own student aid, for full-time and part-time studies: a living-allowance loan that can
+      be forgiven if you live in the NWT after your studies, a repayable loan of up to $1,400 a month,
+      and grants for tuition and books if you went to school in the NWT.
+    how_to_get: >-
+      Send the SFA application by email (nwtsfa@gov.nt.ca). You can apply before you're accepted into a
+      program.
+    url: https://www.ece.gov.nt.ca/en/services/student-financial-assistance
+    needs_tax_return: true
+    last_checked: 2026-10-20
+    source: official
+    params:
+      residency_months: 12
+      note: >-
+        You need to have lived in the NWT for 12 months in a row before your program starts.
+
+  - id: nt_income_assistance
+    rule: income_assistance
+    name: NWT Income Assistance
+    level: territorial
+    category: support
+    summary: >-
+      Monthly money for food, shelter and utilities if you can't cover them, for people 19 and older.
+    how_to_get: >-
+      Apply at your local ECE Service Centre by the end of the month you need help in.
+    url: https://www.ece.gov.nt.ca/en/services/income-security-programs/income-assistance-program
+    needs_tax_return: false
+    last_checked: 2026-10-20
+    source: official

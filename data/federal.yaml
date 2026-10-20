@@ -62,6 +62,25 @@ benefits:
       disability_reduction_start: 37740
       student_weeks_limit: 13
 
+  - id: northern_residents
+    name: Northern residents deduction
+    level: federal
+    category: money
+    summary: >-
+      Everyone in the Yukon, the Northwest Territories and Nunavut can take up to $11 a day off their
+      taxable income, or $22 a day if nobody else in their home claims it (up to $8,030 a year). Some
+      job-paid trips home count too.
+    how_to_get: >-
+      Claim it on form T2222 when you file your tax return. You need to have lived in the North for 6
+      months in a row first.
+    url: https://www.canada.ca/en/revenue-agency/services/tax/individuals/topics/about-your-tax-return/tax-return/completing-a-tax-return/deductions-credits-expenses/line-25500-northern-residents-deductions.html
+    needs_tax_return: true
+    last_checked: 2026-10-20
+    source: official
+    note: Amounts are for the 2025 tax year.
+    params:
+      months_needed: 6
+
   - id: ccb
     name: Canada Child Benefit
     level: federal

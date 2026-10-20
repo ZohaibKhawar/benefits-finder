@@ -5,7 +5,7 @@ name of the Government of Canada's own tool, so it was renamed; the repository a
 
 A free website that asks students and newcomers in Canada 13 short questions and lists the credits and
 benefits they might qualify for, with a rough amount, what to do first, and the official link for each.
-All ten provinces, English and French. Nothing is saved.
+All ten provinces and the three territories, English and French. Nothing is saved.
 
 Status (2026-10-18): built and tested, not online yet. See [ROADMAP.md](ROADMAP.md).
 
@@ -28,7 +28,7 @@ python -m finder.demo
 python -m finder.i18n_keys fr
 ```
 
-The tests (156) check the formulas against official numbers. `check_links.py` opens every official
+The tests (172) check the formulas against official numbers. `check_links.py` opens every official
 link. `finder.demo` prints results for five sample people. `finder.i18n_keys fr` lists anything
 without a French translation.
 
@@ -57,7 +57,7 @@ without a French translation.
 - [02 Ontario](research/02-ontario-benefits.md)
 - [03 newcomers and students](research/03-newcomers-and-students.md)
 - [04 existing tools, legal, privacy, accessibility](research/04-existing-tools-legal-privacy.md)
-- [05 other provinces and Ontario cities](research/05-other-provinces.md)
+- [05 other provinces, the territories and Ontario cities](research/05-other-provinces.md)
 
 ## License
 

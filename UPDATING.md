@@ -15,6 +15,7 @@ number, the official limit in the test changed too: update both from the same of
 ## January (new tax year)
 
 - [ ] Canada Workers Benefit amounts and thresholds (`federal.yaml` → `cwb`). CRA "How much you can get".
+- [ ] Northern residents deduction daily amounts (`northern_residents`), CRA line 25500.
 - [ ] Canada Training Credit income limits (`training_credit`).
 - [ ] Ontario Low-Income Workers Tax Credit (`liwtc`), BC renter's credit (`bc_renter_credit`),
       Manitoba renters credit (`mb_renter_credit`).
@@ -34,7 +35,8 @@ number, the official limit in the test changed too: update both from the same of
 ## June (CRA publishes July amounts)
 
 - [ ] Canada Groceries and Essentials Benefit (`cgeb`): adult, child, single top-up, thresholds.
-- [ ] Canada Child Benefit (`ccb`) and every provincial child benefit.
+- [ ] Canada Child Benefit (`ccb`) and every provincial and territorial child benefit (the NWT table is in
+      the GNWT Finance handout).
 - [ ] Ontario Trillium parts (`oeptc` from the new CRA calculation sheet, `ostc`, `noec`).
 - [ ] Every provincial credit paid with the grocery benefit (SK, NS, NB, PE, NL).
 - [ ] Quebec solidarity tax credit (`qc_solidarity`).
@@ -44,7 +46,8 @@ number, the official limit in the test changed too: update both from the same of
 
 ## August 1
 
-- [ ] Student aid year: OSAP and the other provinces, Canada Student Grant amounts.
+- [ ] Student aid year: OSAP and the other provinces, Canada Student Grant amounts, the Yukon Grant weekly
+      rate, NWT SFA and Nunavut FANS amounts.
 
 ## Every week
 

@@ -136,3 +136,10 @@ def test_language_switch_points_to_the_other_language(client):
 def test_site_never_uses_the_government_tool_name(client, path):
     page = client.get(path).get_data(as_text=True)
     assert "Benefits Finder" not in page and "Claimable" in page
+
+
+def test_sources_page_lists_federal_programs_once_and_every_territory(client):
+    page = client.get("/benefits").get_data(as_text=True)
+    assert page.count(">Canada Child Benefit<") == 1
+    for place in ("Across Canada", "Ontario", "Yukon", "Northwest Territories", "Nunavut"):
+        assert f"<h2>{place}</h2>" in page

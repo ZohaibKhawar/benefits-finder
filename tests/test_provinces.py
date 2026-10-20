@@ -88,7 +88,9 @@ def test_every_province_runs_for_a_newcomer_family(province):
     report = find(family, today=TODAY)
     health_id = load(province)[1]["plan"]["health_card_id"]
     assert report.get(health_id).status == "likely"
-    assert report.get(load(province)[1]["plan"]["student_aid_id"]).status == "likely"
+    aid_id = load(province)[1]["plan"]["student_aid_id"]
+    waits = "residency_months" in load(province)[0][aid_id].get("params", {})   # 8 months here, 12 needed
+    assert report.get(aid_id).status == ("not_yet" if waits else "likely")
     assert report.total > 0
     assert any("tax return" in step.text for step in report.plan)
 
@@ -115,8 +117,8 @@ def test_manitoba_doesnt_cover_international_students():
     assert find(student, today=TODAY).get("mb_health").status == "no"
 
 
-def test_alberta_and_quebec_workers_benefit_shows_no_estimate():
-    for province in ("AB", "QC"):
+def test_alberta_quebec_and_nunavut_workers_benefit_shows_no_estimate():
+    for province in ("AB", "QC", "NU"):
         item = find(Answers(age=30, province=province, work_income=15000), today=TODAY).get("cwb")
         assert item.estimate is None and item.up_to == 1633
 
@@ -125,3 +127,48 @@ def test_ontario_only_programs_stay_in_ontario():
     report = find(Answers(age=22, province="BC", student="full_time", school_type="public"), today=TODAY)
     assert report.get("osap") is None and report.get("ohip") is None
     assert report.get("bc_student_aid").status == "likely"
+
+
+# ---------------------------------------------------------------- territories
+
+def test_nwt_child_benefit_matches_the_gnwt_table():
+    p = params("NT", "nt_child_benefit")
+    assert est.nwt_child(p, under_6=1, age_6_to_17=0, income=0) == 815        # $67.91 a month
+    assert est.nwt_child(p, under_6=2, age_6_to_17=1, income=30000) == 1467 + 652
+    assert est.nwt_child(p, under_6=5, age_6_to_17=0, income=0) == 2445 + 367
+    assert est.nwt_child(p, under_6=1, age_6_to_17=0, income=55000) == 408     # halfway to $80,000
+    assert est.nwt_child(p, under_6=1, age_6_to_17=1, income=80000) == 0
+
+
+def test_yukon_and_nunavut_child_benefits():
+    assert est.flat_per_child(params("YT", "yt_child_benefit"), kids=2, income=35000) == 2 * 966   # $80.50 a month
+    assert est.flat_per_child(params("YT", "yt_child_benefit"), kids=2, income=40000) is None
+    assert est.flat_per_child(params("NU", "nu_child_benefit"), kids=1, income=20000) == 696      # $58 a month
+
+
+def test_no_federal_student_grant_in_the_nwt_or_nunavut():
+    for province, status in (("NT", "no"), ("NU", "no"), ("YT", "maybe")):
+        student = Answers(age=20, province=province, student="full_time", school_type="public", monthly_rent=900)
+        assert find(student, today=TODAY).get("student_grant").status == status
+
+
+def test_territorial_student_aid_waits_12_months_and_goes_on_the_calendar():
+    newcomer = Answers(age=27, province="NT", status="pr", arrived="2026-02", student="full_time",
+                       school_type="public", monthly_rent=1800)
+    report = find(newcomer, today=TODAY)
+    assert report.get("nt_student_aid").status == "not_yet"
+    assert report.get("nt_student_aid").available_from == "February 2027"
+    assert any("NWT Student Financial Assistance" in step.text for step in report.plan)
+
+
+def test_yukon_doesnt_cover_international_students():
+    student = Answers(age=22, province="YT", status="study_permit", arrived="2025-09", student="full_time",
+                      school_type="public", monthly_rent=1200)
+    assert find(student, today=TODAY).get("yt_health").status == "no"
+
+
+def test_northern_residents_deduction_only_in_the_territories():
+    assert find(Answers(age=30, province="YT", work_income=50000), today=TODAY).get("northern_residents").status == "likely"
+    newcomer = find(Answers(age=30, province="NU", status="pr", arrived="2026-07"), today=TODAY).get("northern_residents")
+    assert newcomer.status == "not_yet" and newcomer.available_from == "January 2027"
+    assert find(Answers(age=30, province="ON"), today=TODAY).get("northern_residents") is None
