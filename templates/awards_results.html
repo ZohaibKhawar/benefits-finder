@@ -1,0 +1,174 @@
+{% extends "base.html" %}
+{% block title %}{{ _("Your scholarships and bursaries") }}{% endblock %}
+{% block body_class %}page-results{% endblock %}
+
+{% macro official(url, text=None) %}
+  <a href="{{ url }}" target="_blank" rel="noopener noreferrer">{{ text or _("Official page") }}<span class="visually-hidden"> {{ _("(opens in a new tab)") }}</span></a>
+{% endmacro %}
+
+{% macro award_row(m) %}
+  {% set a = m.award %}
+  <li class="benefit status-{{ m.status }}">
+    <div class="benefit-head">
+      <h3>{{ at(a, "name") }}<span class="also">{{ at(a, "provider") }}</span></h3>
+      {% if a.group != "search" %}
+        <p class="tags">
+          <span class="tag tag-{{ 'likely' if m.status == 'fits' else 'maybe' }}">{{ _(award_status_labels[m.status]) }}</span>
+          <span class="amount">{{ at(a, "amount") }}</span>
+          {% if a.rules and a.rules.competitive %}<span class="tag tag-no">{{ _("Competitive") }}</span>{% endif %}
+        </p>
+      {% endif %}
+    </div>
+    <p class="summary">{{ at(a, "summary") }}</p>
+    {% for reason in m.reasons %}<p class="reason">{{ r(reason) }}</p>{% endfor %}
+    {% if a.group != "search" %}
+      <p class="how"><strong>{{ _("How to apply:") }}</strong> {{ at(a, "how") }}<br>
+        <strong>{{ _("When:") }}</strong> {{ at(a, "when") }}</p>
+    {% endif %}
+    <p class="source">{{ official(a.url, _("Official page") if a.group != "search" else _("Open the list")) }}</p>
+  </li>
+{% endmacro %}
+
+{% macro tier_amount(tier) %}
+  {%- if tier.first_year -%}
+    {{ _("{amount} in first year", amount=money(tier.first_year)) }}{% if tier.total %}{{ _(", up to {total} in all", total=money(tier.total)) }}{% endif %}
+  {%- else -%}
+    {{ _("{total} in all", total=money(tier.total)) }}
+  {%- endif -%}
+{% endmacro %}
+
+{% block main %}
+{% set s = report.student %}
+<div class="results">
+  <h1>{{ _("Your scholarships and bursaries") }}</h1>
+  {% if s.average is not none and s.scale != "percent" %}
+    <p class="hint">{{ _("We read your average of {grade} out of {scale} as about {pct}. Schools convert grades their own way, so check yours.", grade="%g" | format(s.grade), scale="4.0" if s.scale == "4" else s.scale, pct=percent(s.average)) }}</p>
+  {% endif %}
+
+  <section class="plan" aria-labelledby="plan-title">
+    <h2 id="plan-title">{{ _("Do these first") }}</h2>
+    <ol class="steps">
+      {% for step in report.plan %}
+        <li>{{ r(step.text) }}{% if step.url %} {{ official(step.url) }}{% endif %}</li>
+      {% endfor %}
+    </ol>
+    <div class="actions">
+      <button type="button" class="button button-quiet" data-print>{{ _("Print or save as PDF") }}</button>
+      <form method="post" action="{{ link('awards') }}">
+        <input type="hidden" name="answers" value="{{ answers_json }}">
+        <button type="submit" class="button-back">{{ _("Change my answers") }}</button>
+      </form>
+    </div>
+  </section>
+
+  {% if report.school %}
+    {% set school = report.school %}
+    <section class="group" aria-labelledby="school-title">
+      <h2 id="school-title">{{ _("At {school}", school=_(school.name)) }}</h2>
+      <ul class="benefits">
+        {% set e = report.entrance %}
+        {% if e %}
+          <li class="benefit">
+            <div class="benefit-head">
+              <h3>{{ _("Automatic entrance scholarship") }}</h3>
+              {% if e.status == "amount" %}
+                <p class="tags"><span class="tag tag-likely">{{ _("You can get it") }}</span><span class="amount">{{ tier_amount(e.tier) }}</span></p>
+              {% elif e.status == "qualifies" %}
+                <p class="tags"><span class="tag tag-likely">{{ _("You can get it") }}</span></p>
+              {% elif e.status == "below" %}
+                <p class="tags"><span class="tag tag-no">{{ _("Not at your average") }}</span></p>
+              {% endif %}
+            </div>
+            {% if e.status == "below" %}
+              <p class="reason">{{ _("It starts at an average of {needed}, and we read yours as about {yours}.", needed=percent(e.lowest), yours=percent(s.average)) }}</p>
+            {% elif e.status == "unknown_average" %}
+              <p class="reason">{{ _("No application needed. It depends on your final admission average:") }}</p>
+            {% elif e.status in ("amount", "qualifies") %}
+              <p class="summary">{{ _("No application needed. It comes with your offer of admission, based on your admission average.") }}</p>
+            {% endif %}
+            {% for reason in e.reasons %}<p class="reason">{{ r(reason) }}</p>{% endfor %}
+            {% if e.tiers %}
+              <ul class="tiers">
+                {% for tier in e.tiers %}
+                  <li{% if e.tier is sameas tier %} class="current"{% endif %}>
+                    {% if tier.min %}{{ _("{pct} and up:", pct=percent(tier.min)) }}{% else %}{{ _("Everyone eligible:") }}{% endif %}
+                    {{ tier_amount(tier) }}
+                  </li>
+                {% endfor %}
+              </ul>
+            {% endif %}
+            {% if st(school, "entrance.note") %}<p class="hint">{{ st(school, "entrance.note") }}</p>{% endif %}
+            <p class="source">{{ official(school.entrance.url, _("The school's entrance scholarship page")) }}</p>
+          </li>
+        {% endif %}
+        <li class="benefit">
+          <div class="benefit-head">
+            <h3>{{ _("{school}'s own scholarships and bursaries", school=_(school.name)) }}</h3>
+          </div>
+          <p class="summary">{{ _("Every school gives out its own awards: scholarships for grades and leadership, bursaries for students who need money, and emergency money if something goes wrong. Many are for one program, or for a group like Indigenous students, first-generation students or students with a disability.") }}</p>
+          <p class="how"><strong>{{ _("How to apply:") }}</strong> {{ _("Most schools use one online awards application each year or term. Fill it in, even if you think you won't win: fewer students apply than you'd guess.") }}</p>
+          <p class="source">{{ official(school.url, _("The school's awards page")) }}</p>
+        </li>
+      </ul>
+    </section>
+  {% elif s.school == "other" %}
+    <section class="group" aria-labelledby="school-title">
+      <h2 id="school-title">{{ _("At your school") }}</h2>
+      <p>{{ _("Every school gives out its own scholarships and bursaries. Ask the financial aid office, or look for the awards page on the school's website.") }}</p>
+    </section>
+  {% endif %}
+
+  {% if report.table %}
+    <section class="group" aria-labelledby="table-title">
+      <h2 id="table-title">{{ _("Automatic entrance scholarships at your average") }}</h2>
+      <p>{{ _("Ontario universities that publish an automatic entrance scholarship, with what an average of {pct} gets you. No application is needed: it comes with your offer.", pct=percent(s.average)) }}</p>
+      <table class="sources wrap">
+        <thead><tr><th scope="col">{{ _("University") }}</th><th scope="col">{{ _("At your average") }}</th></tr></thead>
+        <tbody>
+          {% for offer in report.table %}
+            <tr>
+              <td>{{ official(offer.school.entrance.url, _(offer.school.name)) }}</td>
+              <td>{% if offer.tier %}{{ tier_amount(offer.tier) }}{% else %}{{ _("Yes; the amount isn't published") }}{% endif %}</td>
+            </tr>
+          {% endfor %}
+        </tbody>
+      </table>
+      <p class="hint">{{ _("Only for students coming straight from high school, and the rules differ (some need a Canadian or Ontario high school, some are for citizens and permanent residents only). Check each school's page.") }}</p>
+    </section>
+  {% endif %}
+
+  {% for title, items in report.groups %}
+    <section class="group" aria-labelledby="group-{{ loop.index }}">
+      <h2 id="group-{{ loop.index }}">{{ _(title) }}</h2>
+      <ul class="benefits">{% for m in items %}{{ award_row(m) }}{% endfor %}</ul>
+    </section>
+  {% endfor %}
+
+  {% if not report.groups %}
+    <p>{{ _("We didn't find outside awards that fit your answers. Your school's own awards are still worth applying for.") }}</p>
+  {% endif %}
+
+  {% if report.ruled_out %}
+    <details class="ruled-out">
+      <summary>{{ _("Probably not for you ({count}), and why", count=report.ruled_out | length) }}</summary>
+      <ul class="plain">
+        {% for m in report.ruled_out %}
+          <li><strong>{{ at(m.award, "name") }}:</strong> {{ r(m.reasons[0]) }}</li>
+        {% endfor %}
+      </ul>
+    </details>
+  {% endif %}
+
+  <section class="callout" aria-labelledby="scam-title">
+    <h2 id="scam-title">{{ _("Watch out for scholarship scams") }}</h2>
+    <ul class="plain">
+      <li>{{ _("Real scholarships never charge a fee to apply, and nobody can guarantee you'll win one.") }}</li>
+      <li>{{ _("Don't put your Social Insurance Number, bank card or banking password on an application. If you win, the school or foundation may ask for your SIN for a tax slip; make sure it's really them first.") }}</li>
+      <li>{{ _("Be careful with a message saying you won something you never applied for.") }}</li>
+      <li>{{ _("Every link on this page goes to a government, a school, or a long-running charity or foundation. Check the web address before you type anything.") }} <a href="{{ link('awards_sources') }}">{{ _("Who runs each site") }}</a></li>
+    </ul>
+  </section>
+
+  <p class="disclaimer">{{ _("This is a guide. Each school and organization decides who gets its awards, and amounts and dates change every year. Check the official page before you count on anything.") }}</p>
+</div>
+{% endblock %}

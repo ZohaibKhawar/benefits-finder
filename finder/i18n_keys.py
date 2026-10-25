@@ -8,6 +8,7 @@ import re
 import sys
 from pathlib import Path
 
+from . import awards as student_awards
 from .data import PROVINCE_FILES, all_benefits, load
 from .engine import GROUPS
 from .form import QUESTIONS
@@ -17,6 +18,7 @@ ROOT = Path(__file__).resolve().parent.parent
 TEMPLATE_CALL = re.compile(r"""_\(\s*(["'])((?:(?!\1).)*)\1""")
 CALLS_WITH_TEXT = {"Msg": 0, "gettext": 0, "FormError": 1, "AskError": 0}
 PARAM_TEXTS = ("wait", "study_note", "note")
+AWARD_FIELDS = ("name", "provider", "amount", "summary", "how", "when", "check", "looks_for_note")
 
 
 def _from_python(path: Path) -> set[str]:
@@ -39,16 +41,19 @@ def ui_texts() -> set[str]:
         texts |= {match.group(2) for match in TEMPLATE_CALL.finditer(template.read_text(encoding="utf-8"))}
     for source in [*(ROOT / "finder").glob("*.py"), ROOT / "app.py"]:
         texts |= _from_python(source)
-    for question in QUESTIONS:
+    for question in QUESTIONS + student_awards.AWARD_QUESTIONS:
         texts |= {question["title"], *filter(None, [question.get("help")])}
         for field in question["fields"]:
             texts |= set(filter(None, [field.get("label"), field.get("help"), field.get("suffix")]))
             for _, label, sub in field.get("choices", []):
                 texts |= set(filter(None, [label, sub]))
-    texts |= {title for _, title in GROUPS}
+    texts |= {title for _, title in GROUPS} | {title for _, title in student_awards.GROUPS}
+    for label, options in student_awards.school_choices():
+        texts |= {label} | {name for value, name in options if value in student_awards.NO_SCHOOL}
+    texts |= set(student_awards.trusted_domains().values())
     texts |= {"Type a question first.", "The helper has answered a lot of questions recently. Try again later."}
-    from app import STATUS_LABELS, WHATS_NEW   # late import: app imports this package
-    texts |= set(STATUS_LABELS.values()) | {str(line.template) for line in WHATS_NEW}
+    from app import AWARD_STATUS_LABELS, STATUS_LABELS, WHATS_NEW   # late import: app imports this package
+    texts |= set(STATUS_LABELS.values()) | set(AWARD_STATUS_LABELS.values()) | {str(line.template) for line in WHATS_NEW}
     for province in PROVINCE_FILES:
         benefits, links = load(province)
         texts |= {links["plan"][key] for key in ("rent_form_text", "tax_text") if links["plan"].get(key)}
@@ -68,6 +73,15 @@ def missing(lang: str) -> tuple[list[str], list[str]]:
         for field in ("name", "summary", "how_to_get", "also_called", "note"):
             if benefit.get(field) and not benefit_texts.get(benefit_id, {}).get(field):
                 missing_benefits.append(f"{benefit_id}.{field}")
+    award_texts = catalog(lang).get("awards", {})
+    for award_id, award in student_awards.awards().items():
+        for field in AWARD_FIELDS:
+            if award.get(field) and not award_texts.get(award_id, {}).get(field):
+                missing_benefits.append(f"award {award_id}.{field}")
+    school_texts = catalog(lang).get("schools", {})
+    for school_id, school in student_awards.schools().items():
+        if school.get("entrance", {}).get("note") and not school_texts.get(school_id, {}).get("entrance.note"):
+            missing_benefits.append(f"school {school_id}.entrance.note")
     return missing_ui, missing_benefits
 
 

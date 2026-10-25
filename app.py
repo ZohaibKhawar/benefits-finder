@@ -12,12 +12,13 @@ from datetime import date
 from flask import Blueprint, Flask, Response, abort, redirect, render_template, request, url_for
 
 from finder import ask as helper
+from finder import awards as student_awards
 from finder import find
 from finder.calendar import build_calendar
 from finder.data import all_benefits, load
 from finder.engine import GROUPS
 from finder.form import PROVINCE_CHOICES, QUESTIONS, FormError, answers_from_form, answers_from_json, answers_to_json, form_values
-from finder.i18n import LANGUAGES, Msg, benefit_text, gettext, money, render
+from finder.i18n import LANGUAGES, Msg, benefit_text, entry_text, gettext, money, percent, render
 from finder.samples import PEOPLE
 
 APP_NAME = "Claimable"   # not "Benefits Finder": that is the Government of Canada's own tool
@@ -29,6 +30,7 @@ app.config["SEND_FILE_MAX_AGE_DEFAULT"] = 3600   # CSS, JS and icon: cache for a
 pages = Blueprint("pages", __name__)
 
 STATUS_LABELS = {"likely": "Likely", "maybe": "Maybe", "not_yet": "Not yet", "no": "Probably not"}
+AWARD_STATUS_LABELS = {"fits": "You can apply", "check": "Check first", "no": "Not for you"}
 
 WHATS_NEW = [
     Msg("The GST/HST credit is now the Canada Groceries and Essentials Benefit, and it's 25% bigger until 2031."),
@@ -76,12 +78,16 @@ def template_helpers():
         "r": lambda value: render(value, current),
         "bt": lambda benefit, field: benefit_text(benefit, field, current),
         "money": lambda amount: money(amount, current),
+        "percent": lambda value: percent(value, current),
+        "at": lambda award, field: entry_text("awards", award, field, current),
+        "st": lambda school, field: entry_text("schools", school, field, current),
         "link": link,
         "other_language_url": other_language_url,
         "language_urls": language_urls,
         "app_name": APP_NAME,
         "site_url": SITE_URL,
         "status_labels": STATUS_LABELS,
+        "award_status_labels": AWARD_STATUS_LABELS,
         "ai_enabled": helper.enabled(),
         "contact_email": CONTACT_EMAIL,
     }
@@ -191,6 +197,46 @@ def benefit(benefit_id):
     return render_template("benefit.html", benefit=entry, groups=dict(GROUPS))
 
 
+def awards_questionnaire(values: dict, errors: dict, status: int = 200):
+    return render_template("awards.html", questions=student_awards.AWARD_QUESTIONS, values=values, errors=errors,
+                           select_groups={"schools": student_awards.school_choices()}), status
+
+
+@pages.route("/awards", methods=["GET", "POST"])
+def awards():
+    """Scholarships and bursaries for students at Ontario colleges and universities."""
+    values = {}
+    if request.method == "POST" and request.form.get("answers"):
+        try:
+            values = student_awards.student_form_values(student_awards.student_from_json(request.form["answers"]))
+        except ValueError:
+            values = {}
+    return awards_questionnaire(values, {})
+
+
+@pages.route("/awards/results", methods=["GET", "POST"])
+def awards_results():
+    if request.method == "GET":
+        return redirect(link("awards"))
+    try:
+        student = student_awards.student_from_form(request.form)
+    except FormError as error:
+        return awards_questionnaire(request.form.to_dict(), {error.field: error.message}, 400)
+    report = student_awards.find_awards(student)
+    return render_template("awards_results.html", report=report,
+                           answers_json=student_awards.student_to_json(student))
+
+
+@pages.route("/awards/sources")
+def awards_sources():
+    """Every school and award the scholarships finder links to, and who runs each site."""
+    schools = list(student_awards.schools().values())
+    return render_template("awards_sources.html", awards=student_awards.awards(), groups=student_awards.GROUPS,
+                           universities=[s for s in schools if s["kind"] == "university"],
+                           colleges=[s for s in schools if s["kind"] == "college"],
+                           trusted=student_awards.trusted_domains())
+
+
 @pages.route("/about")
 def about():
     return render_template("about.html")
@@ -209,13 +255,14 @@ app.register_blueprint(pages, url_prefix="/fr", name="fr")
 
 @app.route("/robots.txt")
 def robots():
-    body = "User-agent: *\nDisallow: /results\nDisallow: /fr/results\nAllow: /\n"
+    body = ("User-agent: *\nDisallow: /results\nDisallow: /fr/results\n"
+            "Disallow: /awards/results\nDisallow: /fr/awards/results\nAllow: /\n")
     return Response(f"{body}Sitemap: {SITE_URL}/sitemap.xml\n", mimetype="text/plain")
 
 
 @app.route("/sitemap.xml")
 def sitemap():
-    paths = ["/", "/start", "/benefits", "/about", "/privacy"]
+    paths = ["/", "/start", "/benefits", "/awards", "/awards/sources", "/about", "/privacy"]
     paths += [f"/benefits/{benefit_id}" for benefit_id in all_benefits()]
     urls = [f"{SITE_URL}{prefix}{path}" for prefix in ("", "/fr") for path in paths]
     today = date.today().isoformat()

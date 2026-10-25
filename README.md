@@ -7,6 +7,11 @@ A free website that asks students and newcomers in Canada 13 short questions and
 benefits they might qualify for, with a rough amount, what to do first, and the official link for each.
 All ten provinces and the three territories, English and French. Nothing is saved.
 
+For students at Ontario colleges and universities there's a second, 8-question finder at `/awards`: their
+school's awards page, the automatic entrance scholarship at their average (every university that
+publishes one, side by side), and the government and foundation scholarships and bursaries they fit.
+It only links to governments, schools and long-running charities, and a test enforces that.
+
 Status (2026-10-18): built and tested, not online yet. See [ROADMAP.md](ROADMAP.md).
 
 This is a guide, not tax, legal or immigration advice, and it isn't affiliated with any government.
@@ -28,7 +33,7 @@ python -m finder.demo
 python -m finder.i18n_keys fr
 ```
 
-The tests (172) check the formulas against official numbers. `check_links.py` opens every official
+The tests (231) check the formulas against official numbers. `check_links.py` opens every official
 link. `finder.demo` prints results for five sample people. `finder.i18n_keys fr` lists anything
 without a French translation.
 
@@ -45,6 +50,8 @@ without a French translation.
 | `finder/i18n.py`, `translations/fr.yaml` | English and French |
 | `finder/calendar.py` | The calendar download |
 | `finder/ask.py` | Optional AI helper (Claude Haiku 5.5), off without `ANTHROPIC_API_KEY` |
+| `finder/awards.py` | The scholarships and bursaries finder for Ontario students: questions, grade scales, matching |
+| `data/ontario_schools.yaml`, `data/student_awards.yaml` | Ontario's 47 public colleges and universities, entrance scholarships, outside awards and the trusted sites |
 | `data/*.yaml` | Every benefit: text, numbers, official link, last checked |
 | `templates/`, `static/` | Pages, styles, the questionnaire script |
 | `tests/` | Formulas, rules, sample people, provinces, website, French, accessibility, AI helper |
@@ -58,6 +65,7 @@ without a French translation.
 - [03 newcomers and students](research/03-newcomers-and-students.md)
 - [04 existing tools, legal, privacy, accessibility](research/04-existing-tools-legal-privacy.md)
 - [05 other provinces, the territories and Ontario cities](research/05-other-provinces.md)
+- [06 scholarships and bursaries for Ontario students](research/06-student-awards.md)
 
 ## License
 

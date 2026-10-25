@@ -7,6 +7,7 @@
   <h2>{{ _("What we collect and why") }}</h2>
   <ul class="ruled">
     <li>{{ _("To show your results, the questions ask about your province or territory, age, status in Canada, school, housing, family, income, health coverage and disability. Some of this is sensitive, so we use it only to build your results page.") }}</li>
+    <li>{{ _("The scholarships questions ask about your school, program, year, average and money, and, only if you choose, whether you're Indigenous or Black, have a disability, were in care, or come from a military family. They follow the same rules as the rest.") }}</li>
     <li>{{ _("Your answers are sent to our server once, used to build your results page, and then thrown away. They aren't stored, logged or shared.") }}</li>
     <li>{{ _("We never ask for your name, address, email or Social Insurance Number.") }}</li>
     <li>{{ _("Your answers never go in the web address, so they don't end up in your browser history.") }}</li>
@@ -30,6 +31,6 @@
   <p>{{ _("Because we keep nothing, there's nothing about you for us to show, correct or delete.") }}</p>
   {% if contact_email %}<p>{{ _("Questions or complaints about privacy, or a mistake on the site: write to {email}.", email=contact_email) }}</p>{% endif %}
   <p><a href="https://www.priv.gc.ca/{{ lang }}/" target="_blank" rel="noopener noreferrer">{{ _("You can also complain to the Office of the Privacy Commissioner of Canada.") }}<span class="visually-hidden"> {{ _("(opens in a new tab)") }}</span></a></p>
-  <p class="hint">{{ _("Last updated October 19, 2026.") }}</p>
+  <p class="hint">{{ _("Last updated October 25, 2026.") }}</p>
 </article>
 {% endblock %}

@@ -1,0 +1,89 @@
+{# The one-question-per-screen questionnaire, shared by the benefits and the scholarships questions.
+   Needs: questions, values, errors, form_action, and select_groups for a select field. #}
+{% macro hint(text) %}{% if text %}<span class="hint">{{ _(text) }}</span>{% endif %}{% endmacro %}
+
+{% macro error_for(name) %}
+  {% if errors.get(name) %}<p class="error" id="{{ name }}-error">{{ _(errors[name]) }}</p>{% endif %}
+{% endmacro %}
+
+{% macro field(f, question_title) %}
+  {% set value = values.get(f.name, f.get("default", "")) %}
+  {% set show_if = f.get("show_if") %}
+  <div class="field field-{{ f.kind }}" data-field="{{ f.name }}"{% if show_if %} data-show-if='{{ show_if | tojson }}'{% endif %}>
+  {% if f.kind == "radio" %}
+    <fieldset class="choices">
+      {% if f.get("label") %}<legend class="sub-label">{{ _(f.label) }}</legend>
+      {% else %}<legend class="visually-hidden">{{ _(question_title) }}</legend>{% endif %}
+      {{ hint(f.get("help")) }}
+      {% for choice, label, sub in f.choices %}
+        <label class="choice">
+          <input type="radio" name="{{ f.name }}" value="{{ choice }}"{% if value == choice %} checked{% endif %}>
+          <span class="choice-text">{{ _(label) }}{% if sub %}<span class="hint">{{ _(sub) }}</span>{% endif %}</span>
+        </label>
+      {% endfor %}
+    </fieldset>
+  {% elif f.kind == "check" %}
+    <label class="choice choice-check">
+      <input type="checkbox" name="{{ f.name }}" value="1"{% if value and value not in ("0", "false", False) %} checked{% endif %}>
+      <span class="choice-text">{{ _(f.label) }}{{ hint(f.get("help")) }}</span>
+    </label>
+  {% elif f.kind == "select" %}
+    {% set input_id = "q-" ~ f.name %}
+    <label class="sub-label" for="{{ input_id }}">{{ _(f.label) }}</label>
+    {{ hint(f.get("help")) }}
+    <select id="{{ input_id }}" name="{{ f.name }}"
+      {% if f.get("required") %} required data-required{% endif %}
+      {% if errors.get(f.name) %} aria-invalid="true" aria-describedby="{{ f.name }}-error"{% endif %}>
+      <option value="">{{ _("Choose one") }}</option>
+      {% for group_label, options in select_groups[f.groups] %}
+        <optgroup label="{{ _(group_label) }}">
+          {% for choice, label in options %}<option value="{{ choice }}"{% if value == choice %} selected{% endif %}>{{ _(label) }}</option>{% endfor %}
+        </optgroup>
+      {% endfor %}
+    </select>
+  {% else %}
+    {% set input_id = "q-" ~ f.name %}
+    <label class="sub-label{% if not f.get('label') %} visually-hidden{% endif %}" for="{{ input_id }}">{{ _(f.label) if f.get("label") else _(question_title) }}</label>
+    {{ hint(f.get("help")) }}
+    <div class="input-row">
+      {% if f.kind == "money" %}<span class="unit" aria-hidden="true">$</span>{% endif %}
+      <input id="{{ input_id }}" name="{{ f.name }}"
+        {% if f.kind == "month" %}type="month" min="2020-01"
+        {% else %}type="text" inputmode="numeric" pattern="[0-9 ,.$]*" autocomplete="off"{% endif %}
+        value="{{ value }}"
+        {% if f.kind == "count" %}placeholder="0" class="short"{% elif f.kind == "number" %}class="short"{% endif %}
+        {% if f.get("required") %} required data-required{% endif %}
+        {% if errors.get(f.name) %} aria-invalid="true" aria-describedby="{{ f.name }}-error"{% endif %}>
+      {% if f.get("suffix") %}<span class="unit">{{ _(f.suffix) }}</span>{% endif %}
+    </div>
+  {% endif %}
+  {{ error_for(f.name) }}
+  </div>
+{% endmacro %}
+
+<form class="quiz" method="post" action="{{ form_action }}" data-quiz novalidate>
+  <p class="progress" aria-live="polite"><span data-progress-text></span></p>
+  <div class="progress-bar" aria-hidden="true"><span data-progress-bar></span></div>
+
+  {% for q in questions %}
+    {% set has_error = q.fields | selectattr("name", "in", errors) | list %}
+    <section class="screen" data-screen id="screen-{{ q.id }}"{% if has_error %} data-start{% endif %} aria-labelledby="title-{{ q.id }}">
+      <h2 class="question" id="title-{{ q.id }}" tabindex="-1">{{ _(q.title) }}</h2>
+      {% if q.get("help") %}<p class="hint question-hint">{{ _(q.help) }}</p>{% endif %}
+      {% for f in q.fields %}{{ field(f, q.title) }}{% endfor %}
+      <div class="screen-nav">
+        {% if not loop.first %}<button type="button" class="button-back" data-back>{{ _("Back") }}</button>{% endif %}
+        {% if loop.last %}
+          <button type="submit" class="button">{{ _("See my results") }}</button>
+        {% else %}
+          <button type="button" class="button" data-next>{{ _("Next") }}</button>
+        {% endif %}
+      </div>
+    </section>
+  {% endfor %}
+
+  <div class="nojs-submit">
+    <button type="submit" class="button">{{ _("See my results") }}</button>
+  </div>
+  <p class="reassure">{{ _("We don't save your answers. They're used once to build your results page.") }}</p>
+</form>

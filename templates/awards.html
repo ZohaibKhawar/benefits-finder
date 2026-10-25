@@ -1,0 +1,8 @@
+{% extends "base.html" %}
+{% block title %}{{ _("Scholarships and bursaries for Ontario students") }}{% endblock %}
+{% block description %}{{ _("Answer 8 questions about your school, program, year and average, and see the scholarships and bursaries you might get at an Ontario college or university, each with its official link.") }}{% endblock %}
+{% block body_class %}page-quiz{% endblock %}
+{% block main %}
+<h1 class="visually-hidden">{{ _("Scholarships and bursaries for Ontario students") }}</h1>
+{% with form_action=link('awards_results') %}{% include "_questionnaire.html" %}{% endwith %}
+{% endblock %}

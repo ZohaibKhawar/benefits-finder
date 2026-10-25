@@ -6,7 +6,7 @@ what to do first, and the official link for each one.
 
 Started and built 2026-10-18. Research is in [research/](research/).
 
-**Status:** every phase is built and tested (172 tests). What's left needs you: choosing hosting and a
+**Status:** every phase is built and tested (231 tests). What's left needs you: choosing hosting and a
 name, putting it online (`DEPLOY.md`), sending the outreach, and the open number checks
 below and in research/05.
 
@@ -140,6 +140,26 @@ amounts, so no estimate is shown (like Alberta and Quebec).
 
 Also fixed: the "Every benefit and its source" page listed every federal program ten times with no
 province names. It now shows the federal programs once, then each province and territory under its name.
+
+## Phase 8: Scholarships and bursaries for Ontario students (done 2026-10-25)
+
+A second finder at `/awards` (English and French) for anyone at, or applying to, an Ontario college or
+university. Eight questions: school (all 24 public colleges and 23 universities), program and subject,
+year, average on any scale (percent, 4.0, 4.33, York's 9, uOttawa's 10, the 12-point scale), status in
+Canada, money, optional groups (First Nations, Métis, Inuit, Black, disability, first-generation, in care,
+military family) and what they do (volunteering, leadership, research, a language course).
+
+- **Your school:** its own awards page, and the automatic entrance scholarship at your average (or how far
+  below the cut-off you are) for the 18 universities that publish one.
+- **Grade 12 students:** every university's automatic entrance scholarship at your average, biggest first.
+- **25 outside awards and search lists:** Ontario's first-generation, Indigenous, youth-in-care and
+  disability bursaries, OGS, the federal master's scholarship and research awards, Explore, Indspire,
+  MNO, Loran, Schulich Leader and Builders, Terry Fox, BBPA, nurses, Rhodes. "You can apply", "Check
+  first" (with what to check) or "Not for you" (with why).
+- **Trusted links only:** each link's site is on a list with who runs it (shown at `/awards/sources`),
+  and a test fails on anything else, including lookalike domains. A box warns about scholarship scams.
+- Ended programs left out: TD Scholarships for Community Leadership, the federal apprenticeship grants.
+- Sources: [research/06](research/06-student-awards.md). 59 new tests.
 
 ---
 

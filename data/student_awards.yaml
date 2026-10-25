@@ -1,0 +1,447 @@
+# Scholarships and bursaries from outside a student's own school, for the Ontario students finder.
+# Text lives here; the matching is in finder/awards.py. Checked 2026-10-25; sources in
+# research/06-student-awards.md.
+#
+# Only links to governments, schools, and long-running charities and foundations go in this file.
+# Every link's host must be on the list below, and tests/test_awards.py fails if one isn't. Before adding
+# a domain, check who runs it, that it never charges students to apply, and add the reason.
+
+trusted_domains:
+  ontario.ca: Government of Ontario
+  osap.gov.on.ca: OSAP, Government of Ontario
+  canada.ca: Government of Canada
+  sac-isc.gc.ca: Indigenous Services Canada, Government of Canada
+  educanada.ca: EduCanada, Government of Canada
+  metisnation.org: Métis Nation of Ontario, the Métis government in Ontario
+  indspire.ca: Indspire, a national Indigenous registered charity, funding students since 1996
+  loranscholar.ca: Loran Scholars Foundation, a national registered charity
+  schulichleaders.com: Schulich Foundation scholarship program, at 20 Canadian universities
+  schulichbuilders.com: Schulich Foundation scholarship program, at Ontario colleges
+  terryfoxawards.ca: Terry Fox Humanitarian Award Program
+  bbpa.org: Black Business and Professional Association, Toronto, giving scholarships since 1986
+  cnf-fiic.ca: Canadian Nurses Foundation, the national nursing charity
+  rhodeshouse.ox.ac.uk: Rhodes Trust, University of Oxford
+
+# rules (all optional):
+#   levels: college, bachelor, bachelor_final (a bachelor's student in fourth year or later), masters, phd
+#   years: hs_senior (applying now), first, second, third, fourth_plus
+#   fields: stem, health, business, arts, social, trades, creative, undecided
+#   identities: shown only to students who ticked one of these
+#   activities: shown only to students who ticked one of these
+#   statuses: domestic (citizens, permanent residents, protected persons) or a list
+#   need: true when it's only for students with financial need
+#   min_average: percent
+#   in_school: true when you can only apply once you've started at your school
+#   looks_for: activities they weigh; if none is ticked, looks_for_note is shown
+#   competitive: true when many more people apply than win
+# check: something we didn't ask that decides it; shown with "Check first".
+
+awards:
+
+  # ---------------------------------------------------------------- governments
+
+  - id: first_generation
+    name: Ontario First Generation Bursary
+    provider: Government of Ontario, through your school
+    group: government
+    amount: $1,000 to $3,500
+    summary: For students whose parents never went to college or university, anywhere in the world, and who need money for school.
+    how: Ask your school's financial aid office. You don't have to apply for OSAP to get it.
+    when: Each school sets its own dates.
+    url: https://osap.gov.on.ca/OSAPPortal/en/A-ZListofAid/PRDR019247.html
+    rules:
+      identities: [first_gen]
+      levels: [college, bachelor, bachelor_final]
+      statuses: domestic
+      need: true
+      in_school: true
+    check: Only for a first program after high school (not graduate school, law or medicine), and you need to meet OSAP's Ontario residency rules.
+    last_checked: 2026-10-25
+
+  - id: indigenous_student_bursary
+    name: Indigenous Student Bursary
+    provider: Government of Ontario, through your school
+    group: government
+    amount: Usually $1,000 to $3,500, up to $6,500 with remote travel costs
+    summary: For First Nations, Métis and Inuit students with financial need at an Ontario public college or university, or an Indigenous Institute.
+    how: Ask your school's financial aid office or Indigenous student centre. You don't have to apply for OSAP to get it.
+    when: Each school sets its own dates.
+    url: https://osap.gov.on.ca/OSAPPortal/en/A-ZListofAid/POCONT1_109272
+    rules:
+      identities: [first_nations, metis, inuit]
+      statuses: domestic
+      need: true
+      in_school: true
+    check: You also need to meet OSAP's Ontario residency rules.
+    last_checked: 2026-10-25
+
+  - id: fnrds
+    name: First Nations Resource Development Scholarship
+    provider: Government of Ontario, through your school
+    group: government
+    amount: The full cost of your program, plus $2,500 (2026-27)
+    summary: Pays the direct costs of an approved resource development program, such as mining, for First Nations students at an Ontario public college, university or Indigenous Institute.
+    how: Ask your school's financial aid office whether your program counts. You don't have to apply for OSAP.
+    when: Ask your school.
+    url: https://osap.gov.on.ca/OSAPPortal/en/A-ZListofAid/POCONT1_110873
+    rules:
+      identities: [first_nations]
+      fields: [stem, trades]
+      in_school: true
+    check: Only for approved resource development programs, and you need to be a member of, or connected to, a First Nations community in Ontario.
+    last_checked: 2026-10-25
+
+  - id: psssp
+    name: Post-Secondary Student Support Program
+    provider: Indigenous Services Canada, through your First Nation
+    group: government
+    amount: Can cover tuition, books, travel and living costs
+    summary: Federal funding for First Nations students, given out by First Nations and First Nations organizations.
+    how: Contact your band office or First Nations education office. They set the deadline, so ask early.
+    when: Your band office sets the deadline.
+    url: https://www.sac-isc.gc.ca/eng/1100100033682/1531933580211
+    rules:
+      identities: [first_nations]
+    check: For students registered under the Indian Act, including the general list.
+    last_checked: 2026-10-25
+
+  - id: inuit_strategy
+    name: Inuit Post-Secondary Education Strategy
+    provider: Inuit land-claim organizations, funded by the Government of Canada
+    group: government
+    amount: Can cover tuition, books, application fees and living costs
+    summary: Money for Inuit students in college or university, given out by Inuit organizations.
+    how: Contact Inuit Tapiriit Kanatami or your Inuit land-claim organization.
+    when: Ask your Inuit organization.
+    url: https://www.sac-isc.gc.ca/eng/1578850688146/1578850715764
+    rules:
+      identities: [inuit]
+    check: For beneficiaries of an Inuit land-claims agreement, wherever you live in Canada.
+    last_checked: 2026-10-25
+
+  - id: mno_bursary
+    name: Métis Student Bursary Program
+    provider: Métis Nation of Ontario
+    group: government
+    amount: Changes each year with the money available
+    summary: Bursaries for Métis students at 43 Ontario colleges and universities.
+    how: Apply through your school's financial aid office or Indigenous student centre once you've registered in the fall.
+    when: Each school sets its own deadline. Winners hear in the winter.
+    url: https://www.metisnation.org/programs-and-services/education-training/post-secondary-education/mno-scholarships-and-bursaries/
+    rules:
+      identities: [metis]
+      statuses: [citizen, pr]
+      need: true
+      in_school: true
+    check: You need to be a verified MNO citizen and to have lived in Ontario for 12 months before you start.
+    last_checked: 2026-10-25
+
+  - id: living_learning
+    name: Living and Learning Grant
+    provider: Government of Ontario, through OSAP
+    group: government
+    amount: Up to $2,000 a semester
+    summary: Extra money for living costs, on top of regular OSAP, for students who are or were in the care of an Ontario Children's Aid Society.
+    how: You're considered automatically when you send a full-time OSAP application.
+    when: With your OSAP application.
+    url: https://www.ontario.ca/page/osap-for-under-represented-learners
+    rules:
+      identities: [care]
+      statuses: domestic
+      in_school: true
+    check: For ages 18 to 26 when your studies start. For some groups, your school's financial aid office does a review first.
+    last_checked: 2026-10-25
+
+  - id: fee_refund
+    name: Ontario Postsecondary Application Fee Reimbursement Program
+    provider: Government of Ontario
+    group: government
+    amount: Your application fees back, for up to 5 university and 5 college choices
+    summary: Pays back college and university application fees for anyone who is or was in extended society care in Ontario, whatever their age or income.
+    how: Print the form on the Ontario website, fill it in and mail it.
+    when: You can claim this year's fees and the 2 years before.
+    url: https://www.ontario.ca/page/ontario-postsecondary-application-fee-reimbursement-program
+    rules:
+      identities: [care]
+      years: [hs_senior, first]
+    check: Only for extended society care in Ontario (formerly Crown wards).
+    last_checked: 2026-10-25
+
+  - id: bswd
+    name: Bursary for Students with Disabilities and Canada Student Grant for Services and Equipment
+    provider: Governments of Ontario and Canada, through OSAP
+    group: government
+    amount: Up to $2,000 from Ontario and up to $20,000 from Canada
+    summary: Pays for the disability-related services and equipment you need for school, like note-takers, tutors and assistive technology.
+    how: Say you have a disability on your OSAP application, then apply with help from your school's accessibility office.
+    when: During your study period. Equipment bought more than 60 days before it starts doesn't count.
+    url: https://osap.gov.on.ca/OSAPPortal/en/A-ZListofAid/POCONT1_109289
+    rules:
+      identities: [disability]
+      statuses: domestic
+      in_school: true
+    check: You need a verified permanent disability, or a persistent or prolonged one.
+    last_checked: 2026-10-25
+
+  - id: ogs
+    name: Ontario Graduate Scholarship (OGS)
+    provider: Government of Ontario and your university
+    group: government
+    amount: $5,000 a term, up to $15,000 a year
+    summary: Scholarships for master's and doctoral students at Ontario universities, based on grades and research.
+    how: Apply through your university's graduate studies office.
+    when: Your university sets the deadline.
+    url: https://www.ontario.ca/page/student-loans-grants-scholarships-and-bursaries
+    rules:
+      levels: [masters, phd]
+      competitive: true
+    check: Each university sets the rules, including the grades you need.
+    last_checked: 2026-10-25
+
+  - id: cgrs_m
+    name: Canada Graduate Research Scholarship – Master's
+    provider: Government of Canada (CIHR, NSERC and SSHRC)
+    group: government
+    amount: $27,000 for 12 months
+    summary: For students starting or doing a research master's at a Canadian university. You can apply in the last year of your bachelor's.
+    how: Apply on the federal Research Portal, choosing the university where you'd hold it.
+    when: December 1, before 8 p.m. Eastern.
+    url: https://nserc-crsng.canada.ca/en/funding-opportunity/canada-graduate-research-scholarship-masters-program
+    rules:
+      levels: [bachelor_final, masters]
+      statuses: domestic
+      min_average: 80
+      competitive: true
+    check: Universities usually look for a first-class (A-) average in your last two years.
+    last_checked: 2026-10-25
+
+  - id: usra
+    name: NSERC Undergraduate Student Research Award (USRA)
+    provider: Government of Canada (NSERC)
+    group: government
+    amount: $6,000 plus a top-up from your school, for 14 to 16 weeks of full-time research
+    summary: A paid research job with a professor for students in science, math and engineering.
+    how: Find a professor who'll supervise you, then apply through your university. Each has its own contact and deadline.
+    when: Your university sets the deadline.
+    url: https://nserc-crsng.canada.ca/en/funding-opportunity/undergraduate-student-research-awards
+    rules:
+      levels: [bachelor, bachelor_final]
+      years: [first, second, third, fourth_plus]
+      fields: [stem]
+      activities: [research]
+      statuses: domestic
+      min_average: 70
+    check: You need a good average so far, normally at least a B-. Not for professional health programs like nursing or medicine.
+    last_checked: 2026-10-25
+
+  - id: usra_black
+    name: Undergraduate Student Research Award for Black student researchers (SSHRC and CIHR)
+    provider: Government of Canada (SSHRC and CIHR)
+    group: government
+    amount: $6,000 plus a top-up from your school, for 14 to 16 weeks of full-time research
+    summary: A paid research job with a professor in the social sciences, humanities or health research. For now, these two councils offer them only to Black students.
+    how: Find a professor who'll supervise you, then apply through your university.
+    when: Your university sets the deadline.
+    url: https://nserc-crsng.canada.ca/en/funding-opportunity/undergraduate-student-research-awards
+    rules:
+      identities: [black]
+      levels: [bachelor, bachelor_final]
+      years: [first, second, third, fourth_plus]
+      fields: [social, arts, business, health]
+      activities: [research]
+      statuses: domestic
+      min_average: 70
+    check: You need a good average so far, normally at least a B-.
+    last_checked: 2026-10-25
+
+  - id: explore
+    name: Explore
+    provider: Government of Canada
+    group: government
+    amount: $4,000, which covers the course, meals and a place to stay
+    summary: A five-week course in spring or summer to learn French or English.
+    how: Apply on the Explore website.
+    when: Check the Explore website for this year's dates.
+    url: https://www.canada.ca/en/canadian-heritage/services/funding/explore.html
+    rules:
+      activities: [language]
+      statuses: [citizen, pr]
+    check: You need to have been a student for at least one term this school year or last.
+    last_checked: 2026-10-25
+
+  # ---------------------------------------------------------------- foundations and organizations
+
+  - id: indspire
+    name: Indspire Building Brighter Futures
+    provider: Indspire, a national Indigenous charity
+    group: foundation
+    amount: Changes with each award; one application covers all of them
+    summary: Bursaries and scholarships for First Nations, Inuit and Métis students in college, university, trades and graduate programs.
+    how: Fill in one application on the Indspire website. It stays in the running for all three deadlines in the school year.
+    when: August 1, November 1 and February 1.
+    url: https://indspire.ca/programs/students/bursaries-scholarships/
+    rules:
+      identities: [first_nations, metis, inuit]
+    check: Indspire may ask for proof of registration or citizenship with a First Nations, Inuit or Métis government or organization.
+    last_checked: 2026-10-25
+
+  - id: loran
+    name: Loran Award
+    provider: Loran Scholars Foundation
+    group: foundation
+    amount: About $150,000 over four years
+    summary: For students in their last year of high school with character, service and leadership, not only grades.
+    how: Apply online on the Loran website. You can't apply once you're in college or university.
+    when: Closes in mid-October each year. It closed on October 15, 2026 for students starting in 2027.
+    url: https://loranscholar.ca/the-program/how-it-works/
+    rules:
+      years: [hs_senior]
+      levels: [bachelor]
+      statuses: [citizen, pr]
+      min_average: 88
+      looks_for: [volunteer, leadership]
+      competitive: true
+    looks_for_note: They look for service to others and leadership, so you'll need examples of both.
+    check: The 88% is an average of all your Grade 10 to 12 courses, not only your top six.
+    last_checked: 2026-10-25
+
+  - id: schulich_leader
+    name: Schulich Leader Scholarship
+    provider: Schulich Foundation
+    group: foundation
+    amount: $120,000 for engineering, $100,000 for science, technology or math
+    summary: For students finishing high school who are going into a science, technology, engineering or math degree. They look for leadership, grit and financial need.
+    how: Your high school chooses one nominee, so talk to your guidance office first. The nominee then fills in the scholarship application.
+    when: Schools nominate by January 27, 2027. Nominees apply by February 17, 2027.
+    url: https://schulichleaders.com/faq/
+    rules:
+      years: [hs_senior]
+      levels: [bachelor]
+      fields: [stem]
+      statuses: [citizen]
+      looks_for: [leadership]
+      competitive: true
+    looks_for_note: They look for entrepreneurial leaders, not only top marks.
+    check: Only at the 20 partner universities listed on the Schulich site.
+    last_checked: 2026-10-25
+
+  - id: schulich_builders
+    name: Schulich Builders Scholarship
+    provider: Schulich Foundation
+    group: foundation
+    amount: $20,000 for a 1-year certificate, $40,000 for a 2-year diploma
+    summary: For students starting a full-time skilled trades certificate or diploma at a participating Ontario college. It helps with tuition, tools and living costs.
+    how: Get nominated, then apply through the college. Each college sets its own deadline.
+    when: Nominations by March 31, 2027. Most college deadlines are in May.
+    url: https://www.schulichbuilders.com/
+    rules:
+      years: [hs_senior]
+      levels: [college]
+      fields: [trades]
+      statuses: [citizen]
+      need: true
+      competitive: true
+    check: Only in eligible programs at the 8 participating colleges.
+    last_checked: 2026-10-25
+
+  - id: terry_fox
+    name: Terry Fox Humanitarian Award
+    provider: Terry Fox Humanitarian Award Program
+    group: foundation
+    amount: $7,000 a year, up to $28,000 over four years
+    summary: For students finishing high school who do unpaid humanitarian or volunteer work. Any field of study.
+    how: Apply online with three references and a transcript.
+    when: Opens November 1, closes December 1.
+    url: https://terryfoxawards.ca/applicant-information/
+    rules:
+      years: [hs_senior, first]
+      statuses: [citizen, pr]
+      activities: [volunteer]
+      competitive: true
+    check: For students heading into a first degree or diploma. To keep it, you reapply each year.
+    last_checked: 2026-10-25
+
+  - id: bbpa
+    name: BBPA National Scholarship Program
+    provider: Black Business and Professional Association
+    group: foundation
+    amount: $1,000 to $7,000 a year
+    summary: Scholarships for Black students in college or university, based on grades, financial need and what they give to the Black community.
+    how: Read the guide on the BBPA website, then apply online with a transcript, a financial statement, a personal statement and a reference letter.
+    when: Check the website for this year's dates. The last window posted ran from May to July.
+    url: https://bbpa.org/how-to-apply/
+    rules:
+      identities: [black]
+      statuses: [citizen, pr, protected, study_permit, work_permit]
+      competitive: true
+    check: For ages 17 to 30 at the start of the school year.
+    last_checked: 2026-10-25
+
+  - id: cnf
+    name: Canadian Nurses Foundation scholarships
+    provider: Canadian Nurses Foundation
+    group: foundation
+    amount: $750 to $10,000
+    summary: Scholarships for nursing students in bachelor's, master's and doctoral programs.
+    how: Apply on the foundation's website while applications are open.
+    when: Opens January 1, closes in mid-March.
+    url: https://cnf-fiic.ca/scholarships/
+    rules:
+      fields: [health]
+      levels: [bachelor, bachelor_final, masters, phd]
+      statuses: [citizen, pr]
+      in_school: true
+      competitive: true
+    check: Only for nursing programs, and you need at least 3 courses finished before the deadline.
+    last_checked: 2026-10-25
+
+  - id: rhodes
+    name: Rhodes Scholarship (Canada)
+    provider: Rhodes Trust, University of Oxford
+    group: foundation
+    amount: Pays for graduate study at the University of Oxford
+    summary: One of the best-known scholarships in the world, for final-year students with top grades, character and a record of service.
+    how: Apply online. Your university has to certify you first, and its deadline comes earlier.
+    when: In the fall of your final year. University certification for 2027 closed on September 28, 2026.
+    url: https://www.rhodeshouse.ox.ac.uk/scholarships/applications/canada/eligibilitycriteria/
+    rules:
+      levels: [bachelor_final]
+      statuses: [citizen, pr]
+      min_average: 80
+      looks_for: [volunteer, leadership]
+      competitive: true
+    looks_for_note: They look for leadership and service to others as well as grades.
+    check: For ages 18 to 23 on October 1 of the year you apply (a little older if you finished your degree late). They usually look for a GPA of 3.7 out of 4.0 or better.
+    last_checked: 2026-10-25
+
+  # ---------------------------------------------------------------- places to search
+
+  - id: isc_search
+    name: Indigenous Bursaries Search Tool
+    provider: Government of Canada
+    group: search
+    summary: A government list of bursaries, scholarships and incentives for First Nations, Inuit and Métis students, searchable by school and program.
+    url: https://www.sac-isc.gc.ca/eng/1351185180120/1351685455328
+    rules:
+      identities: [first_nations, metis, inuit]
+    last_checked: 2026-10-25
+
+  - id: military_list
+    name: Scholarships and bursaries for military families
+    provider: National Defence and Canadian Armed Forces Ombudsman
+    group: search
+    summary: A government list of scholarships and bursaries for Canadian Armed Forces members, veterans and their families, including Support Our Troops.
+    url: https://www.canada.ca/en/ombudsman-national-defence-forces/education-information/military-families/post-secondary-scholarships-bursaries.html
+    rules:
+      identities: [military_family]
+    last_checked: 2026-10-25
+
+  - id: educanada
+    name: International scholarships (EduCanada)
+    provider: Government of Canada
+    group: search
+    summary: The government's search tool for scholarships open to international students in Canada.
+    url: https://www.educanada.ca/scholarships-bourses/index.aspx?lang=eng
+    rules:
+      statuses: [study_permit]
+    last_checked: 2026-10-25

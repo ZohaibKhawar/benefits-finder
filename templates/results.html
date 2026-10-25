@@ -83,6 +83,13 @@
     </section>
   {% endif %}
 
+  {% if answers.province == "ON" and answers.student != "no" %}
+    <div class="callout">
+      <p>{{ _("Studying in Ontario? See the scholarships and bursaries you might get, including your school's own.") }}</p>
+      <p><a class="button button-quiet" href="{{ link('awards') }}">{{ _("Find scholarships") }}</a></p>
+    </div>
+  {% endif %}
+
   {% if report.ruled_out %}
     <details class="ruled-out">
       <summary>{{ _("Probably not for you ({count}), and why", count=report.ruled_out | length) }}</summary>

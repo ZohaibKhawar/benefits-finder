@@ -72,16 +72,21 @@ class PageCheck(HTMLParser):
             self.label_depth -= 1
 
 
+STUDENT = {"school": "york", "level": "bachelor", "field": "stem", "year": "hs_senior", "grade": "87",
+           "status": "citizen", "need": "osap", "first_gen": "1"}
+
 AISHA = {"province": "ON", "city": "toronto", "age": "20", "student": "full_time", "school_type": "public",
          "housing": "rent", "monthly_rent": "900", "work_income": "9000"}
 
 
 @pytest.mark.parametrize("method, path", [("get", "/"), ("get", "/start"), ("post", "/results"),
                                           ("get", "/benefits"), ("get", "/benefits/cgeb"), ("get", "/about"),
-                                          ("get", "/privacy"), ("get", "/fr/start")])
+                                          ("get", "/privacy"), ("get", "/fr/start"), ("get", "/awards"),
+                                          ("post", "/awards/results"), ("get", "/awards/sources")])
 def test_page_structure(method, path):
     client = app.test_client()
-    response = client.post(path, data=AISHA) if method == "post" else client.get(path)
+    data = STUDENT if path.startswith("/awards") else AISHA
+    response = client.post(path, data=data) if method == "post" else client.get(path)
     check = PageCheck()
     check.feed(response.get_data(as_text=True))
     assert check.lang in ("en", "fr")

@@ -257,7 +257,18 @@ input[type="text"], input[type="month"] {
   max-width: 16rem;
 }
 input.short { max-width: 7rem; }
-input[aria-invalid="true"] { border-color: var(--error); }
+select {
+  font: inherit;
+  color: var(--ink);
+  background: var(--paper);
+  border: 2px solid var(--ink-2);
+  border-radius: 0.5rem;
+  padding: 0.65rem 0.8rem;
+  min-height: 3rem;
+  width: 100%;
+  max-width: 28rem;
+}
+input[aria-invalid="true"], select[aria-invalid="true"] { border-color: var(--error); }
 .error { color: var(--error); font-weight: 600; margin: 0.4rem 0 0; }
 
 .screen-nav { display: flex; gap: 1rem; align-items: center; margin-top: 2rem; }
@@ -294,6 +305,13 @@ html:not(.js) .screen-nav { display: none; }
 .how { padding-left: 0.9rem; border-left: 3px solid var(--rule); }
 .source { font-size: var(--step--1); margin-bottom: 0; }
 
+/* Entrance scholarship levels: the student's own level gets the green rule. */
+.tiers { list-style: none; padding: 0; margin: 0 0 0.75rem; }
+.tiers li { padding: 0.2rem 0 0.2rem 0.75rem; border-left: 3px solid var(--rule); color: var(--ink-2); max-width: var(--measure); }
+.tiers li.current { border-left-color: var(--likely); color: var(--ink); font-weight: 600; }
+.callout h2 { font-size: var(--step-1); }
+.callout .plain { margin-bottom: 0; }
+
 .ruled-out { margin: 2rem 0; border-top: 1px solid var(--rule); padding-top: 1rem; }
 .ruled-out summary { cursor: pointer; font-weight: 600; padding: 0.4rem 0; }
 .plain { padding-left: 1.2rem; }
@@ -323,6 +341,9 @@ html:not(.js) .screen-nav { display: none; }
 .sources th, .sources td { text-align: left; padding: 0.6rem 0.75rem 0.6rem 0; border-bottom: 1px solid var(--rule); vertical-align: top; }
 .sources th { font-size: var(--step--1); color: var(--ink-2); font-weight: 600; }
 .sources td:last-child { white-space: nowrap; color: var(--ink-2); font-size: var(--step--1); }
+.sources.wrap td:last-child { white-space: normal; }
+.sources.wrap td { overflow-wrap: anywhere; }
+.sources td a { overflow-wrap: anywhere; }
 
 /* ------------------------------------------------------------------ print */
 

@@ -32,6 +32,10 @@ class BenefitName(str):
     """A benefit id inside a message; shown as that benefit's name in the reader's language."""
 
 
+class Percent(float):
+    """An average inside a message: 88% / 88 %."""
+
+
 @lru_cache
 def catalog(lang: str) -> dict:
     if lang == "en":
@@ -56,19 +60,32 @@ def money(amount: float, lang: str = "en") -> str:
     return f"${whole}"
 
 
+def percent(value: float, lang: str = "en") -> str:
+    number = f"{value:g}"
+    return f"{number.replace('.', ',')} %" if lang == "fr" else f"{number}%"
+
+
 def month(day: date, lang: str = "en") -> str:
     if lang in MONTHS:
         return f"{MONTHS[lang][day.month - 1]} {day.year}"
     return day.strftime("%B %Y")
 
 
-def benefit_text(benefit: dict, field: str, lang: str):
-    """A field of a benefit (name, summary, how_to_get, also_called) in the reader's language."""
+def entry_text(section: str, entry: dict, field: str, lang: str):
+    """A field of a data-file entry in the reader's language. Sections: benefits, awards, schools."""
     if lang != "en":
-        translated = catalog(lang).get("benefits", {}).get(benefit["id"], {}).get(field)
+        translated = catalog(lang).get(section, {}).get(entry["id"], {}).get(field)
         if translated:
             return translated
-    return benefit.get(field)
+    value = entry
+    for key in field.split("."):          # "entrance.note" reaches into a nested entry
+        value = value.get(key) if isinstance(value, dict) else None
+    return value
+
+
+def benefit_text(benefit: dict, field: str, lang: str):
+    """A field of a benefit (name, summary, how_to_get, also_called) in the reader's language."""
+    return entry_text("benefits", benefit, field, lang)
 
 
 def _benefit_name(benefit_id: str, lang: str) -> str:
@@ -86,6 +103,8 @@ def _format(value, lang: str) -> str:
         return month(value, lang)
     if isinstance(value, BenefitName):
         return _benefit_name(value, lang)
+    if isinstance(value, Percent):
+        return percent(value, lang)
     if isinstance(value, int):
         return f"{value:,}" if lang == "en" else f"{value:,}".replace(",", " ")
     return str(value)
@@ -110,6 +129,18 @@ class Msg(str):
             return str(self)
         template = gettext(self.template, lang)
         return template.format(**{key: _format(value, lang) for key, value in self.params.items()})
+
+
+class EntryText(Msg):
+    """A text field of a data-file entry used as a message (an award's 'check', say)."""
+
+    def __new__(cls, section: str, entry: dict, field: str):
+        obj = super().__new__(cls, entry_text(section, entry, field, "en"))
+        obj.section, obj.entry, obj.field = section, entry, field
+        return obj
+
+    def render(self, lang: str) -> str:
+        return entry_text(self.section, self.entry, self.field, lang)
 
 
 def render(value, lang: str):

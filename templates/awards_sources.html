@@ -1,0 +1,53 @@
+{% extends "base.html" %}
+{% block title %}{{ _("Every scholarship and school we link to") }}{% endblock %}
+{% block description %}{{ _("Every award and Ontario college and university page the scholarships finder links to, who runs each site, and the date we last checked it.") }}{% endblock %}
+{% block main %}
+<div class="prose">
+  <h1>{{ _("Every scholarship and school we link to") }}</h1>
+  <p>{{ _("The scholarships finder only links to governments, schools, and long-running charities and foundations. A test stops the site from adding a link to any other website.") }}</p>
+  <p><a class="button" href="{{ link('awards') }}">{{ _("Find scholarships") }}</a></p>
+
+  <h2>{{ _("Who runs each site") }}</h2>
+  <table class="sources wrap">
+    <thead><tr><th scope="col">{{ _("Website") }}</th><th scope="col">{{ _("Run by") }}</th></tr></thead>
+    <tbody>
+      {% for domain, who in trusted.items() %}
+        <tr><td>{{ domain }}</td><td>{{ _(who) }}</td></tr>
+      {% endfor %}
+      <tr><td>{{ _("Each school's own website") }}</td><td>{{ _("The college or university") }}</td></tr>
+    </tbody>
+  </table>
+
+  {% for group, title in groups %}
+    <h2>{{ _(title) }}</h2>
+    <table class="sources">
+      <thead><tr><th scope="col">{{ _("Program") }}</th><th scope="col">{{ _("Last checked") }}</th></tr></thead>
+      <tbody>
+        {% for a in awards.values() if a.group == group %}
+          <tr>
+            <td><a href="{{ a.url }}" target="_blank" rel="noopener noreferrer">{{ at(a, "name") }}<span class="visually-hidden"> {{ _("(opens in a new tab)") }}</span></a>
+              <span class="hint">{{ at(a, "provider") }}</span></td>
+            <td>{{ a.last_checked.isoformat() }}</td>
+          </tr>
+        {% endfor %}
+      </tbody>
+    </table>
+  {% endfor %}
+
+  {% for title, schools in [("Universities", universities), ("Colleges", colleges)] %}
+    <h2>{{ _(title) }}</h2>
+    <table class="sources">
+      <thead><tr><th scope="col">{{ _("School") }}</th><th scope="col">{{ _("Last checked") }}</th></tr></thead>
+      <tbody>
+        {% for school in schools %}
+          <tr>
+            <td><a href="{{ school.url }}" target="_blank" rel="noopener noreferrer">{{ _(school.name) }}<span class="visually-hidden"> {{ _("(opens in a new tab)") }}</span></a>
+              {% if school.entrance %}<span class="hint">{{ _("publishes an automatic entrance scholarship") }}</span>{% endif %}</td>
+            <td>{{ school.last_checked.isoformat() }}</td>
+          </tr>
+        {% endfor %}
+      </tbody>
+    </table>
+  {% endfor %}
+</div>
+{% endblock %}

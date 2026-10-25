@@ -12,13 +12,14 @@ import urllib.request
 from concurrent.futures import ThreadPoolExecutor
 from datetime import date
 
+from finder import awards as student_awards
 from finder.data import PROVINCE_FILES, load
 
 STALE_AFTER_DAYS = 180
 BROWSER = {"User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64)"}
 
 # Sites that refuse every script; check these by hand in a browser.
-BLOCKS_SCRIPTS = ("ramq.gouv.qc.ca", "yukon.ca", "gov.nu.ca")
+BLOCKS_SCRIPTS = ("ramq.gouv.qc.ca", "yukon.ca", "gov.nu.ca", "laurentian.ca", "nipissingu.ca", "georgebrown.ca")
 
 
 def fetch(url: str, headers: dict) -> str:
@@ -68,6 +69,12 @@ def main() -> int:
     for name, url in links.items():
         if name != "plan":
             urls.setdefault(url, []).append(f"link:{name}")
+    for school in student_awards.schools().values():
+        urls.setdefault(school["url"], []).append(f"school:{school['id']}")
+        if "entrance" in school:
+            urls.setdefault(school["entrance"]["url"], []).append(f"school:{school['id']} (entrance)")
+    for award in student_awards.awards().values():
+        urls.setdefault(award["url"], []).append(f"award:{award['id']}")
 
     with ThreadPoolExecutor(max_workers=8) as pool:
         results = dict(zip(urls, pool.map(status_of, urls)))
@@ -79,7 +86,8 @@ def main() -> int:
         label = "ok " if code == "200" else "?? " if code == "blocked" else "BAD"
         print(f"{label} {code:>4}  {', '.join(urls[url])}  {url}")
 
-    stale = [b["id"] for b in benefits.values() if (date.today() - b["last_checked"]).days > STALE_AFTER_DAYS]
+    entries = [*benefits.values(), *student_awards.schools().values(), *student_awards.awards().values()]
+    stale = [e["id"] for e in entries if (date.today() - e["last_checked"]).days > STALE_AFTER_DAYS]
     if stale:
         print(f"\nNot checked in {STALE_AFTER_DAYS}+ days: {', '.join(stale)}")
     print(f"\n{len(results) - broken} of {len(results)} links ok")

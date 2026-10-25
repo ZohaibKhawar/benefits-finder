@@ -49,6 +49,16 @@ number, the official limit in the test changed too: update both from the same of
 - [ ] Student aid year: OSAP and the other provinces, Canada Student Grant amounts, the Yukon Grant weekly
       rate, NWT SFA and Nunavut FANS amounts.
 
+## September to October (scholarships)
+
+- [ ] University entrance scholarship tables for next year's students (`data/ontario_schools.yaml`):
+      schools post them in the fall. Change `last_checked` for each school you open.
+- [ ] Dates in `data/student_awards.yaml`: Loran (closes mid-October), Schulich Leader and Builders,
+      Terry Fox (Nov 1 to Dec 1), CGRS Master's (Dec 1), Indspire, BBPA, nurses (Jan to March), Rhodes.
+- [ ] Any award that ended: remove it, and add its name to `test_ended_programs_are_not_listed`.
+- [ ] A new outside award goes in only if its site is run by a government, a school, or a long-running
+      charity or foundation. Add the domain to `trusted_domains` with who runs it.
+
 ## Every week
 
 - [ ] `python check_links.py`. Fix any link marked BAD. RAMQ blocks scripts; open it in a browser.

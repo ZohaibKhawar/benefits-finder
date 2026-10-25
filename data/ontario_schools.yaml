@@ -1,0 +1,326 @@
+# Ontario's public universities and colleges, for the scholarships and bursaries finder.
+# Every link goes to the school's own awards or financial aid page, on the school's own domain
+# (tests/test_awards.py checks that). Entrance scholarships are only the automatic ones that every
+# student coming straight from high school gets at a given average; anything you apply for is on the
+# school's page instead.
+#
+# entrance.tiers: final admission average (top 6 Grade 12 U/M courses) -> dollars, highest first.
+#   first_year is paid in first year; total is the most over the whole degree if you keep renewing it.
+# entrance.min: used instead of tiers when the school publishes a cut-off but no amounts.
+# entrance.statuses: who it's for; left out means citizens, permanent residents and protected persons.
+# Sources and dates: research/06-student-awards.md
+
+schools:
+
+  # ---------------------------------------------------------------- universities
+
+  - id: algoma
+    name: Algoma University
+    kind: university
+    domain: algomau.ca
+    url: https://algomau.ca/students/tuition-scholarships-financial-aid/financial-support/
+    entrance:
+      url: https://algomau.ca/students/tuition-scholarships-financial-aid/awards-scholarships/entrance-scholarships/
+      tiers:
+        - {min: 95, first_year: 4000, total: 16000}
+        - {min: 90, first_year: 3000, total: 12000}
+        - {min: 85, first_year: 2500, total: 10000}
+        - {min: 80, first_year: 1500, total: 6000}
+      note: Renewable for up to 3 more years, at the level your university average reaches.
+    last_checked: 2026-10-25
+
+  - id: brock
+    name: Brock University
+    kind: university
+    domain: brocku.ca
+    url: https://brocku.ca/safa/
+    entrance:
+      url: https://brocku.ca/safa/2026-future-students/
+      tiers:
+        - {min: 95, first_year: 5500, total: 7000}
+        - {min: 90, first_year: 3500, total: 5000}
+        - {min: 85, first_year: 1500, total: 3000}
+      note: These are the amounts for students who started in 2026. After first year it renews at $500 a year with an 80% average.
+    last_checked: 2026-10-25
+
+  - id: carleton
+    name: Carleton University
+    kind: university
+    domain: carleton.ca
+    url: https://carleton.ca/awards/
+    entrance:
+      url: https://carleton.ca/awards/awards/scholarships/entrance-scholarships/
+      tiers:
+        - {min: 95, first_year: 3000, total: 12000}
+        - {min: 90, first_year: 2000, total: 8000}
+        - {min: 85, first_year: 1000, total: 4000}
+      note: Based on the grades your high school sends with your application, not your final marks. Renewable with an A- (10.0) average each year.
+    last_checked: 2026-10-25
+
+  - id: guelph
+    name: University of Guelph
+    kind: university
+    domain: uoguelph.ca
+    url: https://www.uoguelph.ca/registrar/finances-fees/scholarships-bursaries
+    entrance:
+      url: https://www.uoguelph.ca/registrar/finances-fees/scholarships-bursaries
+      tiers:
+        - {min: 95, first_year: 2000}
+        - {min: 90, first_year: 1000}
+      statuses: [citizen, pr]
+      note: First year only. Guelph also has entrance bursaries and scholarships you apply for.
+    last_checked: 2026-10-25
+
+  - id: lakehead
+    name: Lakehead University
+    kind: university
+    domain: lakeheadu.ca
+    url: https://www.lakeheadu.ca/studentcentral/financing-budgeting/entrance-scholarships-for-future-new-students
+    entrance:
+      url: https://www.lakeheadu.ca/studentcentral/financing-budgeting/entrance-scholarships-for-future-new-students
+      tiers:
+        - {min: 95, first_year: 4000, total: 16000}
+        - {min: 90, first_year: 2500, total: 10000}
+        - {min: 85, first_year: 1250, total: 5000}
+        - {min: 80, first_year: 750, total: 3000}
+      note: With 95% in your final marks it becomes free tuition. Renewable with an 80% average (90% for the top level).
+    last_checked: 2026-10-25
+
+  - id: laurentian
+    name: Laurentian University
+    kind: university
+    domain: laurentian.ca
+    url: https://laurentian.ca/academics/fees-financing/scholarships-bursaries/undergraduate
+    last_checked: 2026-10-25
+
+  - id: mcmaster
+    name: McMaster University
+    kind: university
+    domain: mcmaster.ca
+    url: https://registrar.mcmaster.ca/financial-support/scholarships-and-bursaries/
+    last_checked: 2026-10-25
+
+  - id: nipissing
+    name: Nipissing University
+    kind: university
+    domain: nipissingu.ca
+    url: https://nipissingu.ca/departments/student-financial-services/student-awards-and-financial-aid/scholarships-bursaries-awards-high-school-students
+    entrance:
+      url: https://nipissingu.ca/departments/student-financial-services/student-awards-and-financial-aid/scholarships-bursaries-awards-high-school-students
+      min: 80
+      note: Guaranteed with an 80% average by June 30, with no application. The amount grows with your average.
+    last_checked: 2026-10-25
+
+  - id: ocadu
+    name: OCAD University
+    kind: university
+    domain: ocadu.ca
+    url: https://www.ocadu.ca/student-services/financial-aid/scholarships-awards
+    entrance:
+      url: https://admissions.ocadu.ca/afford/funding-options
+      tiers:
+        - {min: 95, first_year: 3000}
+        - {min: 90, first_year: 2000}
+        - {min: 85, first_year: 1000}
+      note: For students graduating from an Ontario high school. First year only.
+    last_checked: 2026-10-25
+
+  - id: ontariotech
+    name: Ontario Tech University
+    kind: university
+    domain: ontariotechu.ca
+    url: https://safa.ontariotechu.ca/awards-bursaries-and-scholarships/undergraduate-student-finances/index.php
+    entrance:
+      url: https://registrar.ontariotechu.ca/faqs/awards-bursaries-and-scholarships.php
+      min: 85
+      note: For students out of high school less than 18 months, with no application. The amount grows with your average.
+    last_checked: 2026-10-25
+
+  - id: uottawa
+    name: University of Ottawa
+    kind: university
+    domain: uottawa.ca
+    url: https://www.uottawa.ca/study/fees-financial-support/scholarships-awards-overview
+    entrance:
+      url: https://www.uottawa.ca/study/fees-financial-support/scholarships-awards-overview
+      tiers:
+        - {min: 95, first_year: 3000}
+        - {min: 90, first_year: 2000}
+        - {min: 85, first_year: 1000}
+      note: For full-time students in a direct-entry program. Faculties add their own scholarships, some from 90% or 92%.
+    last_checked: 2026-10-25
+
+  - id: queens
+    name: Queen's University
+    kind: university
+    domain: queensu.ca
+    url: https://www.queensu.ca/registrar/financial-aid-and-awards-profile
+    entrance:
+      url: https://www.queensu.ca/registrar/financial-aid/no-application-required/future-students/automatic-awards
+      min: 90
+      note: Automatic grade-based admission scholarships start at a 90% average. The amount depends on your program and how your average compares.
+    last_checked: 2026-10-25
+
+  - id: tmu
+    name: Toronto Metropolitan University
+    kind: university
+    domain: torontomu.ca
+    url: https://www.torontomu.ca/student-financial-assistance/
+    entrance:
+      url: https://www.torontomu.ca/admissions/scholarships-awards/
+      tiers:
+        - {min: 95, first_year: 3000, total: 12000}
+        - {min: 90, first_year: 1500, total: 6000}
+        - {min: 86, first_year: 750, total: 3000}
+      note: Guaranteed for students from a Canadian high school. Renewable each year you keep the grades TMU asks for.
+    last_checked: 2026-10-25
+
+  - id: trent
+    name: Trent University
+    kind: university
+    domain: trentu.ca
+    url: https://www.trentu.ca/studentfinances/scholarships-awards-bursaries
+    entrance:
+      url: https://www.trentu.ca/studentfinances/scholarships-awards-bursaries/entrance-scholarships
+      tiers:
+        - {min: 95, first_year: 6241, total: 18118}
+        - {min: 90, first_year: 3000, total: 12000}
+        - {min: 85, first_year: 2000, total: 8000}
+        - {min: 80, first_year: 1500, total: 6000}
+      note: At 95% or more, first-year tuition is free, then $4,000 a year. Renewable with an 80% average.
+    last_checked: 2026-10-25
+
+  - id: uoft
+    name: University of Toronto
+    kind: university
+    domain: utoronto.ca
+    url: https://future.utoronto.ca/scholarships
+    entrance:
+      url: https://future.utoronto.ca/university-of-toronto-scholars-program
+      statuses: [citizen, pr, protected, study_permit, work_permit, refugee_claimant]
+      note: About 900 admission awards of $10,000 go to the students with the highest averages (the U of T Scholars Program). Everyone coming from high school is considered.
+    last_checked: 2026-10-25
+
+  - id: waterloo
+    name: University of Waterloo
+    kind: university
+    domain: uwaterloo.ca
+    url: https://uwaterloo.ca/awards-directory/
+    entrance:
+      url: https://uwaterloo.ca/future-students/financing/scholarships
+      tiers:
+        - {min: 95, first_year: 2000, total: 5000}
+        - {min: 90, first_year: 2000}
+        - {min: 85, first_year: 1000}
+      note: One-time. At 95% you can also claim up to $3,000 later for research or a term abroad. Faculties add their own.
+    last_checked: 2026-10-25
+
+  - id: western
+    name: Western University
+    kind: university
+    domain: uwo.ca
+    url: https://registrar.uwo.ca/student_finances/scholarships_awards/index.html
+    entrance:
+      url: https://registrar.uwo.ca/student_finances/scholarships_awards/admission/western_admission_scholarship_program.html
+      tiers:
+        - {min: 92, first_year: 2500, total: 3500}
+        - {min: 90, first_year: 1500, total: 2500}
+      note: Plus $1,000 for an optional term abroad. The 250 students with the top averages get $6,000 instead.
+    last_checked: 2026-10-25
+
+  - id: laurier
+    name: Wilfrid Laurier University
+    kind: university
+    domain: wlu.ca
+    url: https://students.wlu.ca/finances/scholarships-and-bursaries/index.html
+    entrance:
+      url: https://www.wlu.ca/future-students/undergraduate/tuition-finances/entrance-scholarships.html
+      tiers:
+        - {min: 95, first_year: 4000}
+        - {min: 90, first_year: 3000}
+        - {min: 85, first_year: 2500}
+      note: For students starting in September 2027 or later. Business (BBA) students need 90% or more. International students get $5,000, or $6,000 at 95%.
+    last_checked: 2026-10-25
+
+  - id: windsor
+    name: University of Windsor
+    kind: university
+    domain: uwindsor.ca
+    url: https://www.uwindsor.ca/studentawards/
+    entrance:
+      url: https://www.uwindsor.ca/studentawards/entering-students
+      tiers:
+        - {min: 95, first_year: 4000, total: 16000}
+        - {min: 90, first_year: 2500, total: 10000}
+        - {min: 85, first_year: 1000}
+      note: The top two levels are paid over 8 terms if you keep an 85% average. You must start full-time the year after high school.
+    last_checked: 2026-10-25
+
+  - id: york
+    name: York University
+    kind: university
+    domain: yorku.ca
+    url: https://students.yorku.ca/sfs
+    entrance:
+      url: https://futurestudents.yorku.ca/scholarships-incoming-students
+      tiers:
+        - {min: 95, first_year: 3500, total: 14000}
+        - {min: 90, first_year: 2000, total: 8000}
+        - {min: 85, first_year: 1500, total: 6000}
+        - {min: 80, first_year: 1000, total: 4000}
+      note: Renewable with a B+ (8.0) average on 24 credits a year.
+    last_checked: 2026-10-25
+
+  - id: uof
+    name: Université de l'Ontario français
+    kind: university
+    domain: uof.ca
+    url: https://uof.ca/admission-et-droits-de-scolarite/bourses-et-aide-financiere
+    entrance:
+      url: https://uof.ca/admission-et-droits-de-scolarite/bourses-et-aide-financiere
+      tiers:
+        - {min: 0, total: 12000}
+      statuses: [citizen, pr]
+      note: For Ontario high school graduates (OSSD) starting a bachelor's, spread over four years. The B.A./B.Ed. gets $18,000.
+    last_checked: 2026-10-25
+
+  - id: hearst
+    name: Université de Hearst
+    kind: university
+    domain: uhearst.ca
+    url: https://uhearst.ca/bourses-et-aides-financieres/
+    last_checked: 2026-10-25
+
+  - id: nosm
+    name: NOSM University
+    kind: university
+    domain: nosm.ca
+    url: https://www.nosm.ca/education/current-learners/scholarships-bursaries-awards/
+    last_checked: 2026-10-25
+
+  # ---------------------------------------------------------------- colleges
+
+  - {id: algonquin, name: Algonquin College, kind: college, domain: algonquincollege.com, url: "https://www.algonquincollege.com/financial-aid/", last_checked: 2026-10-25}
+  - {id: cambrian, name: Cambrian College, kind: college, domain: cambriancollege.ca, url: "https://cambriancollege.ca/admissions/paying-for-college/available-scholarships-and-bursaries", last_checked: 2026-10-25}
+  - {id: canadore, name: Canadore College, kind: college, domain: canadorecollege.ca, url: "https://www.canadorecollege.ca/support/money/bursaries", last_checked: 2026-10-25}
+  - {id: centennial, name: Centennial College, kind: college, domain: centennialcollege.ca, url: "https://www.centennialcollege.ca/financial-aid", last_checked: 2026-10-25}
+  - {id: boreal, name: Collège Boréal, kind: college, domain: collegeboreal.ca, url: "https://collegeboreal.ca/etudiantes-et-etudiants-actuels-et-diplomes/aide-financiere/", last_checked: 2026-10-25}
+  - {id: conestoga, name: Conestoga College, kind: college, domain: conestogac.on.ca, url: "https://www.conestogac.on.ca/student-financial-services/awards", last_checked: 2026-10-25}
+  - {id: confederation, name: Confederation College, kind: college, domain: confederationcollege.ca, url: "https://www.confederationcollege.ca/financial-aid/", last_checked: 2026-10-25}
+  - {id: durham, name: Durham College, kind: college, domain: durhamcollege.ca, url: "https://durhamcollege.ca/financial-info/financial-aid", last_checked: 2026-10-25}
+  - {id: fanshawe, name: Fanshawe College, kind: college, domain: fanshawec.ca, url: "https://www.fanshawec.ca/admission-finance/financial-aid-awards", last_checked: 2026-10-25}
+  - {id: fleming, name: Fleming College, kind: college, domain: flemingcollege.ca, url: "https://flemingcollege.ca/financial-aid", last_checked: 2026-10-25}
+  - {id: georgebrown, name: George Brown Polytechnic, kind: college, domain: georgebrown.ca, url: "https://www.georgebrown.ca/apply/financial-aid/awards-and-scholarships/types-of-awards", last_checked: 2026-10-25}
+  - {id: georgian, name: Georgian College, kind: college, domain: georgiancollege.ca, url: "https://www.georgiancollege.ca/finance-and-fees/awards", last_checked: 2026-10-25}
+  - {id: humber, name: Humber Polytechnic, kind: college, domain: humber.ca, url: "https://humber.ca/study-at-humber/pay-fees/scholarships-bursaries", last_checked: 2026-10-25}
+  - {id: lacite, name: La Cité, kind: college, domain: collegelacite.ca, url: "https://www.collegelacite.ca/services-aux-etudiants#Aide_financiere", last_checked: 2026-10-25}
+  - {id: lambton, name: Lambton College, kind: college, domain: lambtoncollege.ca, url: "https://www.lambtoncollege.ca/future-students/financial-aid-services/financial-aid", last_checked: 2026-10-25}
+  - {id: loyalist, name: Loyalist College, kind: college, domain: loyalistcollege.com, url: "https://loyalistcollege.com/admissions/paying-for-college/", last_checked: 2026-10-25}
+  - {id: mohawk, name: Mohawk College, kind: college, domain: mohawkcollege.ca, url: "https://www.mohawkcollege.ca/financial-assistance/awards-scholarships-and-bursaries", last_checked: 2026-10-25}
+  - {id: niagara, name: Niagara College, kind: college, domain: niagaracollege.ca, url: "https://www.niagaracollege.ca/enrolmentservices/financialaid/", last_checked: 2026-10-25}
+  - {id: northern, name: Northern College, kind: college, domain: northerncollege.ca, url: "https://www.northerncollege.ca/students/bursaries/", last_checked: 2026-10-25}
+  - {id: sault, name: Sault College, kind: college, domain: saultcollege.ca, url: "https://www.saultcollege.ca/admissions/financial-aid", last_checked: 2026-10-25}
+  - {id: seneca, name: Seneca Polytechnic, kind: college, domain: senecapolytechnic.ca, url: "https://www.senecapolytechnic.ca/student-services-and-support/financial-supports.html", last_checked: 2026-10-25}
+  - {id: sheridan, name: Sheridan College, kind: college, domain: sheridancollege.ca, url: "https://www.sheridancollege.ca/admissions/financial-aid-and-awards/awards-and-scholarships", last_checked: 2026-10-25}
+  - {id: stclair, name: St. Clair College, kind: college, domain: stclaircollege.ca, url: "https://www.stclaircollege.ca/financial-aid", last_checked: 2026-10-25}
+  - {id: stlawrence, name: St. Lawrence College, kind: college, domain: stlawrencecollege.ca, url: "https://www.stlawrencecollege.ca/fees/bursaries-and-scholarships", last_checked: 2026-10-25}
